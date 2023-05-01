@@ -36,6 +36,9 @@ public:
 	virtual       ~TUdoSlave() { }
 
 	virtual bool  UdoReadWrite(TUdoRequest * udorq); // must be overridden
+
+protected:
+	bool          UdoBlobTest(TUdoRequest * udorq);
 };
 
 bool      udo_response_error(TUdoRequest * udorq, uint16_t aresult);
@@ -47,7 +50,7 @@ bool      udo_rw_data(TUdoRequest * udorq, void * dataptr, unsigned datalen);
 bool      udo_ro_data(TUdoRequest * udorq, void * dataptr, unsigned datalen);
 bool      udo_wo_data(TUdoRequest * udorq, void * dataptr, unsigned datalen);
 bool      udo_response_cstring(TUdoRequest * udorq, char * astr);
-int       udorq_intvalue(TUdoRequest * udorq);
-unsigned  udorq_uintvalue(TUdoRequest * udorq);
+int32_t   udorq_intvalue(TUdoRequest * udorq);
+uint32_t  udorq_uintvalue(TUdoRequest * udorq);
 
 #endif /* SRC_UDOSLAVE_H_ */

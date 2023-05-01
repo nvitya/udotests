@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "udoslaveapp.h"
+#include "mscounter.h"
 
 TUdoSlaveApp slaveapp;
 
@@ -10,10 +11,9 @@ int main()
 {
 	setbuf(stdout, nullptr); // disable output buffering
 
-	printf("Example UDO-SLAVE\n");
+	printf("Example UDOIP-SLAVE\n");
 
-#if 0
-	g_device.Init();
+	//g_device.Init();
 
 	if (!slaveapp.Init())
 	{
@@ -21,10 +21,9 @@ int main()
 		exit(1);
 	}
 
-	rt_thread.Start();
-#endif
+	//rt_thread.Start();
 
-	printf("UDO Slave initialized, waiting requests...\n");
+	printf("UDOIP Slave listening at port %u ...\n", slaveapp.port);
 
 	while (true)
 	{
@@ -32,13 +31,10 @@ int main()
 
 		slaveapp.Run();
 
-#if 0
-		// cycle boosting for 100 ms
-		if (nstime() - slaveapp.last_request_time > 100000000)
+		if (mscounter() - slaveapp.last_request_mstime > 100) // cycle boosting for 100 ms
 		{
 			usleep(1000);  // to leave some rest to the system
 		}
-#endif
 	}
 
 	return 0;

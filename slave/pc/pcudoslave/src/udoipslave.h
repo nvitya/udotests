@@ -33,6 +33,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
+#include "mscounter.h"
 #include "udo.h"
 #include "udoslave.h"
 
@@ -50,7 +51,7 @@ typedef struct
 {
 	uint32_t    rqid;       // request id to detect repeated requests
 	uint16_t    len_cmd;    // LEN, MLEN, RW
-	uint16_t    address;    // object index
+	uint16_t    index;      // object index
 	uint32_t    offset;
 	uint32_t    metadata;
 //
@@ -81,6 +82,9 @@ typedef struct
 
 class TUdoIpSlave : public TUdoSlave
 {
+private:
+	typedef TUdoSlave super;
+
 public:
 	uint16_t              port = UDOIP_DEFAULT_PORT;
 
@@ -96,7 +100,7 @@ public:
 	uint8_t               ans_cache_lru_idx[UDOIP_ANSCACHE_NUM];
 	TUdoIpSlaveCacheRec   ans_cache[UDOIP_ANSCACHE_NUM];
 
-	//t_nstime            last_request_time = 0;
+	uint32_t              last_request_mstime = 0;
 
 	TUdoIpSlave();
 	virtual ~TUdoIpSlave();

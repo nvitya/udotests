@@ -12,6 +12,8 @@
 
 class TUdoSlaveApp: public TUdoIpSlave
 {
+private:
+	typedef TUdoIpSlave super;
 public:
 	TUdoSlaveApp();
 	virtual ~TUdoSlaveApp() { }

@@ -1,0 +1,39 @@
+/*
+ *  file:     mscounter.cpp
+ *  brief:    simple 32-bit millisecond counter
+ *  created:  2023-05-01
+ *  authors:  nvitya
+*/
+
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "mscounter.h"
+
+#ifdef WIN32
+  #include "windows.h"
+  double qpcmsscale = 0.0;
+
+#else
+  // Linux
+  #include "time.h"
+#endif
+
+uint32_t mscounter(void)
+{
+  #ifdef WIN32
+
+	  return GetTickCount();
+
+	#else // linux
+
+    // high resolution timer on linux
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    uint64_t ns = (uint64_t)ts.tv_sec * (uint64_t)1000000000 + (uint64_t)ts.tv_nsec;
+    return ns / 1000000;
+
+  #endif
+}

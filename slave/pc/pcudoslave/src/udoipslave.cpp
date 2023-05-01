@@ -54,7 +54,7 @@ void TUdoIpSlave::ProcessUdpRequest(TUdoIpRequest * ucrq)
 	TRACETS("UDP RQ: srcip=%s, port=%i, datalen=%i\n",
 				 inet_ntoa(*(struct in_addr *)&ucrq->srcip), ucrq->srcport, ucrq->datalen);
 
-	TRACE("  sqid=%u, len_cmd=%u, address=%04X, offset=%u\n", prqh->rqid, prqh->len_cmd, prqh->address, prqh->offset);
+	TRACE("  sqid=%u, len_cmd=%u, address=%04X, offset=%u\n", prqh->rqid, prqh->len_cmd, prqh->index, prqh->offset);
 #endif
 
 	// prepare the response
@@ -85,44 +85,39 @@ void TUdoIpSlave::ProcessUdpRequest(TUdoIpRequest * ucrq)
 	// execute the SDO
 
 	memset(&mudorq, 0, sizeof(mudorq));
-	mudorq.address  = prqh->address;
+	mudorq.index  = prqh->index;
 	mudorq.offset = prqh->offset;
-	mudorq.datalen = (prqh->len_cmd & 0x7FF);
+	mudorq.rqlen = (prqh->len_cmd & 0x7FF);
 	mudorq.iswrite = ((prqh->len_cmd >> 15) & 1);
 	mudorq.metalen = ((0x8420 >> ((prqh->len_cmd >> 13) & 3) * 4) & 0xF);
 	mudorq.metadata = prqh->metadata;
-	uint16_t ansdatalen = 0;
+
 
 	if (mudorq.iswrite)
 	{
 		// write
 		mudorq.dataptr = (uint8_t *)(prqh + 1); // the data comes after the header
-		mudorq.datalen = ucrq->datalen - sizeof(TUdoIpRqHeader);  // override the datalen from the header
+		mudorq.rqlen = ucrq->datalen - sizeof(TUdoIpRqHeader);  // override the datalen from the header
 
 		UdoReadWrite(&mudorq);
 	}
 	else
 	{
 		// read
+		mudorq.maxanslen = UDOIP_MAX_RQ_SIZE - sizeof(TUdoIpRqHeader);
 		mudorq.dataptr = pansdata;
 
-		UdoReadWrite(&mudorq);
-
-		if (0 == mudorq.result)
-		{
-			// prepare the answer, the data is already copied there
-			ansdatalen = mudorq.datalen;
-		}
+		UdoReadWrite(&mudorq);  // should set the mudorq.anslen
 	}
 
 	if (mudorq.result)
 	{
+		mudorq.anslen = 2;
 		pansh->len_cmd |= 0x7FF; // abort response
-		*(int32_t *)pansdata = mudorq.result;
-		ansdatalen = 2;
+		*(uint16_t *)pansdata = mudorq.result;
 	}
 
-	pansc->datalen = ansdatalen + sizeof(TUdoIpRqHeader);
+	pansc->datalen = mudorq.anslen + sizeof(TUdoIpRqHeader);
 
 	// send the response
 	r = sendto(fdsocket, pansc->dataptr, pansc->datalen, 0, (struct sockaddr*)&client_addr, client_struct_length);
@@ -134,8 +129,7 @@ void TUdoIpSlave::ProcessUdpRequest(TUdoIpRequest * ucrq)
 
 bool TUdoIpSlave::UdoReadWrite(TUdoRequest * udorq)  // must be overwritten
 {
-	udorq->result = UDOERR_NOT_IMPLEMENTED;
-	return false;
+	return super::UdoReadWrite(udorq);
 }
 
 bool TUdoIpSlave::Init()
@@ -218,7 +212,7 @@ TUdoIpSlaveCacheRec * TUdoIpSlave::FindAnsCache(TUdoIpRequest * iprq, TUdoIpRqHe
 	{
 		if ( (pac->srcip == iprq->srcip) and (pac->srcport == iprq->srcport)
 				 and (pac->rqh.rqid == prqh->rqid) and (pac->rqh.len_cmd == prqh->len_cmd)
-				 and (pac->rqh.address == prqh->address) and (pac->rqh.offset == prqh->offset)
+				 and (pac->rqh.index == prqh->index) and (pac->rqh.offset == prqh->offset)
 				 and (pac->datalen == iprq->datalen)
 			 )
 		{

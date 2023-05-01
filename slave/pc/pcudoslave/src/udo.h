@@ -39,29 +39,32 @@
 #define UDOERR_TIMEOUT          0x1003
 #define UDOERR_DATA_TOO_BIG     0x1004
 
-#define UDOERR_WRONG_ADDR       0x2001  // address not existing
-#define UDOERR_WRONG_OBJ        0x2001  // object not existing
+#define UDOERR_WRONG_INDEX      0x2000  // index / object not existing
+#define UDOERR_WRONG_OFFSET     0x2001  // like the offset must be divisible by the 4
 #define UDOERR_WRONG_ACCESS     0x2002
-#define UDOERR_READ_ONLY        0x2003
-#define UDOERR_WRITE_ONLY       0x2004
-#define UDOERR_WRITE_BOUNDS     0x2005  // write is out ouf bounds
-#define UDOERR_VALUE            0x2006  // invalid value
-#define UDOERR_RUN_MODE         0x2007  // config mode required
-#define UDOERR_UNITSEL          0x2008  // the referenced unit is not existing
-#define UDOERR_BUSY             0x2009
+#define UDOERR_READ_ONLY        0x2010
+#define UDOERR_WRITE_ONLY       0x2011
+#define UDOERR_WRITE_BOUNDS     0x2012  // write is out ouf bounds
+#define UDOERR_WRITE_VALUE      0x2020  // invalid value
+#define UDOERR_RUN_MODE         0x2030  // config mode required
+#define UDOERR_UNITSEL          0x2040  // the referenced unit is not existing
+#define UDOERR_BUSY             0x2050
 
 #define UDOERR_NOT_IMPLEMENTED  0x9001
 #define UDOERR_INTERNAL         0x9002  // internal implementation error
+#define UDOERR_APPLICATION      0x9003  // application (interfaceing) error
 
 typedef struct TUdoRequest
 {
   uint8_t      iswrite;      // 0 = read, 1 = write
   uint8_t      metalen;      // length of the metadata
-  uint16_t     address;      // object address
+  uint16_t     index;        // object index
   uint32_t     offset;
   uint32_t     metadata;
 
-  uint16_t     datalen;      // write length or maximal buffer length for read
+  uint16_t     rqlen;        // requested read/write length
+  uint16_t     anslen;       // response data length, default = 0
+  uint16_t     maxanslen;    // maximal read buffer length
   uint16_t     result;       // 0 if no error
 
   uint8_t *    dataptr;
