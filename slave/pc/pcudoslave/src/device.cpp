@@ -72,13 +72,13 @@ bool TDevice::prfn_canobj_1008_1018(TUdoRequest * udorq, TParamRangeDef * prdef)
     return udo_response_cstring(udorq, (char *)DEVICE_NAME);
 
   case 0x1009: // Hardware version as string
- 		len = snprintf(&sdo_str_buf[0], 16, "???");
-  	return udo_ro_data(udorq, &sdo_str_buf[0], len);
+ 		len = snprintf(&udo_str_buf[0], 16, "???");
+  	return udo_ro_data(udorq, &udo_str_buf[0], len);
 
   case 0x100A: // Software version as string
   {
-  	len = snprintf(&sdo_str_buf[0], sizeof(sdo_str_buf), "APP: %i", VERSION_INTEGER);
-  	return udo_ro_data(udorq, &sdo_str_buf[0], len);
+  	len = snprintf(&udo_str_buf[0], sizeof(udo_str_buf), "APP: %i", VERSION_INTEGER);
+  	return udo_ro_data(udorq, &udo_str_buf[0], len);
   }
 
   case 0x1018: // identity

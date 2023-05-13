@@ -82,7 +82,7 @@ void TUdoIpSlave::ProcessUdpRequest(TUdoIpRequest * ucrq)
 	*pansh = *prqh;  // initialize the answer header with the request header
 	uint8_t * pansdata = (uint8_t *)(pansh + 1); // the data comes right after the header
 
-	// execute the SDO
+	// execute the UDO request
 
 	memset(&mudorq, 0, sizeof(mudorq));
 	mudorq.index  = prqh->index;

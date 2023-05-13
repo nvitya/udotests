@@ -25,8 +25,8 @@
  *  authors:  nvitya
 */
 
-#ifndef UDPCANSLAVE_H_
-#define UDPCANSLAVE_H_
+#ifndef UDOIPSLAVE_H_
+#define UDOIPSLAVE_H_
 
 #include "unistd.h"
 #include <string.h>
@@ -130,4 +130,4 @@ public:
 };
 
 
-#endif /* UDPCANSLAVE_H_ */
+#endif /* UDOIPSLAVE_H_ */

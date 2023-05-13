@@ -78,7 +78,7 @@ bool udo_rw_data(TUdoRequest * udorq, void * dataptr, unsigned datalen)
 	{
 		// write, handling segmented write too
 
-		//TRACE("sdo_write(%04X, %i), offs=%u, len=%u\r\n", sdorq->index, sdorq->subindex, sdorq->offset, sdorq->datalen);
+		//TRACE("udo_write(%04X, %u), len=%u\r\n", udorq->index, udorq->offset, udorq->datalen);
 
 		if (datalen < udorq->offset + udorq->rqlen)
 		{

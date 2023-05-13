@@ -41,7 +41,7 @@ public:
 public:
 	uint32_t       canopen_devid = 0x000000B1;
 
-	char           sdo_str_buf[64]; // for responding smaller strings, but segmented possibility
+	char           udo_str_buf[64]; // for responding smaller strings, but segmented possibility
 
 public:
 
