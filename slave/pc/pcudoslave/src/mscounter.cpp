@@ -3,6 +3,7 @@
  *  brief:    simple 32-bit millisecond counter
  *  created:  2023-05-01
  *  authors:  nvitya
+ *  license:  public domain
 */
 
 #include <stdint.h>

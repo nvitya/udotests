@@ -1,12 +1,13 @@
 /*
- * udpcanslaveapp.h
- *
- *  Created on: Sep 17, 2022
- *      Author: vitya
- */
+ *  file:     udoslaveapp.h
+ *  brief:    UDO Slave Application Implementation (udo request handling)
+ *  created:  2023-05-13
+ *  authors:  nvitya
+ *  license:  public domain
+*/
 
-#ifndef UDPCANSLAVEAPP_H_
-#define UDPCANSLAVEAPP_H_
+#ifndef UDOSLAVEAPP_H_
+#define UDOSLAVEAPP_H_
 
 #include "udoipslave.h"
 
@@ -21,4 +22,4 @@ public:
 	virtual bool UdoReadWrite(TUdoRequest * udorq);
 };
 
-#endif /* UDPCANSLAVEAPP_H_ */
+#endif /* UDOSLAVEAPP_H_ */

@@ -1,4 +1,10 @@
-// Traces.cpp - PC implementation
+/*
+ *  file:     traces.cpp
+ *  brief:    TRACES() PC implementation
+ *  created:  2023-05-13
+ *  authors:  nvitya
+ *  license:  public domain
+*/
 
 #include <stdio.h>
 #include <stdarg.h>

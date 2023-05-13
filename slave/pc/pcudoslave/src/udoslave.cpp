@@ -216,7 +216,7 @@ bool TUdoSlave::UdoReadWrite(TUdoRequest * udorq)
 	}
 	else
 	{
-		return udo_response_error(udorq, UDOERR_WRONG_INDEX);
+		return udo_response_error(udorq, UDOERR_INDEX);
 	}
 }
 

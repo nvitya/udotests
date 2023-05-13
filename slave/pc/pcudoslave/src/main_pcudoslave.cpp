@@ -1,9 +1,17 @@
-// Example UDO-SLAVE
+/*
+ *  file:     device.h
+ *  brief:    Example UDO Slave Application Main
+ *  created:  2023-05-13
+ *  authors:  nvitya
+ *  license:  public domain
+*/
 
 #include "stdio.h"
 #include "stdlib.h"
 #include "udoslaveapp.h"
 #include "mscounter.h"
+#include "device.h"
+#include "rt_thread.h"
 
 TUdoSlaveApp slaveapp;
 
@@ -13,7 +21,7 @@ int main()
 
 	printf("Example UDOIP-SLAVE\n");
 
-	//g_device.Init();
+	g_device.Init();
 
 	if (!slaveapp.Init())
 	{
@@ -21,13 +29,13 @@ int main()
 		exit(1);
 	}
 
-	//rt_thread.Start();
+	rt_thread.Start();
 
 	printf("UDOIP Slave listening at port %u ...\n", slaveapp.port);
 
 	while (true)
 	{
-		//g_device.Run();
+		g_device.Run();
 
 		slaveapp.Run();
 

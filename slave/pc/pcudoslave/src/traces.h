@@ -1,6 +1,10 @@
-// Traces.h: sending formatable trace messages
-// Traces_hw.c must be linked for non-userapplications
-// vn 29.09.2015
+/*
+ *  file:     traces.h
+ *  brief:    TRACES() PC implementation
+ *  created:  2023-05-13
+ *  authors:  nvitya
+ *  license:  public domain
+*/
 
 #ifndef __Traces__h
 #define __Traces__h
@@ -34,7 +38,7 @@ extern void buffer_trace_char(char ch);
 #ifdef LTRACES
  #define LTRACE(...)    TRACE( __VA_ARGS__ )
  #define LTRACETS(...)  TRACETS( __VA_ARGS__ )
-##else
+#else
  #define LTRACE(...)
  #define LTRACETS(...)
 #endif

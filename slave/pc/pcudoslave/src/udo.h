@@ -39,7 +39,7 @@
 #define UDOERR_TIMEOUT          0x1003
 #define UDOERR_DATA_TOO_BIG     0x1004
 
-#define UDOERR_WRONG_INDEX      0x2000  // index / object not existing
+#define UDOERR_INDEX            0x2000  // index / object not existing
 #define UDOERR_WRONG_OFFSET     0x2001  // like the offset must be divisible by the 4
 #define UDOERR_WRONG_ACCESS     0x2002
 #define UDOERR_READ_ONLY        0x2010
