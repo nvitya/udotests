@@ -1,0 +1,49 @@
+{
+	"PARAMS": [
+		{
+			"INDEX": "2000",
+			"SUBINDEX": 0,
+			"NAME": "CYCLETIME",
+			"DTYPE": 19,
+			"UNIT": "ns",
+			"SCALE": 1,
+			"DESCR": "Cycle Time [ns]"
+		},
+		{
+			"INDEX": "2001",
+			"SUBINDEX": 0,
+			"NAME": "IRQCNT",
+			"DTYPE": 17,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "IRQ Counter"
+		},
+		{
+			"INDEX": "2002",
+			"SUBINDEX": 0,
+			"NAME": "XACC",
+			"DTYPE": 3,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "X-Acceleration"
+		},
+		{
+			"INDEX": "2003",
+			"SUBINDEX": 0,
+			"NAME": "YACC",
+			"DTYPE": 3,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "Y-Acceleration"
+		},
+		{
+			"INDEX": "2004",
+			"SUBINDEX": 0,
+			"NAME": "ZACC",
+			"DTYPE": 3,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "Z-Acceleration"
+		}
+	]
+}

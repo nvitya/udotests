@@ -1,0 +1,178 @@
+object frmParameters: TfrmParameters
+  Left = 1642
+  Height = 348
+  Top = 800
+  Width = 593
+  Caption = 'Parameters'
+  ClientHeight = 348
+  ClientWidth = 593
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '2.2.6.0'
+  object grid: TDrawGrid
+    Left = 0
+    Height = 242
+    Top = 64
+    Width = 593
+    Align = alClient
+    ColCount = 7
+    Columns = <    
+      item
+        Title.Caption = 'Name'
+        Width = 100
+      end    
+      item
+        Title.Caption = 'Index'
+        Width = 50
+      end    
+      item
+        Title.Caption = 'Offs.'
+        Width = 30
+      end    
+      item
+        Title.Caption = 'Type'
+        Width = 40
+      end    
+      item
+        Title.Caption = 'Unit'
+      end    
+      item
+        Title.Caption = 'Scale'
+      end    
+      item
+        Title.Caption = 'Description'
+        Width = 200
+      end>
+    ExtendedSelect = False
+    FixedCols = 0
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goThumbTracking, goSmoothScroll]
+    ScrollBars = ssVertical
+    TabOrder = 0
+    OnDblClick = gridDblClick
+    OnDrawCell = gridDrawCell
+    OnKeyDown = gridKeyDown
+  end
+  object pnlbot: TPanel
+    Left = 0
+    Height = 42
+    Top = 306
+    Width = 593
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 42
+    ClientWidth = 593
+    TabOrder = 1
+    object btnNew: TBitBtn
+      Left = 116
+      Height = 30
+      Top = 8
+      Width = 80
+      Caption = 'New'
+      OnClick = btnNewClick
+      TabOrder = 0
+    end
+    object btnEdit: TBitBtn
+      Left = 292
+      Height = 30
+      Top = 8
+      Width = 80
+      Caption = 'Edit'
+      OnClick = btnEditClick
+      TabOrder = 1
+    end
+    object btnDelete: TBitBtn
+      Left = 380
+      Height = 30
+      Top = 8
+      Width = 80
+      Caption = 'Delete'
+      OnClick = btnDeleteClick
+      TabOrder = 2
+    end
+    object btnClose: TBitBtn
+      Left = 508
+      Height = 30
+      Top = 8
+      Width = 80
+      Anchors = [akTop, akRight]
+      DefaultCaption = True
+      Kind = bkClose
+      ModalResult = 11
+      OnClick = btnCloseClick
+      TabOrder = 3
+    end
+    object btnCopy: TBitBtn
+      Left = 204
+      Height = 30
+      Top = 8
+      Width = 80
+      Caption = 'Copy'
+      OnClick = btnCopyClick
+      TabOrder = 4
+    end
+    object btnSelect: TBitBtn
+      Left = 4
+      Height = 30
+      Top = 8
+      Width = 80
+      Caption = 'Select'
+      OnClick = btnSelectClick
+      TabOrder = 5
+    end
+  end
+  object pnlTop: TPanel
+    Left = 0
+    Height = 64
+    Top = 0
+    Width = 593
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 64
+    ClientWidth = 593
+    TabOrder = 2
+    object Label1: TLabel
+      Left = 424
+      Height = 14
+      Top = 8
+      Width = 41
+      Caption = 'Device:'
+      ParentColor = False
+    end
+    object cbDevice: TComboBox
+      Left = 424
+      Height = 30
+      Top = 24
+      Width = 136
+      ItemHeight = 0
+      OnChange = cbDeviceChange
+      Style = csDropDownList
+      TabOrder = 0
+    end
+    object btnDevices: TSpeedButton
+      Left = 564
+      Height = 22
+      Top = 28
+      Width = 23
+      Caption = '...'
+      OnClick = btnDevicesClick
+    end
+    object Label2: TLabel
+      Left = 4
+      Height = 14
+      Top = 8
+      Width = 36
+      Caption = 'Name:'
+      ParentColor = False
+    end
+    object fltName: TEdit
+      Left = 4
+      Height = 26
+      Top = 28
+      Width = 88
+      TabOrder = 1
+    end
+  end
+end

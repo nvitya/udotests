@@ -1,0 +1,10 @@
+{
+	"CONNLIST": [
+		{
+			"ID": "test1-local",
+			"DEVID": "TESTDEV1",
+			"CONNTYPE": 0,
+			"ADDR": "127.0.0.1:1221"
+		}
+	]
+}

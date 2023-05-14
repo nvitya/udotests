@@ -1,0 +1,115 @@
+object frmConnect: TfrmConnect
+  Left = 1508
+  Height = 318
+  Top = 142
+  Width = 628
+  Caption = 'Connect'
+  ClientHeight = 318
+  ClientWidth = 628
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '2.2.6.0'
+  object grid: TDrawGrid
+    Left = 0
+    Height = 318
+    Top = 0
+    Width = 502
+    Align = alClient
+    ColCount = 4
+    Columns = <    
+      item
+        Title.Caption = 'ID'
+        Width = 120
+      end    
+      item
+        Title.Caption = 'Device'
+        Width = 80
+      end    
+      item
+        Title.Caption = 'Conn. Type'
+        Width = 76
+      end    
+      item
+        Title.Caption = 'Address'
+        Width = 200
+      end>
+    ExtendedSelect = False
+    FixedCols = 0
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goThumbTracking, goSmoothScroll]
+    ScrollBars = ssVertical
+    TabOrder = 0
+    OnDblClick = gridDblClick
+    OnDrawCell = gridDrawCell
+  end
+  object pnlButtons: TPanel
+    Left = 502
+    Height = 318
+    Top = 0
+    Width = 126
+    Align = alRight
+    BevelOuter = bvNone
+    ClientHeight = 318
+    ClientWidth = 126
+    TabOrder = 1
+    object btnClose: TBitBtn
+      Left = 12
+      Height = 30
+      Top = 279
+      Width = 107
+      Anchors = [akRight, akBottom]
+      DefaultCaption = True
+      Kind = bkClose
+      ModalResult = 11
+      OnClick = btnCloseClick
+      TabOrder = 0
+    end
+    object btnConnect: TBitBtn
+      Left = 12
+      Height = 30
+      Top = 8
+      Width = 107
+      Caption = 'Connect'
+      OnClick = btnConnectClick
+      TabOrder = 1
+    end
+    object btnNew: TBitBtn
+      Left = 12
+      Height = 30
+      Top = 68
+      Width = 107
+      Caption = 'New'
+      OnClick = btnNewClick
+      TabOrder = 2
+    end
+    object btnEdit: TBitBtn
+      Left = 12
+      Height = 30
+      Top = 148
+      Width = 107
+      Caption = 'Edit'
+      OnClick = btnEditClick
+      TabOrder = 3
+    end
+    object btnDelete: TBitBtn
+      Left = 12
+      Height = 30
+      Top = 188
+      Width = 107
+      Caption = 'Delete'
+      OnClick = btnDeleteClick
+      TabOrder = 4
+    end
+    object btnCopy: TBitBtn
+      Left = 12
+      Height = 30
+      Top = 108
+      Width = 107
+      Caption = 'Copy'
+      OnClick = btnCopyClick
+      TabOrder = 5
+    end
+  end
+end

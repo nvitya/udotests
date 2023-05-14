@@ -1,0 +1,94 @@
+{
+	"PARAMS": [
+		{
+			"INDEX": "2000",
+			"OFFSET": 0,
+			"NAME": "CYCLETIME",
+			"DTYPE": 3,
+			"UNIT": "ns",
+			"SCALE": 1,
+			"DESCR": "IRQ Cycle Period"
+		},
+		{
+			"INDEX": "2001",
+			"OFFSET": 0,
+			"NAME": "IRQCNT",
+			"DTYPE": 17,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "IRQ Counter (16-bit)"
+		},
+		{
+			"INDEX": "2002",
+			"OFFSET": 0,
+			"NAME": "F-I32-1",
+			"DTYPE": 3,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "Integer function 1"
+		},
+		{
+			"INDEX": "2003",
+			"OFFSET": 0,
+			"NAME": "F-I32-2",
+			"DTYPE": 3,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "Integer function 2"
+		},
+		{
+			"INDEX": "2004",
+			"OFFSET": 0,
+			"NAME": "F-I16-1",
+			"DTYPE": 1,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "16-bit integer function 1"
+		},
+		{
+			"INDEX": "2005",
+			"OFFSET": 0,
+			"NAME": "F-I16-2",
+			"DTYPE": 1,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "16-bit integer function 2"
+		},
+		{
+			"INDEX": "2006",
+			"OFFSET": 0,
+			"NAME": "F-FL-1",
+			"DTYPE": 35,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "Floating point function 1"
+		},
+		{
+			"INDEX": "2007",
+			"OFFSET": 0,
+			"NAME": "F-FL-2",
+			"DTYPE": 35,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "Floating point function 2"
+		},
+		{
+			"INDEX": "2008",
+			"OFFSET": 0,
+			"NAME": "DUMMY-I32",
+			"DTYPE": 3,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": ""
+		},
+		{
+			"INDEX": "2009",
+			"OFFSET": 0,
+			"NAME": "DUMMY-I16",
+			"DTYPE": 1,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": ""
+		}
+	]
+}

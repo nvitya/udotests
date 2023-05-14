@@ -1,0 +1,141 @@
+object frmConnEdit: TfrmConnEdit
+  Left = 1683
+  Height = 184
+  Top = 532
+  Width = 414
+  BorderStyle = bsDialog
+  Caption = 'Edit Connection'
+  ClientHeight = 184
+  ClientWidth = 414
+  Position = poOwnerFormCenter
+  LCLVersion = '2.2.6.0'
+  object Label1: TLabel
+    Left = 8
+    Height = 14
+    Top = 8
+    Width = 15
+    Caption = 'ID:'
+    ParentColor = False
+  end
+  object edID: TEdit
+    Left = 8
+    Height = 26
+    Top = 24
+    Width = 120
+    TabOrder = 0
+  end
+  object pnlButtons: TPanel
+    Left = 0
+    Height = 50
+    Top = 134
+    Width = 414
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 50
+    ClientWidth = 414
+    TabOrder = 1
+    object Bevel1: TBevel
+      Left = 0
+      Height = 12
+      Top = 0
+      Width = 414
+      Align = alTop
+      Shape = bsTopLine
+    end
+    object btnOk: TBitBtn
+      Left = 8
+      Height = 30
+      Top = 12
+      Width = 91
+      Default = True
+      DefaultCaption = True
+      Kind = bkOK
+      ModalResult = 1
+      OnClick = btnOkClick
+      TabOrder = 0
+    end
+    object btnCancel: TBitBtn
+      Left = 323
+      Height = 30
+      Top = 12
+      Width = 83
+      Anchors = [akTop, akRight]
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      ModalResult = 2
+      TabOrder = 1
+    end
+    object btnTest: TBitBtn
+      Left = 156
+      Height = 30
+      Top = 12
+      Width = 104
+      Caption = 'Test'
+      TabOrder = 2
+    end
+  end
+  object Label2: TLabel
+    Left = 144
+    Height = 14
+    Top = 8
+    Width = 41
+    Caption = 'Device:'
+    ParentColor = False
+  end
+  object cbDevice: TComboBox
+    Left = 144
+    Height = 30
+    Top = 24
+    Width = 120
+    ItemHeight = 0
+    Style = csDropDownList
+    TabOrder = 2
+  end
+  object Label3: TLabel
+    Left = 8
+    Height = 14
+    Top = 68
+    Width = 96
+    Caption = 'Connection Type:'
+    ParentColor = False
+  end
+  object cbConnType: TComboBox
+    Left = 8
+    Height = 27
+    Top = 84
+    Width = 120
+    ItemHeight = 0
+    ItemIndex = 0
+    Items.Strings = (
+      'UDO-IP'
+      'UDO-SL'
+    )
+    Style = csDropDownList
+    TabOrder = 3
+    Text = 'UDO-IP'
+  end
+  object Label4: TLabel
+    Left = 144
+    Height = 14
+    Top = 68
+    Width = 48
+    Caption = 'Address:'
+    ParentColor = False
+  end
+  object edAddress: TEdit
+    Left = 144
+    Height = 26
+    Top = 84
+    Width = 260
+    TabOrder = 4
+  end
+  object btnDevices: TSpeedButton
+    Left = 276
+    Height = 22
+    Top = 27
+    Width = 23
+    Caption = '...'
+    OnClick = btnDevicesClick
+  end
+end

@@ -1,0 +1,169 @@
+object frmParamEdit: TfrmParamEdit
+  Left = 1642
+  Height = 223
+  Top = 524
+  Width = 276
+  BorderStyle = bsDialog
+  Caption = 'Edit Parameter'
+  ClientHeight = 223
+  ClientWidth = 276
+  Position = poOwnerFormCenter
+  LCLVersion = '2.2.6.0'
+  object Bevel1: TBevel
+    Left = 0
+    Height = 46
+    Top = 177
+    Width = 276
+    Align = alBottom
+    Shape = bsTopLine
+  end
+  object Label1: TLabel
+    Left = 132
+    Height = 14
+    Top = 8
+    Width = 64
+    Caption = 'Index (hex):'
+    ParentColor = False
+  end
+  object edIndex: TEdit
+    Left = 132
+    Height = 26
+    Top = 28
+    Width = 68
+    TabOrder = 1
+  end
+  object Label2: TLabel
+    Left = 212
+    Height = 14
+    Top = 8
+    Width = 34
+    Caption = 'Offset:'
+    ParentColor = False
+  end
+  object edOffset: TSpinEdit
+    Left = 212
+    Height = 24
+    Top = 28
+    Width = 55
+    MaxValue = 255
+    TabOrder = 2
+  end
+  object Label3: TLabel
+    Left = 8
+    Height = 14
+    Top = 8
+    Width = 68
+    Caption = 'Short Name:'
+    ParentColor = False
+  end
+  object edName: TEdit
+    Left = 8
+    Height = 26
+    Top = 28
+    Width = 116
+    CharCase = ecUppercase
+    TabOrder = 0
+  end
+  object Label4: TLabel
+    Left = 84
+    Height = 14
+    Top = 60
+    Width = 25
+    Caption = 'Unit:'
+    ParentColor = False
+  end
+  object edUnit: TEdit
+    Left = 84
+    Height = 26
+    Top = 80
+    Width = 80
+    TabOrder = 4
+  end
+  object Label5: TLabel
+    Left = 176
+    Height = 14
+    Top = 60
+    Width = 34
+    Caption = 'Scale:'
+    ParentColor = False
+  end
+  object edScale: TEdit
+    Left = 172
+    Height = 26
+    Top = 80
+    Width = 96
+    TabOrder = 5
+    Text = '1'
+  end
+  object Label6: TLabel
+    Left = 10
+    Height = 14
+    Top = 120
+    Width = 65
+    Caption = 'Description:'
+    ParentColor = False
+  end
+  object edDescr: TEdit
+    Left = 8
+    Height = 26
+    Top = 140
+    Width = 259
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 6
+  end
+  object btnOk: TBitBtn
+    Left = 10
+    Height = 30
+    Top = 188
+    Width = 91
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    OnClick = btnOkClick
+    TabOrder = 7
+  end
+  object btnCancel: TBitBtn
+    Left = 184
+    Height = 30
+    Top = 188
+    Width = 83
+    Anchors = [akTop, akRight]
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 8
+  end
+  object Label7: TLabel
+    Left = 14
+    Height = 14
+    Top = 60
+    Width = 30
+    Caption = 'Type:'
+    ParentColor = False
+  end
+  object cbDType: TComboBox
+    Left = 10
+    Height = 27
+    Top = 80
+    Width = 64
+    ItemHeight = 0
+    ItemIndex = 0
+    Items.Strings = (
+      'i32'
+      'i16'
+      'i8'
+      'u32'
+      'u16'
+      'u8'
+      'f32'
+      'f64'
+      'str'
+      'blb'
+    )
+    Style = csDropDownList
+    TabOrder = 3
+    Text = 'i32'
+  end
+end

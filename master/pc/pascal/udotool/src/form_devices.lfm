@@ -1,0 +1,87 @@
+object frmDevices: TfrmDevices
+  Left = 1662
+  Height = 336
+  Top = 411
+  Width = 448
+  Caption = 'Devices'
+  ClientHeight = 336
+  ClientWidth = 448
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '2.2.6.0'
+  object rightpanel: TPanel
+    Left = 322
+    Height = 336
+    Top = 0
+    Width = 126
+    Align = alRight
+    BevelOuter = bvNone
+    ClientHeight = 336
+    ClientWidth = 126
+    TabOrder = 0
+    object btnNew: TBitBtn
+      Left = 10
+      Height = 30
+      Top = 8
+      Width = 107
+      Caption = 'New'
+      OnClick = btnNewClick
+      TabOrder = 0
+    end
+    object btnEdit: TBitBtn
+      Left = 10
+      Height = 30
+      Top = 48
+      Width = 107
+      Caption = 'Edit'
+      OnClick = btnEditClick
+      TabOrder = 1
+    end
+    object btnDelete: TBitBtn
+      Left = 10
+      Height = 30
+      Top = 88
+      Width = 107
+      Caption = 'Delete'
+      OnClick = btnDeleteClick
+      TabOrder = 2
+    end
+    object btnClose: TBitBtn
+      Left = 12
+      Height = 30
+      Top = 300
+      Width = 107
+      Caption = 'Close'
+      OnClick = btnCloseClick
+      TabOrder = 3
+    end
+  end
+  object grid: TDrawGrid
+    Left = 0
+    Height = 336
+    Top = 0
+    Width = 322
+    Align = alClient
+    ColCount = 2
+    Columns = <    
+      item
+        Title.Caption = 'ID'
+        Width = 80
+      end    
+      item
+        Title.Caption = 'JSON'
+        Width = 200
+      end>
+    ExtendedSelect = False
+    FixedCols = 0
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goThumbTracking, goSmoothScroll]
+    ScrollBars = ssVertical
+    TabOrder = 1
+    OnDblClick = gridDblClick
+    OnDrawCell = gridDrawCell
+    OnKeyDown = gridKeyDown
+  end
+end

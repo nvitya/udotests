@@ -1,0 +1,235 @@
+object frmMain: TfrmMain
+  Left = 1638
+  Height = 388
+  Top = 0
+  Width = 586
+  Caption = 'UDO-Tool'
+  ClientHeight = 364
+  ClientWidth = 586
+  Menu = mmenu
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '2.2.6.0'
+  object pnlStatus: TPanel
+    Left = 0
+    Height = 26
+    Top = 338
+    Width = 586
+    Align = alBottom
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    ClientHeight = 26
+    ClientWidth = 586
+    TabOrder = 0
+    object txtConnState: TStaticText
+      Left = 7
+      Height = 17
+      Top = 6
+      Width = 569
+      Anchors = [akTop, akLeft, akRight]
+      Caption = 'txtConnState'
+      OnDblClick = txtConnStateDblClick
+      TabOrder = 0
+    end
+  end
+  object pnlTerminal: TPanel
+    Left = 25
+    Height = 338
+    Top = 0
+    Width = 561
+    Align = alClient
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    ClientHeight = 338
+    ClientWidth = 561
+    TabOrder = 1
+    object memoTerm: TMemo
+      Left = 1
+      Height = 309
+      Top = 1
+      Width = 559
+      Align = alClient
+      Font.Name = 'Monospace'
+      Lines.Strings = (
+        'asdf asdf'
+        'asdf '
+        'asdf a'
+        'sdf a'
+        'sd'
+      )
+      ParentFont = False
+      ReadOnly = True
+      ScrollBars = ssVertical
+      TabOrder = 0
+    end
+    object pnlEdit: TPanel
+      Left = 1
+      Height = 27
+      Top = 310
+      Width = 559
+      Align = alBottom
+      BevelOuter = bvNone
+      ClientHeight = 27
+      ClientWidth = 559
+      TabOrder = 1
+      object edTerm: TComboBox
+        Left = 0
+        Height = 27
+        Top = 0
+        Width = 559
+        Align = alClient
+        AutoComplete = True
+        AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+        CharCase = ecUppercase
+        DropDownCount = 12
+        ItemHeight = 0
+        OnKeyDown = edTermKeyDown
+        TabOrder = 0
+      end
+    end
+  end
+  object toolbar1: TToolBar
+    Left = 0
+    Height = 338
+    Top = 0
+    Width = 25
+    Align = alLeft
+    Caption = 'toolbar1'
+    Images = tbimages
+    ParentShowHint = False
+    TabOrder = 2
+    object ToolButton1: TToolButton
+      Left = 1
+      Hint = 'Connect'
+      Top = 2
+      AllowAllUp = True
+      Caption = 'Connect...'
+      ImageIndex = 0
+      MenuItem = miConnect
+      ParentShowHint = False
+      ShowCaption = False
+      ShowHint = True
+    end
+    object tbDisconnect: TToolButton
+      Left = 1
+      Hint = 'Disconnect'
+      Top = 24
+      Caption = 'Disconnect'
+      ImageIndex = 1
+      MenuItem = miDisconnect
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ToolButton2: TToolButton
+      Left = 1
+      Hint = 'Parameters'
+      Top = 46
+      Caption = 'Parameters'
+      ImageIndex = 2
+      MenuItem = miParameters
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object tbScope: TToolButton
+      Left = 1
+      Hint = 'Scope'
+      Top = 68
+      Caption = 'Scope'
+      ImageIndex = 3
+      MenuItem = miScope
+    end
+  end
+  object mmenu: TMainMenu
+    Images = tbimages
+    Left = 64
+    Top = 24
+    object mmiMenu: TMenuItem
+      Caption = 'Menu'
+      object miConnect: TMenuItem
+        Caption = 'Connect...'
+        Hint = 'Connect'
+        ImageIndex = 0
+        OnClick = miConnectClick
+      end
+      object miDisconnect: TMenuItem
+        Caption = 'Disconnect'
+        Hint = 'Disconnect'
+        ImageIndex = 1
+        OnClick = miDisconnectClick
+      end
+      object Separator1: TMenuItem
+        Caption = '-'
+      end
+      object miDevices: TMenuItem
+        Caption = 'Devices'
+        OnClick = miDevicesClick
+      end
+      object miParameters: TMenuItem
+        Caption = 'Parameters'
+        Hint = 'Parameters'
+        ImageIndex = 2
+        OnClick = miParametersClick
+      end
+      object Separator3: TMenuItem
+        Caption = '-'
+      end
+      object miScope: TMenuItem
+        Caption = 'Scope'
+        Hint = 'Scope'
+        ImageIndex = 3
+        OnClick = miScopeClick
+      end
+      object Separator2: TMenuItem
+        Caption = '-'
+      end
+      object miExit: TMenuItem
+        Caption = 'Exit'
+        OnClick = miExitClick
+      end
+    end
+  end
+  object tbimages: TImageList
+    Left = 68
+    Top = 108
+    Bitmap = {
+      4C7A040000001000000010000000840400000000000078DAED966D4C5B6514C7
+      6F0D6C98D274E3ADB26563E03086C8DC2873A06E9F166334C6E898BA4D91B176
+      9B131DA22618650ECD148ADB803A1506A3A14D21F8CA60433A6796E98C318B51
+      BF996D563AD6752DAF921042488EE79CF25C6E2F6B2FD10F9AE84DFE794ECF73
+      7E3DE7B97DFE0149FAF73F06A33109F5088640C2384BC41A9C1E9732D415AAAD
+      B57F04AF541D64CE73FE3B11C7E2CB72CDF9D0D5D30767CF7F0B5703419957C4
+      5167A6BA2B033E181A1D03474757041F1A1993E368A27D2D9E72B1343CF607F8
+      832178FD900D02A121990F0E8D701C4DCFBF5AC93A75E66BE8EAEE81172BABE0
+      92778073C45FFCE9E798F3EB743AAEADAE7D0F8EB7BB61D70B15F0CD0F3FCAFC
+      095787D6FB33A3FE323FFB1DF5E6C2FBE1C0BB75505A560EAE4FBBA1786F19F3
+      36FB870BE16FC5A518D773340BDD9F274A2CCC57E1776AF18AEF592ECE33AB3C
+      5AB5EEEF7FE1C1F720297C2DE7845475CA47BE6B4A5FE31A51847B92C8A1E745
+      2CFB5FED6B95221EAC9379C1A87DF9FD2F1758C1911B619F8DDC9079F4ACCC0B
+      FFAAF958FD6FC6AB7D2DCE8A9E97704FC23DF9FCE8799917FE57FB1A57AE45CF
+      4BB827E19E2472E8799917FE57FB32D6FCE8599917FE55F3E2FD8D4F8CF1675C
+      63F26A5FC7EA8F9E9779E17FB5AF718DB883747F440E3D2FF3C2FFB375C2D792
+      9614F7F97FFF47F1F3027453DE5EF11A54EF288DA9583C3D5EAF177C3E1F0C0E
+      0E82DFEF874020C00A8542303C3CACC937353541737333B4B4B430D7D6D6C672
+      381C303A3AAAC92BFB8A9E2462C7C7C73579EADBDADACA3D896B6F6F67399D4E
+      989898D0E4957D454F12B19393939ABCE82DCE4B7D492E976B41BCBA37F515BD
+      A7A6A63479EAAB3CAFDBED66757676C2F4F4B426AFEC2B7A92889D999989C9FF
+      CDFBFB8F3C8707FAA0E6D72FA0F6F2C9B02E75A34E82CDDB0BB6CB3DAC3AEFA9
+      B9F8B75E16C5F5831E2869AEE23325DC6182846C53F87FBF8438487DBA00162D
+      5FC2A258B7386E5EDDAE9637E7F8ECB97CCA53EB61CDC53720C753C1A238E5C9
+      F50A3E2DCCB7E2DF0FE7DBDC237143168BE2ACF7B743EA338573FD8B0B39C775
+      055497C9B1D57D0876F71E86A447D742CAF60D2C8A73FAF683C9BA896312C594
+      53D73DD77714761E3F10317F7C9A01326A8B60E943B9F2EF4D7186AD08E2520D
+      11F35B4E1C9CC72F7D780D241799E7F1C95BF37955F3D64F6A20F19E4CDE2365
+      1DDB01498FADC3F317709E4431E5E81D883ACAEFFDBC0EAC1FD780DE9C014B1E
+      BC8B75E767FB20317F15FF669427514C39DA137594275E39BF3E6F2564366E03
+      4927CD9B9FD64CFB36D0AF5BA998BF3A8237593742DAB3F746E5D34AEE039365
+      6304BFE7F491F07971C66C9705D2F76F86A4C7F3C0B47B13E7491C632EBD7C33
+      643B2D5C4BF97DFD0D7C7FE26F33F2FBC8E92F8745CB8C109F6E8464ACA73C29
+      794B1EE7682FA7FF25AC5DC5F93D1DEF4029CEBFECE50720F74225AC76EC0CCF
+      1C657ED26A4729D712636D7B8BF95BF48BC150783BE8EF5E31CBEBE6F398A358
+      BF760518F00E13437CC3350F1CF9FD341CF57D29ABDED70FF5986FB8EA8146F4
+      68E3F5AFC07EED0CD8FDB85E3F1B167EFE20780EFE046E364E8A
+    }
+  end
+end

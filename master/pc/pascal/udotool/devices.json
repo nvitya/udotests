@@ -1,0 +1,12 @@
+{
+	"DEVICES": [
+		{
+			"ID": "ACCELERO",
+			"JSON": "devices/ACCELERO.json"
+		},
+		{
+			"ID": "TESTDEV1",
+			"JSON": "devices/TESTDEV1.json"
+		}
+	]
+}
