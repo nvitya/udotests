@@ -183,6 +183,7 @@ object frmScope: TfrmScope
         FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
       }
       ModalResult = 6
+      OnClick = btnStartScopeClick
       TabOrder = 4
     end
     object Label7: TLabel
@@ -438,5 +439,12 @@ object frmScope: TfrmScope
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
     Left = 444
     Top = 440
+  end
+  object timStatusPoll: TTimer
+    Enabled = False
+    Interval = 500
+    OnTimer = timStatusPollTimer
+    Left = 368
+    Top = 384
   end
 end

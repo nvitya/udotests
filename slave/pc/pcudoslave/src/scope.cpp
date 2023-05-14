@@ -154,7 +154,7 @@ bool TScope::pfn_scope_data(TUdoRequest * udorq, TParameterDef * pdef, void * va
 
 bool TScope::SetChannelDef(unsigned achnum, unsigned adef)
 {
-	TScopeChannelData * pch = &channels[achnum - 1];
+	TScopeChannelData * pch = &channels[achnum];
 
 	if (adef == 0) // special case to clear
 	{

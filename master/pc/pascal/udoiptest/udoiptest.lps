@@ -7,8 +7,7 @@
       <Unit>
         <Filename Value="udoiptest.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="24" Y="40"/>
+        <CursorPos X="116" Y="58"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
@@ -39,14 +38,18 @@
       </Unit>
       <Unit>
         <Filename Value="../udomaster/udo_comm.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="119"/>
-        <CursorPos X="3" Y="121"/>
+        <CursorPos X="26" Y="162"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="1"/>
+    </General>
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="../udomaster/commh_udoip.pas"/>

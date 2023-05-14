@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  Spin, udo_device, Buttons, Grids, Types, jsontools, udo_comm;
+  Spin, Process, udo_device, Buttons, Grids, Types, jsontools, udo_comm;
 
 type
 
@@ -48,6 +48,8 @@ type
     btnVscopeBrowse : TButton;
     Bevel1 : TBevel;
     txtActualSamples : TStaticText;
+    Label12 : TLabel;
+    timStatusPoll : TTimer;
     procedure btnAddClick(Sender : TObject);
     procedure btnChangeClick(Sender : TObject);
     procedure btnDeleteClick(Sender : TObject);
@@ -58,6 +60,8 @@ type
     procedure cbSmpMulChange(Sender : TObject);
     procedure FormClose(Sender : TObject; var CloseAction : TCloseAction);
     procedure btnVscopeBrowseClick(Sender : TObject);
+    procedure btnStartScopeClick(Sender : TObject);
+    procedure timStatusPollTimer(Sender : TObject);
 
   public
 
@@ -82,6 +86,11 @@ type
     procedure GetDeviceData;
     procedure FillSamplingCombo;
 
+    procedure StartScope;
+    procedure PollScopeStatus;
+
+    procedure ReadScopeData;
+    procedure LaunchVscope(afilename : string);
   end;
 
 var
@@ -224,6 +233,16 @@ begin
   end;
 end;
 
+procedure TfrmScope.btnStartScopeClick(Sender : TObject);
+begin
+  StartScope;
+end;
+
+procedure TfrmScope.timStatusPollTimer(Sender : TObject);
+begin
+  PollScopeStatus;
+end;
+
 procedure TfrmScope.GetDeviceData;
 begin
   try
@@ -265,6 +284,143 @@ begin
     smul := smul shl 1;
   end;
   cbSmpMul.ItemIndex := 0;
+end;
+
+procedure TfrmScope.StartScope;
+var
+  i : integer;
+  sst : integer;
+  par : TUdoParam;
+  trigval : integer;
+begin
+
+  // stop the scope if running
+  while True do
+  begin
+    sst := udocomm.UdoReadInt($5009, 0);
+    if (sst = 0) or (sst = 8)
+    then
+        break;
+
+    udocomm.UdoWriteInt($5008, 0, 0);  // stop the scope
+    application.ProcessMessages;
+    sleep(10);
+  end;
+
+  for i := 0 to 7 do // fill all the channels
+  begin
+    if i < length(channels) then
+    begin
+      par := channels[i];
+      udocomm.UdoWriteInt($5020 + i, 0, par.index shl 16 + (par.offset and $FF) shl 8 + par.ByteSize);
+    end
+    else
+    begin
+      udocomm.UdoWriteInt($5020 + i, 0, 0); // clear the unused channels
+    end;
+  end;
+
+  // record settings
+  udocomm.UdoWriteInt($5010, 0, 1 shl cbSmpMul.ItemIndex);  // sample mul
+  udocomm.UdoWriteInt($5011, 0, edMaxSamples.Value);
+
+  // trigger
+  udocomm.UdoWriteInt($5012, 0, edTriggerCh.Value);
+  trigval := StrToIntDef(edTriggerValue.Text, 0);
+  udocomm.UdoWriteInt($5013, 0, trigval);
+  udocomm.UdoWriteInt($5014, 0, cbTriggerSlope.ItemIndex);
+  udocomm.UdoWriteInt($5016, 0, edPretriggerPercent.Value);
+
+  // start the scope
+  udocomm.UdoWriteInt($5008, 0, 3);
+
+  PollScopeStatus;
+  application.ProcessMessages;
+
+  timStatusPoll.Enabled := true;
+end;
+
+procedure TfrmScope.PollScopeStatus;
+var
+  s : string;
+  scope_status : integer;
+begin
+  {
+  	0: inactive, no data available to read
+  	1: prefilling
+  	3: permanent recording at inactive trigger
+  	5: waiting for trigger
+  	7: trigger hit, finishing the sampling
+  	8: sampling finished, data available for read
+  }
+
+  scope_status := udocomm.UdoReadInt($5009, 0);
+
+  if 0 = scope_status then
+  begin
+    s := 'Inactive';
+    timStatusPoll.Enabled := false;
+  end
+  else if 1 = scope_status then
+  begin
+    s := 'Prefilling';
+  end
+  else if 2 = scope_status then
+  begin
+    s := 'permanent recording';
+  end
+  else if 5 = scope_status then
+  begin
+    s := 'Waiting for trigger';
+  end
+  else if 7 = scope_status then
+  begin
+    s := 'Post-Trigger sampling';
+  end
+  else if 8 = scope_status then
+  begin
+    timStatusPoll.Enabled := false;
+    txtScopeStatus.Caption := 'Reading Data...';
+    Application.ProcessMessages;
+
+    ReadScopeData;
+
+    s := 'Data Ready';
+  end
+  else
+  begin
+    s := 'Unhandled state: '+IntToStr(scope_status);
+  end;
+
+  txtScopeStatus.Caption := s;
+end;
+
+procedure TfrmScope.ReadScopeData;
+begin
+  showmessage('Read Scope Data is not implemented.');
+end;
+
+procedure TfrmScope.LaunchVscope(afilename : string);
+var
+  proc : TProcess;
+begin
+  proc := TProcess.Create(nil);
+  proc.Executable := txtVscopeExe.Caption;
+  proc.Parameters.Add(afilename);
+  proc.Options := [poNoConsole, poDetached, poNewProcessGroup];
+{
+  TProcessOption = (poRunSuspended,poWaitOnExit,
+                    poUsePipes,poStderrToOutPut,
+                    poNoConsole,poNewConsole,
+                    poDefaultErrorMode,poNewProcessGroup,
+                    poDebugProcess,poDebugOnlyThisProcess,poDetached,
+                    poPassInput,poRunIdle);
+}
+  proc.Execute;
+  proc.Free;
+
+  // ExecuteProcess(txtVscopeExe.Caption, [vsfilename], []);
+
 end;
 
 procedure TfrmScope.EditChannel(aidx : integer);
