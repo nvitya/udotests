@@ -8,7 +8,7 @@
         <Filename Value="udotool.lpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos Y="24"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="109"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -17,11 +17,10 @@
         <ComponentName Value="frmMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="70"/>
-        <CursorPos X="43" Y="125"/>
-        <UsageCount Value="104"/>
+        <TopLine Value="77"/>
+        <CursorPos X="49" Y="135"/>
+        <UsageCount Value="109"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -33,7 +32,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
         <CursorPos X="64" Y="33"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="109"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -45,7 +44,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="12"/>
         <CursorPos X="68" Y="31"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="109"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -54,7 +53,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="306"/>
         <CursorPos Y="351"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="109"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -67,7 +66,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="64"/>
         <CursorPos X="25" Y="286"/>
-        <UsageCount Value="102"/>
+        <UsageCount Value="107"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -80,7 +79,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="48"/>
         <CursorPos X="18" Y="66"/>
-        <UsageCount Value="102"/>
+        <UsageCount Value="107"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -90,8 +89,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="4"/>
-        <CursorPos X="65" Y="29"/>
-        <UsageCount Value="95"/>
+        <CursorPos X="95" Y="26"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -103,7 +102,7 @@
         <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
         <CursorPos X="50" Y="19"/>
-        <UsageCount Value="95"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -113,7 +112,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="165"/>
         <CursorPos X="20" Y="219"/>
-        <UsageCount Value="94"/>
+        <UsageCount Value="99"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -122,7 +121,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="15" Y="72"/>
-        <UsageCount Value="80"/>
+        <UsageCount Value="85"/>
       </Unit>
       <Unit>
         <Filename Value="tfr_comm/commh_udpcan.pas"/>
@@ -130,7 +129,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="208"/>
         <CursorPos X="58" Y="259"/>
-        <UsageCount Value="78"/>
+        <UsageCount Value="83"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_scope.pas"/>
@@ -138,17 +137,20 @@
         <ComponentName Value="frmScope"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="250"/>
-        <CursorPos X="80" Y="289"/>
-        <UsageCount Value="64"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="139"/>
+        <CursorPos X="19" Y="216"/>
+        <UsageCount Value="25"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src/scope_data.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="15"/>
-        <UsageCount Value="61"/>
+        <UsageCount Value="66"/>
         <Bookmarks Count="1">
           <Item0 X="32" Y="220" ID="1"/>
         </Bookmarks>
@@ -160,7 +162,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="53" Y="11"/>
-        <UsageCount Value="60"/>
+        <UsageCount Value="65"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/2.2.0/lcl/grids.pas"/>
@@ -342,7 +344,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="34"/>
         <CursorPos X="10" Y="90"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -350,131 +352,131 @@
         <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
         <TopLine Value="16"/>
-        <CursorPos X="14" Y="88"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="42" Y="27"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="351" TopLine="306"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="191" Column="3" TopLine="164"/>
       </Position>
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="352" TopLine="306"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="75" Column="5" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="353" TopLine="306"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="210" Column="44" TopLine="174"/>
       </Position>
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="355" TopLine="306"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="72" Column="15" TopLine="29"/>
       </Position>
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="356" TopLine="306"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="284" Column="3" TopLine="235"/>
       </Position>
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="357" TopLine="306"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="73" Column="32" TopLine="28"/>
       </Position>
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="360" TopLine="306"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="293" Column="44" TopLine="245"/>
       </Position>
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="361" TopLine="306"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="74" Column="32" TopLine="28"/>
       </Position>
       <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="362" TopLine="306"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="364" TopLine="306"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="365" TopLine="306"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="368" TopLine="306"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="471" TopLine="426"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="472" TopLine="426"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="474" TopLine="426"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="525" TopLine="480"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="526" TopLine="480"/>
-      </Position>
-      <Position>
-        <Filename Value="src/udo_device.pas"/>
-        <Caret Line="542" Column="56" TopLine="480"/>
-      </Position>
-      <Position>
-        <Filename Value="src/form_param_edit.pas"/>
-        <Caret Line="43" Column="21"/>
-      </Position>
-      <Position>
-        <Filename Value="src/form_connections.pas"/>
-        <Caret Line="29" Column="65"/>
-      </Position>
-      <Position>
-        <Filename Value="udotool.lpr"/>
-        <Caret Line="24"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="333" Column="28" TopLine="246"/>
       </Position>
       <Position>
         <Filename Value="src/form_main.pas"/>
-        <Caret Line="10" Column="31"/>
+        <Caret Line="49" Column="25" TopLine="19"/>
       </Position>
       <Position>
-        <Filename Value="src/connections.pas"/>
-        <Caret Line="67" Column="61" TopLine="20"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="257" Column="42" TopLine="201"/>
       </Position>
       <Position>
-        <Filename Value="src/form_main.pas"/>
-        <Caret Line="34" Column="92"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="346" Column="19" TopLine="256"/>
       </Position>
       <Position>
-        <Filename Value="udomaster/udo_comm.pas"/>
-        <Caret Line="90" Column="10" TopLine="34"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="209" Column="23" TopLine="206"/>
       </Position>
       <Position>
-        <Filename Value="src/form_main.pas"/>
-        <Caret Line="178" Column="7" TopLine="133"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="57" Column="15" TopLine="14"/>
       </Position>
       <Position>
-        <Filename Value="src/form_main.pas"/>
-        <Caret Line="177" Column="9" TopLine="132"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="197" Column="3" TopLine="191"/>
       </Position>
       <Position>
-        <Filename Value="src/form_main.pas"/>
-        <Caret Line="284" Column="45" TopLine="253"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="77" Column="19" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="udomaster/udo_comm.pas"/>
-        <Caret Line="90" Column="10" TopLine="34"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="360" Column="14" TopLine="285"/>
       </Position>
       <Position>
-        <Filename Value="src/form_main.pas"/>
-        <Caret Line="173" Column="38" TopLine="142"/>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="57" Column="15" TopLine="31"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="201" Column="3" TopLine="194"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="213" Column="20" TopLine="168"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="301" Column="20" TopLine="256"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="9" Column="55"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="345" Column="13" TopLine="282"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="327" Column="13" TopLine="282"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="353" Column="84" TopLine="301"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="93" Column="16" TopLine="46"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="374" Column="80" TopLine="292"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="221" TopLine="176"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="214" Column="13" TopLine="176"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="300" Column="38" TopLine="139"/>
       </Position>
     </JumpHistory>
     <RunParams>

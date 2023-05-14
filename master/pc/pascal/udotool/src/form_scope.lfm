@@ -1,0 +1,442 @@
+object frmScope: TfrmScope
+  Left = 1638
+  Height = 501
+  Top = 421
+  Width = 552
+  Caption = 'Scope'
+  ClientHeight = 501
+  ClientWidth = 552
+  OnClose = FormClose
+  OnCreate = FormCreate
+  Position = poOwnerFormCenter
+  LCLVersion = '2.2.6.0'
+  object pnlScope: TPanel
+    Left = 4
+    Height = 228
+    Top = 267
+    Width = 540
+    Anchors = [akLeft, akRight, akBottom]
+    BevelOuter = bvLowered
+    ClientHeight = 228
+    ClientWidth = 540
+    TabOrder = 0
+    object Label3: TLabel
+      Left = 168
+      Height = 14
+      Top = 8
+      Width = 76
+      Caption = 'Trigger Mode:'
+      ParentColor = False
+    end
+    object cbTriggerSlope: TComboBox
+      Left = 168
+      Height = 27
+      Top = 28
+      Width = 100
+      ItemHeight = 0
+      ItemIndex = 0
+      Items.Strings = (
+        'Always'
+        'Rising Edge'
+        'Falling Edge'
+        'Equal To'
+        'Not Equal'
+        'Any Edge'
+        'Change To'
+      )
+      Style = csDropDownList
+      TabOrder = 0
+      Text = 'Always'
+    end
+    object Label4: TLabel
+      Left = 80
+      Height = 14
+      Top = 8
+      Width = 75
+      Caption = 'Trigger Level:'
+      ParentColor = False
+    end
+    object Label8: TLabel
+      Left = 279
+      Height = 14
+      Top = 8
+      Width = 50
+      Caption = 'Pre-Trig.:'
+      ParentColor = False
+    end
+    object edPretriggerPercent: TSpinEdit
+      Left = 276
+      Height = 24
+      Top = 28
+      Width = 52
+      Increment = 5
+      MaxValue = 99
+      MinValue = 1
+      TabOrder = 1
+      Value = 50
+    end
+    object Label9: TLabel
+      Left = 116
+      Height = 14
+      Top = 64
+      Width = 75
+      Caption = 'Max samples:'
+      ParentColor = False
+    end
+    object Label5: TLabel
+      Left = 428
+      Height = 14
+      Top = 8
+      Width = 76
+      Caption = 'Device Buffer:'
+      ParentColor = False
+    end
+    object txtDeviceBufferSize: TStaticText
+      Left = 428
+      Height = 19
+      Top = 28
+      Width = 92
+      BorderStyle = sbsSunken
+      Caption = '? kByte'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+    end
+    object Label6: TLabel
+      Left = 312
+      Height = 14
+      Top = 64
+      Width = 65
+      Caption = 'Rec. length:'
+      ParentColor = False
+    end
+    object txtRecLen: TStaticText
+      Left = 312
+      Height = 19
+      Top = 85
+      Width = 78
+      BorderStyle = sbsSunken
+      Caption = '166666'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 3
+    end
+    object btnStartScope: TBitBtn
+      Left = 428
+      Height = 33
+      Top = 72
+      Width = 76
+      Caption = 'Start'
+      Default = True
+      Glyph.Data = {
+        76060000424D7606000000000000360000002800000014000000140000000100
+        2000000000004006000064000000640000000000000000000000FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00000000030000000C000000150000001E0000
+        002500000026000000220000001A000000120000000800000001FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000000E000000220000
+        003300371B70024C26A8025F2FD7026333F7026333F7025E2FD9014A25AD0033
+        19780000003F000000300000001B00000004FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF000000000F00000023001A0B44015A2EC4046837F90C914EFC12AA5CFF17C0
+        6AFF17C06AFF12AA5CFF0C904EFD046837FA01572CC900150954000000340000
+        002000000006FFFFFF00FFFFFF00FFFFFF000000000A00482651036433F10D88
+        4AF91DC872FF1AD275FF19D676FF17D776FF17D776FF19D576FF1AD174FF1DC7
+        71FF0D8849FA036433F2003F215E0000001A00000006FFFFFF00FFFFFF00FFFF
+        FF0000692D11036533EE18A55DFF1FCC74FF16D072FF14D574FF16DB77FF17E0
+        7AFF17DF7AFF15DA77FF14D473FF15CF71FF1FCA74FF18A55CFF036433EF0069
+        2D11FFFFFF00FFFFFF00FFFFFF00FFFFFF00016734AB12894DF724C874FF11C9
+        6CFF13D070FF15D774FF16DD79FF18E37CFF17E27CFF16DC78FF14D573FF13CE
+        6FFF11C86BFF23C674FF12884CF7016734ABFFFFFF00FFFFFF00FFFFFF000063
+        313E086B3AF62BBF74FF14C26AFF11C86BFF12CE6FFF14D472FF15D976FF16DC
+        78FF16DB77FF15D775FF13D272FF12CC6EFF10C66AFF14C169FF2ABD73FF086B
+        3AF60063313EFFFFFF00FFFFFF00026331811A9053FA24BF70FF0FBE65FF10C4
+        68FF11C96CFF12CE6FFF13D171FF14D372FF14D372FF13D171FF12CD6EFF11C8
+        6BFF10C267FF0EBC64FF24BD6FFF1A8F53FA02633181FFFFFF00FFFFFF000367
+        34C128A264FF1CB969FF0DB962FF0FBF65FF10C368FF11C76AFF11CA6CFF12CB
+        6DFF12CB6DFF11C96CFF10C66AFF0FC267FF0EBD64FF0DB861FF1CB768FF27A1
+        63FF036734C1FFFFFF00FFFFFF00026434F237B173FF14B261FF0CB45EFF0DB8
+        61FF0EBC64FF0FBF65FF0FC167FF10C268FF10C267FF0FC167FF0FBE65FF0EBB
+        63FF0DB760FF0CB25DFF13B060FF37B072FF026434F2FFFFFF00FFFFFF000264
+        33F23CAF75FF13AC5EFF0AAE5AFF0BB15DFF0CB55FFF0DB760FF0DB962FF0DBA
+        62FF0DBA62FF0DB961FF0DB760FF0CB45EFF0BB05CFF0AAC59FF13AB5EFF3CAE
+        74FF026433F2FFFFFF00FFFFFF00016734C1349F68FF20AC64FF09A756FF15AE
+        5FFF1CB366FF1CB567FF1AB666FF1AB667FF19B667FF18B465FF17B363FF16B0
+        61FF0FAB5BFF08A555FF1FAA63FF339F68FF016734C1FFFFFF00FFFFFF000263
+        3181298E5AFB30AD6DFF079F51FF29AE6AFF2DB26EFF2CB36EFF2BB46EFF2BB5
+        6EFF2AB46DFF29B36DFF28B16BFF26AF69FF20AB65FF079E50FF30AB6CFF298E
+        5AFB02633181FFFFFF00FFFFFF000063313E0D6D3EF64EB580FF129F56FF37AF
+        71FF3DB376FF3CB477FF3CB476FF3BB476FF3BB476FF3AB374FF38B172FF36AF
+        71FF2FAB6BFF129F56FF4EB580FF0D6D3EF60063313EFFFFFF00FFFFFF00FFFF
+        FF00016534AB2A8C5AF846B47CFF30AB6CFF4FB882FF4EB781FF4DB781FF4BB6
+        7FFF4BB67FFF4AB67FFF49B57EFF48B57DFF2CA969FF46B47CFF2A8C5AF80165
+        34ABFFFFFF00FFFFFF00FFFFFF00FFFFFF0000692D11036534EE48A676FF4EB7
+        81FF55BA86FF61BF8FFF5FBE8DFF5EBE8CFF5DBD8CFF5DBD8CFF5CBD8BFF50B8
+        83FF4EB781FF48A676FF036534EE00692D11FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF000063343B036534EE308F5FF861BD8EFF5FBE8DFF6FC599FF71C6
+        9AFF71C69AFF6FC498FF5EBE8CFF61BD8EFF308F5FF8036534EE0063343BFFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000692D110165
+        34AB116F41F73A9768FB50AB7CFF65BB90FF65BB90FF50AB7CFF3A9768FB116F
+        41F7016534AB00692D11FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000063313E02633181016734C10264
+        33F2026433F2016734C1026331810063313EFFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
+      }
+      ModalResult = 6
+      TabOrder = 4
+    end
+    object Label7: TLabel
+      Left = 8
+      Height = 14
+      Top = 116
+      Width = 75
+      Caption = 'Scope Status:'
+      ParentColor = False
+    end
+    object txtScopeStatus: TStaticText
+      Left = 8
+      Height = 21
+      Top = 136
+      Width = 292
+      BorderStyle = sbsSunken
+      Caption = 'Idle'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 5
+    end
+    object Label11: TLabel
+      Left = 332
+      Height = 14
+      Top = 32
+      Width = 11
+      Caption = '%'
+      ParentColor = False
+    end
+    object edMaxSamples: TSpinEdit
+      Left = 116
+      Height = 24
+      Top = 81
+      Width = 86
+      Alignment = taRightJustify
+      Increment = 1000
+      MaxValue = 8000000
+      OnChange = cbSmpMulChange
+      TabOrder = 6
+    end
+    object Label2: TLabel
+      Left = 8
+      Height = 14
+      Top = 8
+      Width = 61
+      Caption = 'Trigger Ch:'
+      ParentColor = False
+    end
+    object edTriggerCh: TSpinEdit
+      Left = 7
+      Height = 24
+      Top = 28
+      Width = 64
+      MaxValue = 7
+      TabOrder = 7
+    end
+    object edTriggerValue: TEdit
+      Left = 80
+      Height = 26
+      Top = 28
+      Width = 80
+      TabOrder = 8
+      Text = '0'
+    end
+    object cbSmpMul: TComboBox
+      Left = 8
+      Height = 27
+      Top = 81
+      Width = 100
+      ItemHeight = 0
+      Items.Strings = (
+        '62.5 us'
+        '125 us'
+        '250 us'
+        '500 us'
+        '1 ms'
+        '2 ms'
+        '4 ms'
+        '8 ms'
+      )
+      OnChange = cbSmpMulChange
+      Style = csDropDownList
+      TabOrder = 9
+    end
+    object Label13: TLabel
+      Left = 8
+      Height = 14
+      Top = 64
+      Width = 79
+      Caption = 'Sampling rate:'
+      ParentColor = False
+    end
+    object Label10: TLabel
+      Left = 8
+      Height = 14
+      Top = 178
+      Width = 70
+      Caption = 'VScope Exe:'
+      ParentColor = False
+    end
+    object txtVscopeExe: TStaticText
+      Left = 8
+      Height = 21
+      Top = 196
+      Width = 484
+      BorderStyle = sbsSunken
+      Caption = 'txtVscopeExe'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 10
+    end
+    object btnVscopeBrowse: TButton
+      Left = 500
+      Height = 25
+      Top = 193
+      Width = 28
+      Caption = '...'
+      OnClick = btnVscopeBrowseClick
+      TabOrder = 11
+    end
+    object Bevel1: TBevel
+      Left = 7
+      Height = 12
+      Top = 168
+      Width = 526
+      Shape = bsTopLine
+    end
+    object Label12: TLabel
+      Left = 216
+      Height = 14
+      Top = 64
+      Width = 81
+      Caption = 'Sample Count:'
+      ParentColor = False
+    end
+    object txtActualSamples: TStaticText
+      Left = 216
+      Height = 19
+      Top = 85
+      Width = 76
+      Alignment = taRightJustify
+      BorderStyle = sbsSunken
+      Caption = '0'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 12
+    end
+  end
+  object Panel2: TPanel
+    Left = 4
+    Height = 253
+    Top = 4
+    Width = 542
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BevelOuter = bvNone
+    Caption = 'Panel2'
+    ClientHeight = 253
+    ClientWidth = 542
+    TabOrder = 1
+    object pnlGridBtns: TPanel
+      Left = 420
+      Height = 253
+      Top = 0
+      Width = 122
+      Align = alRight
+      BevelOuter = bvNone
+      ClientHeight = 253
+      ClientWidth = 122
+      TabOrder = 0
+      object btnAdd: TBitBtn
+        Left = 8
+        Height = 30
+        Top = 8
+        Width = 107
+        Caption = 'Add'
+        OnClick = btnAddClick
+        TabOrder = 0
+      end
+      object btnChange: TBitBtn
+        Left = 8
+        Height = 30
+        Top = 48
+        Width = 107
+        Caption = 'Change'
+        OnClick = btnChangeClick
+        TabOrder = 1
+      end
+      object btnDelete: TBitBtn
+        Left = 8
+        Height = 30
+        Top = 88
+        Width = 107
+        Caption = 'Delete'
+        OnClick = btnDeleteClick
+        TabOrder = 2
+      end
+      object btnUp: TBitBtn
+        Left = 8
+        Height = 30
+        Top = 144
+        Width = 107
+        Caption = 'Move Up'
+        OnClick = btnUpClick
+        TabOrder = 3
+      end
+      object btnDown: TBitBtn
+        Left = 8
+        Height = 30
+        Top = 180
+        Width = 107
+        Caption = 'Move Down'
+        OnClick = btnDownClick
+        TabOrder = 4
+      end
+    end
+    object grid: TDrawGrid
+      Left = 0
+      Height = 253
+      Top = 0
+      Width = 420
+      Align = alClient
+      ColCount = 4
+      Columns = <      
+        item
+          Title.Caption = 'Ch.'
+          Width = 32
+        end      
+        item
+          Title.Caption = 'Parameter'
+          Width = 120
+        end      
+        item
+          Title.Caption = 'Type'
+          Width = 40
+        end      
+        item
+          Title.Caption = 'Description'
+          Width = 200
+        end>
+      ExtendedSelect = False
+      FixedCols = 0
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goThumbTracking, goSmoothScroll]
+      ScrollBars = ssVertical
+      TabOrder = 1
+      OnDrawCell = gridDrawCell
+    end
+  end
+  object odVscope: TOpenDialog
+    Title = 'Select VScope EXE'
+    DefaultExt = '.exe'
+    Filter = 'VScope Exe (*.exe)|*.exe|Any File|*'
+    FilterIndex = 0
+    Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
+    Left = 444
+    Top = 440
+  end
+end

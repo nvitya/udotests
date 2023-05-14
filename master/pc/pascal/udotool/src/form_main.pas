@@ -69,7 +69,7 @@ var
 implementation
 
 uses
-  LCLType, form_devices, form_parameters, form_connections;
+  LCLType, form_devices, form_parameters, form_connections, form_scope;
 
 {$R *.lfm}
 
@@ -129,14 +129,12 @@ begin
 end;
 
 procedure TfrmMain.miScopeClick(Sender : TObject);
-//var
-//  frm : TfrmScope;
 begin
-{
-  Application.CreateForm(TfrmScope, frm);
-  insert(frm, scopelist, length(scopelist));
-  frm.Show;
-}
+  if frmScope = nil then
+  begin
+    Application.CreateForm(TfrmScope, frmScope);
+  end;
+  frmScope.Show;
 end;
 
 procedure TfrmMain.AddLog(astr : string);
