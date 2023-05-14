@@ -9,6 +9,7 @@
 #include "string.h"
 #include "stdio.h"
 #include <stdarg.h>
+#include "math.h"
 
 #include "device.h"
 #include "udoslave.h"
@@ -16,18 +17,20 @@
 #include "version.h"
 
 #include "paramtable.h"
-#include "math.h"
+#include "scope.h"
 
 TDevice   g_device;
 
+uint8_t scope_buffer[32 * 1024];
+
 void TDevice::Init()
 {
-	//g_scope.Init();
+	g_scope.Init(&scope_buffer[0], sizeof(scope_buffer));
 }
 
 void TDevice::Run()
 {
-	//g_scope.Run();
+	g_scope.Run();
 }
 
 void TDevice::IrqTask() // IRQ Context !
@@ -54,7 +57,7 @@ void TDevice::IrqTask() // IRQ Context !
 	func_fl_1 = 1000.0 / float(1 + irq_cycle_counter);
 	func_fl_2 = (irq_cycle_counter / 1000.0) * sin(seed_sin[2] + seed_sin[0]);
 
-	//g_scope.RunIrqTask();
+	g_scope.RunIrqTask();
 }
 
 bool TDevice::prfn_canobj_1008_1018(TUdoRequest * udorq, TParamRangeDef * prdef)

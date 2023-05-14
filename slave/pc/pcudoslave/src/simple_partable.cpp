@@ -150,7 +150,7 @@ bool param_handle_pdef(TUdoRequest * udorq, TParameterDef * pdef)
 			return udo_response_error(udorq, UDOERR_READ_ONLY);
 		}
 
-		return udo_ro_int(udorq, pdef->const_value, pdef_varsize(pdef));
+		return udo_ro_int(udorq, intptr_t(pdef->var_ptr), pdef_varsize(pdef));
 	}
 
 	if ((rw == PARF_READONLY) && udorq->iswrite)

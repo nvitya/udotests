@@ -122,11 +122,7 @@ typedef bool            (* PUdoParFunc)(TUdoRequest * udorq, TParameterDef * ade
 struct TParameterDef
 {
 	uint32_t        flags;
-	union
-	{
-		void *          var_ptr;
-		int             const_value;
-	};
+  void *          var_ptr; // the constants will be stored here too
 	void *          obj_func_ptr;
 	PUdoParMethod   method_ptr;
 //
