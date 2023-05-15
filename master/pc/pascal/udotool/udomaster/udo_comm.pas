@@ -220,7 +220,6 @@ begin
   commh.UdoWrite(index, offset, lvalue, 4);
 end;
 
-
 initialization
 begin
   commh_none := TUdoCommHandler.Create;

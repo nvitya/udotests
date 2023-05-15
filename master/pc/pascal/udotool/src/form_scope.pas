@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  Spin, Process, udo_device, Buttons, Grids, Types, jsontools, udo_comm;
+  Spin, Process, udo_device, Buttons, Grids, Types, jsontools, udo_comm, vscope_data;
 
 type
 
@@ -50,15 +50,17 @@ type
     txtActualSamples : TStaticText;
     Label12 : TLabel;
     timStatusPoll : TTimer;
+
+    procedure FormCreate(Sender : TObject);
+    procedure FormClose(Sender : TObject; var CloseAction : TCloseAction);
+
     procedure btnAddClick(Sender : TObject);
     procedure btnChangeClick(Sender : TObject);
     procedure btnDeleteClick(Sender : TObject);
     procedure btnUpClick(Sender : TObject);
     procedure btnDownClick(Sender : TObject);
     procedure gridDrawCell(Sender : TObject; aCol, aRow : Integer; aRect : TRect; aState : TGridDrawState);
-    procedure FormCreate(Sender : TObject);
     procedure cbSmpMulChange(Sender : TObject);
-    procedure FormClose(Sender : TObject; var CloseAction : TCloseAction);
     procedure btnVscopeBrowseClick(Sender : TObject);
     procedure btnStartScopeClick(Sender : TObject);
     procedure timStatusPollTimer(Sender : TObject);
@@ -69,9 +71,12 @@ type
     dev_cycle_time_ns : uint32;
     sample_bytes      : uint32;
     sample_count      : uint32;
+    sample_time_ns    : uint64;
 
     channels : array of TUdoParam;
-    //function GetChannelByIndex(aindex : integer) : TScopeChannel;
+    rawdata  : array of byte;
+
+    scope : TScopeData;
 
     procedure EditChannel(aidx : integer);
     function  SelectedCh : integer;
@@ -203,6 +208,8 @@ end;
 
 procedure TfrmScope.FormCreate(Sender : TObject);
 begin
+  scope := TScopeData.Create;
+
   GetDeviceData;
   txtDeviceBufferSize.Caption := IntToStr(dev_scope_buffer div 1024) + ' kByte';
   FillSamplingCombo;
@@ -221,6 +228,8 @@ end;
 procedure TfrmScope.FormClose(Sender : TObject; var CloseAction : TCloseAction);
 begin
   SaveScope;
+  scope.Free;
+
   CloseAction := caFree;
   frmScope := nil;
 end;
@@ -396,8 +405,52 @@ begin
 end;
 
 procedure TfrmScope.ReadScopeData;
+var
+  r : integer;
+  par : TUdoParam;
+  pb : PByte;
+  didx : uint32;
+  scnt : uint32;
+  w : TWaveData;
+  wi : integer;
+  chnum : integer;
 begin
-  showmessage('Read Scope Data is not implemented.');
+  SetLength(rawdata, dev_scope_buffer);
+  r := udocomm.UdoRead($500A, 0, rawdata[0], length(rawdata));
+  if r < length(rawdata) then SetLength(rawdata, r);
+
+  scnt := uint32(length(rawdata)) div sample_bytes;
+
+  chnum := length(channels);
+  wi := 0;
+  scope.waves.Clear;
+  for par in channels do
+  begin
+    w := scope.AddWave(par.name, sample_time_ns / 1000000000);
+    SetLength(w.data, scnt);  // prepare the data
+    w.dataunit := par.vunit;
+    w.viewoffset := 4 - wi;
+    inc(wi);
+  end;
+
+  // convert the raw data to doubles
+  didx := 0;
+  pb := @rawdata[0];
+  while didx < scnt do
+  begin
+    for wi := 0 to chnum - 1 do
+    begin
+      par := channels[wi];
+      w := scope.waves[wi];
+      w.data[didx] := par.ConvertToDouble(pb);
+      Inc(pb, par.ByteSize);
+    end;
+
+    Inc(didx);
+  end;
+
+  scope.SaveToJsonFile('udotool.vscope');
+  LaunchVscope('udotool.vscope');
 end;
 
 procedure TfrmScope.LaunchVscope(afilename : string);
@@ -533,7 +586,7 @@ end;
 
 procedure TfrmScope.UpdateSampling;
 var
-  reclen_ns, sample_time_ns : uint64;
+  reclen_ns : uint64;
   par: TUdoParam;
 begin
   sample_bytes := 0;
@@ -552,13 +605,14 @@ begin
 
   txtActualSamples.Caption := IntToStr(sample_count);
 
+  sample_time_ns := dev_cycle_time_ns * uint32(1 shl cbSmpMul.ItemIndex);
+
   if sample_count = 0 then
   begin
     txtRecLen.Caption := '-';
   end
   else
   begin
-    sample_time_ns := dev_cycle_time_ns * uint32(1 shl cbSmpMul.ItemIndex);
     reclen_ns := uint64(sample_time_ns) * sample_count;
 
     if reclen_ns >= 1000000000 then

@@ -139,7 +139,7 @@
     </Linking>
     <Other>
       <CompilerMessages>
-        <IgnoredMessages idx5024="True"/>
+        <IgnoredMessages idx6058="True" idx5024="True" idx3124="True" idx3123="True"/>
       </CompilerMessages>
     </Other>
   </CompilerOptions>
@@ -159,6 +159,9 @@
       </Item>
       <Item>
         <Name Value="ESdoAbort"/>
+      </Item>
+      <Item>
+        <Name Value="EUdoAbort"/>
       </Item>
     </Exceptions>
   </Debugging>

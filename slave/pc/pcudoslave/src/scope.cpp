@@ -31,6 +31,7 @@
 #include "string.h"
 #include "udoslave.h"
 #include "paramtable.h"
+#include "traces.h"
 
 TScope g_scope;
 
@@ -76,9 +77,11 @@ void TScope::Run() // Called from the idle cycle
 
 bool TScope::pfn_scope_def(TUdoRequest * udorq, TParameterDef * pdef, void * varptr)
 {
-	if (udorq->offset >= SCOPE_MAX_CHANNELS)
+	unsigned chnum = udorq->index - 0x5020;
+
+	if (chnum >= SCOPE_MAX_CHANNELS)
 	{
-		return udo_response_error(udorq, UDOERR_WRONG_OFFSET);
+		return udo_response_error(udorq, UDOERR_INDEX);
 	}
 
 	if (!udorq->iswrite)
@@ -89,7 +92,7 @@ bool TScope::pfn_scope_def(TUdoRequest * udorq, TParameterDef * pdef, void * var
 	// check the write
 
 	uint32_t value = uint32_t(udorq_intvalue(udorq));
-	if (!SetChannelDef(udorq->offset, value))
+	if (!SetChannelDef(chnum, value))
 	{
 		return udo_response_error(udorq, UDOERR_WRITE_VALUE);
 	}
@@ -116,38 +119,43 @@ bool TScope::pfn_scope_cmd(TUdoRequest * udorq, TParameterDef * pdef, void * var
 
 bool TScope::pfn_scope_data(TUdoRequest * udorq, TParameterDef * pdef, void * varptr)
 {
-#if 0
-  sdorq->fullsize = sample_count * sample_width;
+	if (udorq->iswrite)
+	{
+		return udo_response_error(udorq, UDOERR_READ_ONLY);
+	}
 
-  if (sdorq->offset >= sdorq->fullsize)
+  unsigned fullsize = sample_count * sample_width;
+  if (0xFFFFFFFF == udorq->offset)  // special offset, return the data length
   {
-    sdorq->datalen = 0;
-    return sdo_response_ok(sdorq);
+  	return udo_ro_int(udorq, fullsize, 4);
   }
 
-  unsigned remaining = sdorq->fullsize - sdorq->offset;
+  //TRACE("scope_data(%u / %u)\n", udorq->offset, fullsize);
 
-  if (remaining > sdorq->datalen)  remaining = sdorq->datalen;
+	if (fullsize <= udorq->offset)
+	{
+		udorq->anslen = 0; // empty read: no more data
+		return true;
+	}
 
-  sdorq->datalen = remaining;
+  unsigned remaining = fullsize - udorq->offset;
+  if (remaining > udorq->maxanslen)  remaining = udorq->maxanslen;
+  udorq->anslen = remaining;
 
-  unsigned char * psrc = next_smp_ptr;  // the first sample data
-  psrc += sdorq->offset;
-  if (psrc >= buf_end_ptr)
+  uint8_t * psrc = next_smp_ptr;  // the first sample data
+  psrc += udorq->offset;
+  if (psrc >= buf_end_ptr)  // wrap-around handling
   {
-  	psrc = &buffer[0] + (psrc - buf_end_ptr);
+  	psrc = pbuffer + (psrc - buf_end_ptr);
   }
 
-  unsigned char * pdst = sdorq->dataptr;
-
+  uint8_t * pdst = udorq->dataptr;
   while (remaining > 0)
   {
   	*pdst++ = *psrc++;
-  	if (psrc >= buf_end_ptr)  psrc = &buffer[0];
+  	if (psrc >= buf_end_ptr)  psrc = pbuffer;
   	--remaining;
   }
-
-#endif
 
   return udo_response_ok(udorq);
 }
@@ -246,7 +254,14 @@ void TScope::PrepareSampling()
 
 	cur_smp_index = 0;
 
-	smp_cycle_counter = g_device.irq_cycle_counter % smp_cycles;  // some irq cycle synchronization
+	if (smp_cycles > 0)
+	{
+		smp_cycle_counter = g_device.irq_cycle_counter % smp_cycles;  // some irq cycle synchronization
+	}
+	else
+	{
+		smp_cycle_counter = 0;
+	}
 
 	// prepare the trigger, for unsigned comparison
 
