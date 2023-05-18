@@ -9,10 +9,16 @@
 #include <udoslaveapp.h>
 #include "paramtable.h"
 
+TUdoSlaveApp g_slaveapp;
+
 TUdoSlaveApp::TUdoSlaveApp()
 {
 	// TODO Auto-generated constructor stub
+}
 
+bool TUdoSlaveApp::Init()
+{
+  return true;
 }
 
 bool TUdoSlaveApp::UdoReadWrite(TUdoRequest * udorq)
@@ -29,3 +35,4 @@ bool TUdoSlaveApp::UdoReadWrite(TUdoRequest * udorq)
 
 	return false;
 }
+
