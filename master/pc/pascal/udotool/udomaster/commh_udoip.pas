@@ -46,6 +46,7 @@ type
     cursqnum : uint16;
 
     constructor Create; override;
+    destructor Destroy; override;
 
     procedure Open; override;
     procedure Close; override;
@@ -106,6 +107,12 @@ begin
   max_tries := 3;
 end;
 
+destructor TCommHandlerUdoIp.Destroy;
+begin
+  Close;
+  inherited Destroy;
+end;
+
 procedure TCommHandlerUdoIp.Open;
 var
   sarr : array of string;
@@ -159,7 +166,7 @@ end;
 
 function TCommHandlerUdoIp.ConnString : string;
 begin
-  Result := format('UDPCAN %s', [ipaddrstr]);
+  Result := format('UDO-IP %s', [ipaddrstr]);
 end;
 
 function TCommHandlerUdoIp.UdoRead(address : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
@@ -169,8 +176,6 @@ begin
   moffset  := offset;
   mdataptr := PByte(@dataptr);
   mmaxdatalen := maxdatalen;
-  moffset  := 0;
-  mfullsize := 0;
 
   DoUdoReadWrite;
 
@@ -190,7 +195,6 @@ begin
   mdataptr := PByte(@dataptr);
   mmaxdatalen := datalen;
   mfullsize := datalen;
-  moffset  := 0;
   DoUdoReadWrite;
 end;
 
