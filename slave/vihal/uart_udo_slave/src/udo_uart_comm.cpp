@@ -299,7 +299,7 @@ void TUdoUartComm::Run()
     if (rxdmapos >= sizeof(rxdmabuf))  rxdmapos = 0;
   }
 
-  if (lastrecvtime - t0 > rx_timeout_clocks)
+  if ((rxstate != 0) && (t0 - lastrecvtime > rx_timeout_clocks))
   {
     TRACE("UDO-RQ timeout\r\n");
     ++error_count_timeout;

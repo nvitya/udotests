@@ -23,9 +23,17 @@ TDevice   g_device;
 
 uint8_t scope_buffer[32 * 1024];
 
+extern "C" void SysTick_Handler(void) // 250 us periodic IRQ
+{
+  g_device.IrqTask();
+}
+
 void TDevice::Init()
 {
 	g_scope.Init(&scope_buffer[0], sizeof(scope_buffer));
+
+  // start the device periodic irq
+  SysTick_Config(SystemCoreClock / 4000);  // 250 us
 }
 
 void TDevice::Run()

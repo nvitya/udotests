@@ -79,7 +79,7 @@ procedure TfrmMain.FormCreate(Sender : TObject);
 begin
   candevlist.Load;
   connlist.Load;
-  SetLength(readbuf, 4 * 1024 * 1024);
+  SetLength(readbuf, 1024);
   memoTerm.Lines.Text := '';
 end;
 

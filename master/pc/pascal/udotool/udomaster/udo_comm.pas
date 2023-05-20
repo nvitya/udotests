@@ -8,6 +8,9 @@ uses
   Classes, SysUtils;
 
 const
+  UDO_MAX_PAYLOAD_LEN = 1024;
+
+const
   UDOERR_CONNECTION             = $1001;  // not connected, send / receive error
   UDOERR_CRC                    = $1002;
   UDOERR_TIMEOUT                = $1003;
@@ -66,6 +69,8 @@ type
   public
     commh : TUdoCommHandler;
 
+    max_payload_size : uint16;
+
     constructor Create;
 
     procedure SetHandler(acommh : TUdoCommHandler);
@@ -75,6 +80,9 @@ type
 
     function  UdoRead(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
     procedure UdoWrite(index : uint16; offset : uint32; const dataptr; datalen : uint32);
+
+    function  UdoReadBlob(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
+    procedure UdoWriteBlob(index : uint16; offset : uint32; const dataptr; datalen : uint32);
 
     function  UdoReadInt(index : uint16; offset : uint32) : int32;
     procedure UdoWriteInt(index : uint16; offset : uint32; avalue : int32);
@@ -198,6 +206,7 @@ end;
 constructor TUdoComm.Create;
 begin
   commh := commh_none;
+  max_payload_size := 64;  // start with the smallest
 end;
 
 procedure TUdoComm.SetHandler(acommh : TUdoCommHandler);
@@ -207,10 +216,30 @@ begin
 end;
 
 procedure TUdoComm.Open;
+var
+  d32 : uint32;
+  r : integer;
 begin
-  if not commh.Opened
-  then
-      commh.Open();
+  if not commh.Opened then
+  begin
+    commh.Open();
+  end;
+
+  r := commh.UdoRead($0000, 0, d32, 4);  // check the fix data register first
+  if (r <> 4) or (d32 <> $66CCAA55) then
+  begin
+    commh.Close();
+    raise EUdoAbort.Create(UDOERR_CONNECTION, 'Invalid Obj-0000 response: %.8X', [d32]);
+  end;
+
+  r := commh.UdoRead($0001, 0, d32, 4);  // get the maximal payload length
+  if (d32 < 64) or (d32 > UDO_MAX_PAYLOAD_LEN) then
+  begin
+    commh.Close();
+    raise EUdoAbort.Create(UDOERR_CONNECTION, 'Invalid maximal payload size: %d', [d32]);
+  end;
+
+  max_payload_size := d32;
 end;
 
 procedure TUdoComm.Close;
@@ -224,13 +253,76 @@ begin
 end;
 
 function TUdoComm.UdoRead(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
+var
+  pdata : PByte;
 begin
   result := commh.UdoRead(index, offset, dataptr, maxdatalen);
+  if (result <= 8) and (result < maxdatalen) then
+  begin
+    pdata := PByte(@dataptr);
+    FillChar(PByte(pdata + result)^, maxdatalen - result, 0); // pad smaller responses, todo: sign extension
+  end;
 end;
 
 procedure TUdoComm.UdoWrite(index : uint16; offset : uint32; const dataptr; datalen : uint32);
 begin
   commh.UdoWrite(index, offset, dataptr, datalen);
+end;
+
+function TUdoComm.UdoReadBlob(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
+var
+  chunksize : integer;
+  remaining : integer;
+  offs  : uint32;
+  pdata : PByte;
+  r : integer;
+begin
+  result := 0;
+  remaining := maxdatalen;
+  pdata := PByte(@dataptr);
+  offs  := offset;
+
+  while remaining > 0 do
+  begin
+    chunksize := max_payload_size;
+    if chunksize > remaining then chunksize := remaining;
+    r := commh.UdoRead(index, offs, pdata^, chunksize);
+    if r <= 0
+    then
+        break;
+
+    result += r;
+    pdata  += r;
+    offs   += r;
+    remaining -= r;
+
+    if r < chunksize
+    then
+        break;
+  end;
+end;
+
+procedure TUdoComm.UdoWriteBlob(index : uint16; offset : uint32; const dataptr; datalen : uint32);
+var
+  chunksize : integer;
+  remaining : integer;
+  offs  : uint32;
+  pdata : PByte;
+begin
+  remaining := datalen;
+  pdata := PByte(@dataptr);
+  offs  := offset;
+
+  while remaining > 0 do
+  begin
+    chunksize := max_payload_size;
+    if chunksize > remaining then chunksize := remaining;
+    commh.UdoWrite(index, offs, pdata^, chunksize);
+
+    pdata  += chunksize;
+    offs   += chunksize;
+    remaining -= chunksize;
+  end;
 end;
 
 function TUdoComm.UdoReadInt(index : uint16; offset : uint32) : int32;

@@ -8,8 +8,7 @@ uses
   Classes, SysUtils, udo_comm, sercomm, fpcfixes, util_nstime;
 
 const
-  UDOSL_MAX_DATALEN = 1024;
-  UDOSL_MAX_RQ_SIZE = UDOSL_MAX_DATALEN + 32; // 1024 byte payload + variable size header
+  UDOSL_MAX_RQ_SIZE = UDO_MAX_PAYLOAD_LEN + 32; // 1024 byte payload + variable size header
 
   UDOSL_DEFAULT_SPEED = 115200;
 
@@ -80,7 +79,7 @@ constructor TCommHandlerUdoSl.Create;
 begin
   inherited;
   comm := TSerComm.Create;
-  comm.baudrate := 115200;
+  comm.baudrate := UDOSL_DEFAULT_SPEED;
 
   protocol := ucpSerial;
   devstr := '';
@@ -148,11 +147,6 @@ begin
   if ans_datalen > 0 then
   begin
 	  move(rwbuf[rwbuf_ansdatapos], mdataptr^, ans_datalen);
-    if (maxdatalen <= 8) and (ans_datalen < maxdatalen) then  // pad smaller responses
-    begin
-      // todo: sign extension ?
-      FillChar(PByte(mdataptr + ans_datalen)^, maxdatalen - ans_datalen, 0);
-    end;
   end;
 
 	result := ans_datalen;
@@ -343,7 +337,7 @@ begin
           rxstate := 3;  // index follows normally
 
           lencode := ((b shr 4) and 7);
-          if      lencode < 5 then ans_datalen := $84210 shr (lencode shl 2) // in-line demultiplexing
+          if      lencode < 5 then ans_datalen := ($84210 shr (lencode shl 2) and $F) // in-line demultiplexing
           else if 5 = lencode then ans_datalen := 16
           else if 7 = lencode then rxstate := 2     // extended length follows
           else  // 6 == error code

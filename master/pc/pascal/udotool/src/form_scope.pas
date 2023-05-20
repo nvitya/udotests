@@ -343,8 +343,8 @@ begin
   // start the scope
   udocomm.UdoWriteInt($5008, 0, 3);
 
-  PollScopeStatus;
-  application.ProcessMessages;
+  //PollScopeStatus;
+  //application.ProcessMessages;
 
   timStatusPoll.Enabled := true;
 end;
@@ -416,7 +416,7 @@ var
   chnum : integer;
 begin
   SetLength(rawdata, dev_scope_buffer);
-  r := udocomm.UdoRead($500A, 0, rawdata[0], length(rawdata));
+  r := udocomm.UdoReadBlob($500A, 0, rawdata[0], length(rawdata));
   if r < length(rawdata) then SetLength(rawdata, r);
 
   scnt := uint32(length(rawdata)) div sample_bytes;

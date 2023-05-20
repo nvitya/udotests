@@ -62,7 +62,7 @@ function GetConnTypeName(ct : TConnType) : string;
 implementation
 
 uses
-  udo_comm, commh_udoip, form_main;
+  udo_comm, commh_udoip, commh_udosl, form_main;
 
 function GetConnTypeName(ct : TConnType) : string;
 begin
@@ -225,6 +225,15 @@ begin
     udoip_commh.ipaddrstr := addr;
 
     udocomm.SetHandler(udoip_commh);
+
+    udocomm.Open;
+  end
+  else if conntype = ctUDOSL then
+  begin
+    udosl_commh.Close;
+    udosl_commh.devstr := addr;
+
+    udocomm.SetHandler(udosl_commh);
 
     udocomm.Open;
   end

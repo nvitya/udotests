@@ -8,7 +8,7 @@
         <Filename Value="udotool.lpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="100" Y="26"/>
-        <UsageCount Value="124"/>
+        <UsageCount Value="129"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -17,10 +17,11 @@
         <ComponentName Value="frmMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="77"/>
-        <CursorPos X="49" Y="135"/>
-        <UsageCount Value="124"/>
+        <TopLine Value="52"/>
+        <CursorPos X="22" Y="82"/>
+        <UsageCount Value="129"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -31,7 +32,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
         <CursorPos X="64" Y="33"/>
-        <UsageCount Value="124"/>
+        <UsageCount Value="129"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -43,7 +44,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="12"/>
         <CursorPos X="68" Y="31"/>
-        <UsageCount Value="124"/>
+        <UsageCount Value="129"/>
       </Unit>
       <Unit>
         <Filename Value="src/udo_device.pas"/>
@@ -51,7 +52,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="4"/>
         <CursorPos X="14" Y="49"/>
-        <UsageCount Value="124"/>
+        <UsageCount Value="129"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -64,7 +65,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="196"/>
         <CursorPos X="25" Y="286"/>
-        <UsageCount Value="122"/>
+        <UsageCount Value="127"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -76,7 +77,7 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="27" Y="12"/>
-        <UsageCount Value="122"/>
+        <UsageCount Value="127"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_connections.pas"/>
@@ -86,7 +87,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="95" Y="26"/>
-        <UsageCount Value="115"/>
+        <UsageCount Value="120"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_conn_edit.pas"/>
@@ -97,7 +98,7 @@
         <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <CursorPos X="50" Y="19"/>
-        <UsageCount Value="115"/>
+        <UsageCount Value="120"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -105,9 +106,9 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="163"/>
-        <CursorPos X="20" Y="219"/>
-        <UsageCount Value="114"/>
+        <TopLine Value="89"/>
+        <CursorPos X="22" Y="245"/>
+        <UsageCount Value="119"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -116,7 +117,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="15" Y="72"/>
-        <UsageCount Value="100"/>
+        <UsageCount Value="105"/>
       </Unit>
       <Unit>
         <Filename Value="tfr_comm/commh_udpcan.pas"/>
@@ -124,7 +125,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="208"/>
         <CursorPos X="58" Y="259"/>
-        <UsageCount Value="98"/>
+        <UsageCount Value="103"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_scope.pas"/>
@@ -133,20 +134,21 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="381"/>
-        <CursorPos X="27" Y="432"/>
-        <UsageCount Value="40"/>
+        <TopLine Value="367"/>
+        <CursorPos X="91" Y="380"/>
+        <UsageCount Value="45"/>
         <Bookmarks Count="1">
           <Item0 X="34" Y="429" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src/scope_data.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="15"/>
-        <UsageCount Value="81"/>
+        <UsageCount Value="86"/>
         <Bookmarks Count="1">
           <Item0 X="32" Y="220" ID="1"/>
         </Bookmarks>
@@ -158,17 +160,16 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="53" Y="11"/>
-        <UsageCount Value="80"/>
+        <UsageCount Value="85"/>
       </Unit>
       <Unit>
         <Filename Value="udomaster/commh_udosl.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="425"/>
-        <CursorPos X="37" Y="503"/>
-        <UsageCount Value="29"/>
+        <TopLine Value="115"/>
+        <CursorPos X="13" Y="135"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -349,17 +350,17 @@
         <Filename Value="udomaster/udo_comm.pas"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="92"/>
-        <CursorPos X="27" Y="139"/>
-        <UsageCount Value="21"/>
+        <TopLine Value="12"/>
+        <CursorPos X="19" Y="44"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="udomaster/commh_udoip.pas"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="116"/>
-        <CursorPos X="3" Y="127"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="166"/>
+        <CursorPos X="39" Y="49"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -381,7 +382,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="95"/>
         <CursorPos X="77" Y="133"/>
-        <UsageCount Value="15"/>
+        <UsageCount Value="18"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -389,133 +390,130 @@
         <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
         <CursorPos X="11" Y="53"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="1"/>
-    </General>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="35"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="173" Column="28" TopLine="124"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="60" Column="19"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="474" Column="3" TopLine="417"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="24" Column="7" TopLine="15"/>
-      </Position>
-      <Position>
-        <Filename Value="udotool.lpr"/>
-        <Caret Line="15" Column="78"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="74" Column="11" TopLine="29"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="7"/>
-      </Position>
-      <Position>
-        <Filename Value="extlibs/sercomm.pas"/>
-        <Caret Line="53" Column="11"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="81" Column="18" TopLine="5"/>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="81" Column="16" TopLine="11"/>
       </Position>
       <Position>
         <Filename Value="udomaster/commh_udoip.pas"/>
-        <Caret Line="51" Column="17" TopLine="23"/>
+        <Caret Line="77" Column="34" TopLine="14"/>
       </Position>
       <Position>
         <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="105" TopLine="59"/>
+        <Caret Line="65" Column="23"/>
       </Position>
       <Position>
         <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="52" Column="16"/>
+        <Caret Line="444" Column="50" TopLine="392"/>
       </Position>
       <Position>
         <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="262" Column="38" TopLine="197"/>
+        <Caret Line="34" Column="15" TopLine="20"/>
       </Position>
       <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="187" TopLine="142"/>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="190" Column="18" TopLine="175"/>
       </Position>
       <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="54" Column="10"/>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="73" Column="11" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="62" Column="20" TopLine="37"/>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="56" Column="28" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="276" Column="3" TopLine="423"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="152" Column="9" TopLine="100"/>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="229" TopLine="177"/>
       </Position>
       <Position>
         <Filename Value="udomaster/udo_comm.pas"/>
-        <Caret Line="86" Column="13" TopLine="4"/>
+        <Caret Line="263" Column="34" TopLine="218"/>
+      </Position>
+      <Position>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="221" Column="40" TopLine="196"/>
       </Position>
       <Position>
         <Filename Value="udomaster/udo_comm.pas"/>
-        <Caret Line="139" Column="27" TopLine="92"/>
+        <Caret Line="285" Column="57" TopLine="218"/>
+      </Position>
+      <Position>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="238" TopLine="176"/>
+      </Position>
+      <Position>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="201" TopLine="171"/>
+      </Position>
+      <Position>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="83" Column="15" TopLine="38"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="419" Column="23" TopLine="381"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="97" Column="18" TopLine="70"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="419" Column="24" TopLine="407"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="9" Column="44"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="419" Column="24" TopLine="374"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="453" Column="15" TopLine="377"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="395" Column="18" TopLine="377"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="352" Column="36" TopLine="350"/>
+      </Position>
+      <Position>
+        <Filename Value="src/form_scope.pas"/>
+        <Caret Line="252" Column="3" TopLine="207"/>
+      </Position>
+      <Position>
+        <Filename Value="src/connections.pas"/>
+        <Caret Line="231" Column="24" TopLine="163"/>
+      </Position>
+      <Position>
+        <Filename Value="src/connections.pas"/>
+        <Caret Line="234" Column="17" TopLine="174"/>
       </Position>
       <Position>
         <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="263" Column="20" TopLine="253"/>
+        <Caret Line="29" Column="17"/>
       </Position>
       <Position>
         <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="508" Column="38" TopLine="427"/>
+        <Caret Line="102" Column="3" TopLine="97"/>
       </Position>
       <Position>
         <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="489" Column="24" TopLine="426"/>
+        <Caret Line="26" Column="15"/>
       </Position>
       <Position>
         <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="56" Column="13" TopLine="11"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="267" Column="10" TopLine="222"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="264" Column="10" TopLine="219"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="266" Column="10" TopLine="219"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="279" TopLine="219"/>
-      </Position>
-      <Position>
-        <Filename Value="udomaster/commh_udosl.pas"/>
-        <Caret Line="58" Column="21" TopLine="13"/>
+        <Caret Line="343" Column="85" TopLine="301"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -523,4 +521,12 @@
       <Modes ActiveMode=""/>
     </RunParams>
   </ProjectSession>
+  <Debugging>
+    <Watches>
+      <Item>
+        <Expression Value="rwbuf[0]"/>
+        <DisplayStyle Value="wdfMemDump"/>
+      </Item>
+    </Watches>
+  </Debugging>
 </CONFIG>
