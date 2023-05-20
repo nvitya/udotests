@@ -167,7 +167,7 @@ void TUdoUartComm::Run()
       rxstate = 3;  // index follows normally
 
       unsigned lencode = ((b >> 4) & 7);
-      if      (lencode < 5)   { rq.rqlen = (0x84210 >> (lencode << 2)); }  // in-line demultiplexing
+      if      (lencode < 5)   { rq.rqlen = ((0x84210 >> (lencode << 2)) & 0xF); }  // in-line demultiplexing
       else if (5 == lencode)  { rq.rqlen = 16; }
       else if (7 == lencode)  { rxstate = 2; }  // extended length follows
       else  // invalid (6)

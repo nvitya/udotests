@@ -327,7 +327,7 @@ end;
 
 function TUdoComm.UdoReadInt(index : uint16; offset : uint32) : int32;
 var
-  resultbuf : array[0..16] of byte;
+  resultbuf : array[0..3] of byte;
 begin
   resultbuf[0] := 0; // fpc warning fix
   fillchar(resultbuf[0], sizeof(resultbuf), 0);
