@@ -7,6 +7,12 @@
 			"ADDR": "/dev/ttyACM0"
 		},
 		{
+			"ID": "test1-ETH2",
+			"DEVID": "TESTDEV1",
+			"CONNTYPE": 0,
+			"ADDR": "192.168.2.10"
+		},
+		{
 			"ID": "test1-local",
 			"DEVID": "TESTDEV1",
 			"CONNTYPE": 0,

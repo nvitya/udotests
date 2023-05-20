@@ -8,7 +8,7 @@
         <Filename Value="udotool.lpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="100" Y="26"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="135"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -20,7 +20,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="52"/>
         <CursorPos X="76" Y="92"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="135"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -32,7 +32,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
         <CursorPos X="64" Y="33"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="135"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -44,7 +44,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="12"/>
         <CursorPos X="68" Y="31"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="135"/>
       </Unit>
       <Unit>
         <Filename Value="src/udo_device.pas"/>
@@ -52,7 +52,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="4"/>
         <CursorPos X="14" Y="49"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="135"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -65,7 +65,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="196"/>
         <CursorPos X="25" Y="286"/>
-        <UsageCount Value="128"/>
+        <UsageCount Value="133"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -77,7 +77,7 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="27" Y="12"/>
-        <UsageCount Value="128"/>
+        <UsageCount Value="133"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_connections.pas"/>
@@ -87,7 +87,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="95" Y="26"/>
-        <UsageCount Value="121"/>
+        <UsageCount Value="126"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_conn_edit.pas"/>
@@ -98,7 +98,7 @@
         <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <CursorPos X="50" Y="19"/>
-        <UsageCount Value="121"/>
+        <UsageCount Value="126"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -108,7 +108,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="89"/>
         <CursorPos X="22" Y="245"/>
-        <UsageCount Value="120"/>
+        <UsageCount Value="125"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -117,7 +117,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="15" Y="72"/>
-        <UsageCount Value="106"/>
+        <UsageCount Value="111"/>
       </Unit>
       <Unit>
         <Filename Value="tfr_comm/commh_udpcan.pas"/>
@@ -125,7 +125,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="208"/>
         <CursorPos X="58" Y="259"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="109"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_scope.pas"/>
@@ -133,10 +133,11 @@
         <ComponentName Value="frmScope"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <TopLine Value="313"/>
-        <CursorPos Y="344"/>
-        <UsageCount Value="46"/>
+        <CursorPos X="70" Y="364"/>
+        <UsageCount Value="51"/>
         <Bookmarks Count="1">
           <Item0 X="34" Y="429" ID="1"/>
         </Bookmarks>
@@ -148,7 +149,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="15"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="92"/>
         <Bookmarks Count="1">
           <Item0 X="32" Y="220" ID="1"/>
         </Bookmarks>
@@ -160,7 +161,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="53" Y="11"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="91"/>
       </Unit>
       <Unit>
         <Filename Value="udomaster/commh_udosl.pas"/>
@@ -169,7 +170,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="115"/>
         <CursorPos X="13" Y="135"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -179,7 +180,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="4637"/>
         <CursorPos X="16" Y="4675"/>
-        <UsageCount Value="18"/>
+        <UsageCount Value="17"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/2.2.0/lcl/include/canvas.inc"/>
@@ -187,7 +188,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="1206"/>
         <CursorPos X="3" Y="1215"/>
-        <UsageCount Value="18"/>
+        <UsageCount Value="17"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/2.2.0/lcl/graphics.pp"/>
@@ -196,14 +197,14 @@
         <WindowIndex Value="1"/>
         <TopLine Value="1095"/>
         <CursorPos X="32" Y="1148"/>
-        <UsageCount Value="18"/>
+        <UsageCount Value="17"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/objpas/classes/classesh.inc"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="3" Y="91"/>
-        <UsageCount Value="18"/>
+        <UsageCount Value="17"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/2.2.0/lcl/dialogs.pp"/>
@@ -212,7 +213,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="2"/>
         <CursorPos X="45" Y="12"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="24"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/2.2.0/components/lazutils/uitypes.pas"/>
@@ -220,7 +221,7 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="32" Y="28"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="extlibs/jsontools.pas"/>
@@ -229,14 +230,14 @@
         <WindowIndex Value="1"/>
         <TopLine Value="98"/>
         <CursorPos X="14" Y="148"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="34"/>
       </Unit>
       <Unit>
         <Filename Value="../../workvc/wittmann/tfr/distrib/src_py/tfr_comm/tfr_devcomm.py"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="33" Y="49"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
         <DefaultSyntaxHighlighter Value="Python"/>
       </Unit>
       <Unit>
@@ -244,7 +245,7 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="47" Y="51"/>
-        <UsageCount Value="15"/>
+        <UsageCount Value="14"/>
         <DefaultSyntaxHighlighter Value="Python"/>
       </Unit>
       <Unit>
@@ -252,21 +253,21 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="39" Y="8"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="tfr_comm/wdComm2.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="34" Y="32"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="tfr_comm/simplehttp.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="46" Y="29"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="13"/>
       </Unit>
       <Unit>
         <Filename Value="extlibs/strparseobj.pas"/>
@@ -274,14 +275,14 @@
         <WindowIndex Value="1"/>
         <TopLine Value="439"/>
         <CursorPos X="3" Y="519"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="20"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_main.lfm"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="97"/>
         <CursorPos X="48" Y="133"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
@@ -289,7 +290,7 @@
         <UnitName Value="Forms"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="70"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="../../wittvc/wbme/pc/wwwroot/gwscope.html"/>
@@ -297,7 +298,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="550"/>
         <CursorPos X="80" Y="604"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="19"/>
         <DefaultSyntaxHighlighter Value="HTML"/>
       </Unit>
       <Unit>
@@ -306,7 +307,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="170"/>
         <CursorPos X="15" Y="219"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/2.2.0/components/tachart/tacustomsource.pas"/>
@@ -314,7 +315,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="32"/>
         <CursorPos X="27" Y="97"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/2.2.0/components/tachart/tagraph.pas"/>
@@ -322,7 +323,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="96"/>
         <CursorPos X="15" Y="146"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="15"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/2.2.0/components/tachart/tachartutils.pas"/>
@@ -330,13 +331,13 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="247"/>
         <CursorPos X="3" Y="63"/>
-        <UsageCount Value="15"/>
+        <UsageCount Value="14"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/objpas/sysutils/sysutilh.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="4" Y="99"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:/lazarus/fpc/3.2.2/source/packages/rtl-extra/src/win/winsock.pp"/>
@@ -344,24 +345,23 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="691"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="udomaster/udo_comm.pas"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
         <TopLine Value="261"/>
-        <CursorPos Y="343"/>
-        <UsageCount Value="24"/>
+        <CursorPos X="103" Y="303"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="udomaster/commh_udoip.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="171"/>
         <CursorPos X="39" Y="216"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -369,21 +369,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="56"/>
         <CursorPos X="76" Y="66"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
       </Unit>
       <Unit>
         <Filename Value="extlibs/fpcfixes.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos Y="19"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="../../../../../univio/pascal/univio/univio_conn.pas"/>
         <EditorIndex Value="5"/>
         <TopLine Value="95"/>
         <CursorPos X="77" Y="133"/>
-        <UsageCount Value="18"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -391,15 +391,11 @@
         <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
         <CursorPos X="11" Y="53"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="src/form_scope.pas"/>
-        <Caret Line="419" Column="24" TopLine="407"/>
-      </Position>
       <Position>
         <Filename Value="src/form_scope.pas"/>
         <Caret Line="9" Column="44"/>
@@ -516,6 +512,10 @@
         <Filename Value="udomaster/commh_udoip.pas"/>
         <Caret Line="102" TopLine="57"/>
       </Position>
+      <Position>
+        <Filename Value="udomaster/commh_udoip.pas"/>
+        <Caret Line="216" Column="39" TopLine="171"/>
+      </Position>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
@@ -523,15 +523,6 @@
     </RunParams>
   </ProjectSession>
   <Debugging>
-    <BreakPoints>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="src/form_scope.pas"/>
-        <Line Value="344"/>
-      </Item>
-    </BreakPoints>
     <Watches>
       <Item>
         <Expression Value="rwbuf[0]"/>
