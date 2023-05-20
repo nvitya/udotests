@@ -62,7 +62,6 @@ type
     response_addr : TSockAddr;
     rxpoll_fds    : Tfdset;
 
-    rqlen  : uint32;
     rqbuf  : array[0..UDOIP_MAX_RQ_SIZE-1] of byte;
     ansbuf : array[0..UDOIP_MAX_RQ_SIZE-1] of byte;
 
@@ -100,8 +99,6 @@ begin
 
   cursqnum := 0; // always start at zero, and increment, the port number will be at every connection different
   fdsocket := -1;
-  rqlen := 0;
-  //timeout_ms := 50;
   timeout_ms := 500;  // ESP responds with 100 ms delay
   max_tries := 3;
 end;
@@ -216,7 +213,7 @@ begin
   if iswrite then
   begin
     rqhead^.len_cmd := mrqlen or (1 shl 15);
-    move(mdataptr^, rqbuf[headsize], rqlen);
+    move(mdataptr^, rqbuf[headsize], mrqlen);
     opstring := format('UdoWrite(%.4X, %d)[%d]', [mindex, moffset, mrqlen]);
   end
   else  // read

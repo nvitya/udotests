@@ -9,7 +9,7 @@
 #include "string.h"
 #include "paramtable.h"
 #include "device.h"
-#include "scope.h"
+#include "simple_scope.h"
 
 // at some improper definitions (like missing TClass base) the tables were moved to .data (initialized RW data)
 // and thus took twice so much space.  So we force these tables to .rodata with the following macro:

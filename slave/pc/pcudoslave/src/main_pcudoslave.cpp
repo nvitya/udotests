@@ -8,12 +8,12 @@
 
 #include "stdio.h"
 #include "stdlib.h"
+
+#include "udo_ip_comm.h"
 #include "udoslaveapp.h"
 #include "mscounter.h"
 #include "device.h"
 #include "rt_thread.h"
-
-TUdoSlaveApp slaveapp;
 
 int main()
 {
@@ -22,8 +22,9 @@ int main()
 	printf("Example UDOIP-SLAVE\n");
 
 	g_device.Init();
+	g_udoip_comm.Init();
 
-	if (!slaveapp.Init())
+	if (!g_slaveapp.Init())
 	{
 		printf("Error initializing UdoSlaveApp !\n");
 		exit(1);
@@ -31,15 +32,15 @@ int main()
 
 	rt_thread.Start();
 
-	printf("UDOIP Slave listening at port %u ...\n", slaveapp.port);
+	printf("UDOIP Slave listening at port %u ...\n", g_udoip_comm.port);
 
 	while (true)
 	{
 		g_device.Run();
 
-		slaveapp.Run();
+		g_udoip_comm.Run();
 
-		if (mscounter() - slaveapp.last_request_mstime > 100) // cycle boosting for 100 ms
+		if (mscounter() - g_udoip_comm.last_request_mstime > 100) // cycle boosting for 100 ms
 		{
 			usleep(1000);  // to leave some rest to the system
 		}

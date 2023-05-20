@@ -9,17 +9,21 @@
 #ifndef UDOSLAVEAPP_H_
 #define UDOSLAVEAPP_H_
 
-#include "udoipslave.h"
+#include "udoslave.h"
 
-class TUdoSlaveApp: public TUdoIpSlave
+class TUdoSlaveApp: public TUdoSlave
 {
 private:
-	typedef TUdoIpSlave super;
+	typedef TUdoSlave super;
 public:
 	TUdoSlaveApp();
 	virtual ~TUdoSlaveApp() { }
 
+	bool Init();
+
 	virtual bool UdoReadWrite(TUdoRequest * udorq);
 };
+
+extern TUdoSlaveApp g_slaveapp;
 
 #endif /* UDOSLAVEAPP_H_ */

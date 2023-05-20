@@ -17,7 +17,7 @@
 #include "version.h"
 
 #include "paramtable.h"
-#include "scope.h"
+#include "simple_scope.h"
 
 TDevice   g_device;
 
