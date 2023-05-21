@@ -25,8 +25,8 @@
 #define NVSADDR_APPLICATION             0  // app starts at the position 0 (app header first)
 #define NVSADDR_CONFIGURATION  0x080C0000  // configuration at the last 256k Flash Sector
 
-#define SCOPE_DATA_BUFFER_SIZE  (32 * 1024)
-#define WIFI_COMMBUF_SIZE        (6 * 1024)
+#define SCOPE_DATA_BUFFER_SIZE  (128 * 1024)
+#define WIFI_COMMBUF_SIZE        ( 6 * 1024)
 
 #define NETMEM_SECTION  ".bss"
 

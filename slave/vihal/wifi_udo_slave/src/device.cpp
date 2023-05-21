@@ -21,7 +21,7 @@
 
 TDevice   g_device;
 
-uint8_t scope_buffer[32 * 1024];
+uint8_t scope_buffer[SCOPE_DATA_BUFFER_SIZE];
 
 extern "C" void SysTick_Handler(void) // 250 us periodic IRQ
 {

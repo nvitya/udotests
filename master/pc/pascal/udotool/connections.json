@@ -13,6 +13,12 @@
 			"ADDR": "192.168.2.10"
 		},
 		{
+			"ID": "test1-WiFi-71",
+			"DEVID": "TESTDEV1",
+			"CONNTYPE": 0,
+			"ADDR": "192.168.0.71"
+		},
+		{
 			"ID": "test1-local",
 			"DEVID": "TESTDEV1",
 			"CONNTYPE": 0,

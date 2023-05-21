@@ -442,7 +442,7 @@ object frmScope: TfrmScope
   end
   object timStatusPoll: TTimer
     Enabled = False
-    Interval = 500
+    Interval = 250
     OnTimer = timStatusPollTimer
     Left = 368
     Top = 384
