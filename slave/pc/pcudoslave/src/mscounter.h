@@ -9,6 +9,8 @@
 #ifndef SRC_MSCOUNTER_H_
 #define SRC_MSCOUNTER_H_
 
+#include "stdint.h"
+
 uint32_t mscounter(void);
 
 #endif /* SRC_MSCOUNTER_H_ */

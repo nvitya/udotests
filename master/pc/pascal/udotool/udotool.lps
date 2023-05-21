@@ -133,10 +133,9 @@
         <ComponentName Value="frmScope"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <TopLine Value="313"/>
-        <CursorPos X="70" Y="364"/>
+        <CursorPos X="86" Y="346"/>
         <UsageCount Value="51"/>
         <Bookmarks Count="1">
           <Item0 X="34" Y="429" ID="1"/>
@@ -388,13 +387,17 @@
       </Unit>
       <Unit>
         <Filename Value="extlibs/sercomm.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
-        <CursorPos X="11" Y="53"/>
+        <CursorPos X="74" Y="22"/>
         <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="1"/>
+    </General>
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="src/form_scope.pas"/>
