@@ -379,7 +379,6 @@
       </Unit>
       <Unit>
         <Filename Value="../../../../../univio/pascal/univio/univio_conn.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <TopLine Value="95"/>
         <CursorPos X="77" Y="114"/>
@@ -388,13 +387,17 @@
       </Unit>
       <Unit>
         <Filename Value="extlibs/sercomm.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
-        <CursorPos X="73" Y="50"/>
+        <CursorPos X="77" Y="64"/>
         <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="1"/>
+    </General>
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="src/form_scope.pas"/>

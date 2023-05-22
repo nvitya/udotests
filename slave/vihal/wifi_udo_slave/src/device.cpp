@@ -23,17 +23,48 @@ TDevice   g_device;
 
 uint8_t scope_buffer[SCOPE_DATA_BUFFER_SIZE];
 
+#if defined(MCU_ARMM)
+
 extern "C" void SysTick_Handler(void) // 250 us periodic IRQ
 {
   g_device.IrqTask();
 }
 
+void start_periodic_irq()
+{
+  SysTick_Config(SystemCoreClock / 4000);  // 250 us
+}
+
+#else
+
+extern "C" void IRQ_Handler_07() // SYSTIMER INT (number 7)
+{
+  SYS_TIMER->MTIME64 = 0;  // restart the timer, this must be the very first line,
+                          // but so the timer is still not so precise as a self-clearing one.
+  g_device.IrqTask();
+}
+
+void start_periodic_irq()
+{
+  mcu_irq_enable(SYSTIMER_IRQn);
+
+  // settin up the periodic timer
+  SYS_TIMER->MTIMECMP64 = (SystemCoreClock / (4000 * 4));  // this timer counts every 4th system clock
+  SYS_TIMER->MTIME64 = 0;
+  SYS_TIMER->MTIMECTL = (0
+    | (0 << 2)  // CLKSRC: 0 = mtime_toggle_a, 1 = core_aon_clk
+    | (1 << 1)  // CMPCLREN: 1 = auto clear the counter on compare  // does not seems to work
+    | (0 << 0)  // TIMESTOP: 1 = stop timer
+  );
+}
+
+#endif
+
 void TDevice::Init()
 {
 	g_scope.Init(&scope_buffer[0], sizeof(scope_buffer));
 
-  // start the device periodic irq
-  SysTick_Config(SystemCoreClock / 4000);  // 250 us
+	start_periodic_irq();
 }
 
 void TDevice::Run()

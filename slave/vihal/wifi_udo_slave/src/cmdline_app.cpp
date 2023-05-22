@@ -35,6 +35,7 @@ TCmdLineApp g_cmdline;
 
 void cpu_soft_reset()
 {
+#ifdef MCU_ARMM
   __disable_irq();
 
   uint32_t tmp = SCB->AIRCR;
@@ -46,6 +47,9 @@ void cpu_soft_reset()
   {
     // wait for the reset...
   }
+#else
+  #warning "CPU reset not implemented!"
+#endif
 }
 
 bool TCmdLineApp::ParseCmd() // sp is already prepared

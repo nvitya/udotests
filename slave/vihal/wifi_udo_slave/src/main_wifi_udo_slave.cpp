@@ -54,7 +54,7 @@ volatile unsigned hbcounter = 0;
 extern "C" __attribute__((noreturn)) void _start(unsigned self_flashing)  // self_flashing = 1: self-flashing required for RAM-loaded applications
 {
   // after ram setup and region copy the cpu jumps here, with probably RC oscillator
-  mcu_disable_interrupts();
+  mcu_interrupts_disable();
 
   // Set the interrupt vector table offset, so that the interrupts and exceptions work
   mcu_init_vector_table();
@@ -132,7 +132,7 @@ extern "C" __attribute__((noreturn)) void _start(unsigned self_flashing)  // sel
   g_cmdline.ShowNetAdapterInfo();
   g_cmdline.ShowNetInfo(nullptr, 0);
 
-  mcu_enable_interrupts();
+  mcu_interrupts_enable();
 
   if (!wifi_init())
   {
