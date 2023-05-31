@@ -6,7 +6,7 @@
  *  license:  public domain
 */
 
-#include <udoslaveapp.h>
+#include "udoslaveapp.h"
 #include "paramtable.h"
 
 TUdoSlaveApp g_slaveapp;
@@ -21,18 +21,17 @@ bool TUdoSlaveApp::Init()
   return true;
 }
 
-bool TUdoSlaveApp::UdoReadWrite(TUdoRequest * udorq)
+bool HandleUdoReadWrite(TUdoRequest * udorq)  // required by the UDO slave library
 {
 	if (param_read_write(udorq))
 	{
 		return true;
 	}
 
-	if (udorq->result == UDOERR_INDEX)  // handle the standart UDO indexes (0x0000 - 0x0100)
+	if (udorq->result == UDOERR_INDEX)  // handle the standard UDO indexes (0x0000 - 0x0100)
 	{
-		return super::UdoReadWrite(udorq);
+		return g_slaveapp.UdoReadWrite(udorq);
 	}
 
-	return false;
+  return false;
 }
-

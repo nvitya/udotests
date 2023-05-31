@@ -20,10 +20,10 @@ public:
 	virtual ~TUdoSlaveApp() { }
 
 	bool Init();
-
-	virtual bool UdoReadWrite(TUdoRequest * udorq);
 };
 
 extern TUdoSlaveApp g_slaveapp;
+
+extern bool HandleUdoReadWrite(TUdoRequest * udorq);  // required by the UDO slave library
 
 #endif /* UDOSLAVEAPP_H_ */
