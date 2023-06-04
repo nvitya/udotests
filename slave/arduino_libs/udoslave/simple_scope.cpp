@@ -253,6 +253,7 @@ void TScope::PrepareSampling()
 	buf_end_ptr = next_smp_ptr + (sample_width * sample_count);
 
 	cur_smp_index = 0;
+  smp_cycle_counter = 0;
 
 	// prepare the trigger, for unsigned comparison
 

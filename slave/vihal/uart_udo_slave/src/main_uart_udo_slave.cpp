@@ -126,11 +126,6 @@ extern "C" __attribute__((noreturn)) void _start(unsigned self_flashing)  // sel
 
   g_device.Init();
 
-  if (!g_slaveapp.Init())
-  {
-    TRACE("Error initializing UdoSlaveApp !\n");
-  }
-
   TRACE("\r\nStarting main cycle...\r\n");
 
   tracebuf.waitsend = false;  // change to buffered mode
