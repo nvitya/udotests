@@ -1,6 +1,6 @@
 
 #include "WiFi.h"
-#include "FFat.h"
+#include "SPIFFS.h"
 
 #include "board_pins.h"
 #include "device.h"
@@ -17,18 +17,20 @@ unsigned      last_hb_time = 0;
 void setup()
 {
   board_pins_init();
-
   traces_init();
 
-  TRACE("\n\n--------------------------------\n");
+  digitalWrite(PIN_LED, 1);
+  delay(500);
 
-  if (FFat.begin(true))  // formatOnFail = true
+  TRACE("\n\n--------------------------------\n");
+  TRACE("Initializing file system...\r\n");
+  if (SPIFFS.begin(true))  // formatOnFail = true
   {
-    TRACE("FAT FS initialized.\n");
+    TRACE("SPIFFS initialized.\n");
   }
   else
   {
-    TRACE("Error initializing FFat!\n");
+    TRACE("Error initializing SPIFFS!\n");
   }
 
   g_config.Init(); // also loads the confiugration
@@ -44,11 +46,6 @@ void setup()
   }
 
   g_device.Init();  // starts the periodic IRQ / task
-
-  if (!g_slaveapp.Init())
-  {
-    TRACE("Error initializing UdoSlaveApp !\n");
-  }
 
   TRACE("\r\n");
 

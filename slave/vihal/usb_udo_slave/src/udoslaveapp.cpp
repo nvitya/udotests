@@ -6,7 +6,7 @@
  *  license:  public domain
 */
 
-#include "udoslaveapp.h"
+#include <udoslaveapp.h>
 #include "paramtable.h"
 
 // the udoslave_app_read_write() is called from the communication system (Serial or IP) to

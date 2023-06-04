@@ -6,8 +6,6 @@
  *  license:  public domain
 */
 
-#include "Arduino.h"
-
 #include "string.h"
 #include "stdio.h"
 #include <stdarg.h>
@@ -26,72 +24,17 @@ TDevice   g_device;
 
 uint8_t scope_buffer[SCOPE_DATA_BUFFER_SIZE];
 
-hw_timer_t *  my_hw_irq_timer = nullptr;  // from ESP
-
-TaskHandle_t * periodic_task_handle = nullptr;
-
-void IRAM_ATTR my_irq_timer_callback()
+extern "C" void SysTick_Handler(void) // 250 us periodic IRQ
 {
-  digitalWrite(PIN_IRQ, 1);
-  #if defined(NO_FLOAT)  
-    digitalWrite(PIN_IRQ_TASK, 1);
-    g_device.IrqTask();  // floating point does not allowed in ISR !
-    digitalWrite(PIN_IRQ_TASK, 0);
-  #else
-    xTaskResumeFromISR(periodic_task_handle);
-  #endif
-  digitalWrite(PIN_IRQ, 0);
-}
-
-#if !defined(NO_FLOAT)  
-void IRAM_ATTR task_periodic_irq(void * aparam)
-{
-  while (true)
-  {
-    vTaskSuspend(periodic_task_handle);
-
-    digitalWrite(PIN_IRQ_TASK, 1);
-    g_device.IrqTask();  // floating point is safe here
-    digitalWrite(PIN_IRQ_TASK, 0);
-  }
-}
-
-#endif
-
-void start_periodic_irq()
-{
-  // a separate task is required because the floating point is not
-  // allowed in the IRQ service routines !
-
-  TRACE("Starting IRQ Task...\n");
-
-  #if defined(NO_FLOAT)  
-    // 
-  #else
-    xTaskCreatePinnedToCore(
-        task_periodic_irq,
-        "periodic_irq",
-        4192,  // stack size
-        nullptr,
-        0xFFFFFFFF, // priority,
-        (void * *)&periodic_task_handle,
-        1 // xCoreID
-    );
-  #endif
-
-  // setup the periodic interrupt
-  my_hw_irq_timer = timerBegin(0, 80, true);
-  timerAlarmWrite(my_hw_irq_timer, 250, true);  // 250 us timer
-  timerAttachInterrupt(my_hw_irq_timer, my_irq_timer_callback, false); // must come after the alarm setup!
-  timerAlarmEnable(my_hw_irq_timer); //Just Enable
-  //timerStart(my_hw_irq_timer);
+  g_device.IrqTask();
 }
 
 void TDevice::Init()
 {
 	g_scope.Init(&scope_buffer[0], sizeof(scope_buffer));
 
-	start_periodic_irq();
+  // start the device periodic irq
+  SysTick_Config(SystemCoreClock / 4000);  // 250 us
 }
 
 void TDevice::Run()
@@ -99,7 +42,7 @@ void TDevice::Run()
 	g_scope.Run();
 }
 
-void IRAM_ATTR TDevice::IrqTask() // IRQ Context !
+void TDevice::IrqTask() // IRQ Context !
 {
 	unsigned n;
 
@@ -107,8 +50,8 @@ void IRAM_ATTR TDevice::IrqTask() // IRQ Context !
 
 	// generate some functions for scoping
 
-#if defined(NO_FLOAT)  
- 
+#if defined(NO_FLOAT)
+
   func_i32_1 = (irq_cycle_counter * irq_cycle_counter) & 0xFFFF;
   func_i32_2 = 1000 / (1 + (irq_cycle_counter & 0xFFF));
 
@@ -117,22 +60,22 @@ void IRAM_ATTR TDevice::IrqTask() // IRQ Context !
 
 #else
 
-	for (n = 0; n < 4; ++n)
-	{
-		seed_sin[n] += seed_inc[n];
-		while (seed_sin[n] > 2 * M_PI)
-		{
-			seed_sin[n] -= 2 * M_PI;
-		}
-	}
+  for (n = 0; n < 4; ++n)
+  {
+    seed_sin[n] += seed_inc[n];
+    while (seed_sin[n] > 2 * M_PI)
+    {
+      seed_sin[n] -= 2 * M_PI;
+    }
+  }
 
-	func_i32_1 = 100000.0 * sin(seed_sin[0]);
-	func_i32_2 = 50000.0 + 50000.0 * sin(seed_sin[1]) + 10000.0 * sin(seed_sin[3]);
-	func_i16_1 = 10000 * sin(seed_sin[0]) + 5000 * sin(seed_sin[1]) + 2500 * sin(seed_sin[2]) + 1000 * sin(seed_sin[3]);
-	func_i16_2 = 1000 * sin(seed_sin[0]) + 2000 * sin(seed_sin[1]) + 3000 * sin(seed_sin[2]) + 4000 * sin(seed_sin[3]);
-	func_fl_1 = 1000.0 / float(1 + irq_cycle_counter);
-	func_fl_2 = (irq_cycle_counter / 1000.0) * sin(seed_sin[2] + seed_sin[0]);
-#endif  
+  func_i32_1 = 100000.0 * sin(seed_sin[0]);
+  func_i32_2 = 50000.0 + 50000.0 * sin(seed_sin[1]) + 10000.0 * sin(seed_sin[3]);
+  func_i16_1 = 10000 * sin(seed_sin[0]) + 5000 * sin(seed_sin[1]) + 2500 * sin(seed_sin[2]) + 1000 * sin(seed_sin[3]);
+  func_i16_2 = 1000 * sin(seed_sin[0]) + 2000 * sin(seed_sin[1]) + 3000 * sin(seed_sin[2]) + 4000 * sin(seed_sin[3]);
+  func_fl_1 = 1000.0 / float(1 + irq_cycle_counter);
+  func_fl_2 = (irq_cycle_counter / 1000.0) * sin(seed_sin[2] + seed_sin[0]);
+#endif
 
 	g_scope.RunIrqTask();
 }

@@ -7,10 +7,28 @@
 			"ADDR": "/dev/ttyACM0"
 		},
 		{
+			"ID": "test1-ACM1",
+			"DEVID": "TESTDEV1",
+			"CONNTYPE": 1,
+			"ADDR": "/dev/ttyACM1"
+		},
+		{
+			"ID": "test1-ETH-72",
+			"DEVID": "TESTDEV1",
+			"CONNTYPE": 0,
+			"ADDR": "192.168.0.72"
+		},
+		{
 			"ID": "test1-ETH2",
 			"DEVID": "TESTDEV1",
 			"CONNTYPE": 0,
 			"ADDR": "192.168.2.10"
+		},
+		{
+			"ID": "test1-WiFi-70",
+			"DEVID": "TESTDEV1",
+			"CONNTYPE": 0,
+			"ADDR": "192.168.0.70"
 		},
 		{
 			"ID": "test1-WiFi-71",
@@ -23,6 +41,12 @@
 			"DEVID": "TESTDEV1",
 			"CONNTYPE": 0,
 			"ADDR": "192.168.0.73"
+		},
+		{
+			"ID": "test1-WiFi-76",
+			"DEVID": "TESTDEV1",
+			"CONNTYPE": 0,
+			"ADDR": "192.168.0.76"
 		},
 		{
 			"ID": "test1-local",

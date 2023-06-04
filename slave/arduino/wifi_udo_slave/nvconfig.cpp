@@ -6,7 +6,7 @@
  */
 
 #include "nvconfig.h"
-#include "FFat.h"
+#include "SPIFFS.h"
 #include "traces.h"
 
 TNvConfig  g_config;
@@ -58,7 +58,7 @@ void TNvConfig::Load()
 {
   TCfgStb * pstb = &spifl_cfg;
 
-  File file = FFat.open("/netconfig.bin", FILE_READ);
+  File file = SPIFFS.open("/netconfig.bin", FILE_READ);
   if (!file)
   {
     TRACE("Error reading config file!\r\n");
@@ -101,7 +101,7 @@ void TNvConfig::Save()
   data.cfg_csum = 0;
   data.cfg_csum = vgboot_checksum(&data, sizeof(data));
 
-  File file = FFat.open("/netconfig.bin", FILE_WRITE);
+  File file = SPIFFS.open("/netconfig.bin", FILE_WRITE);
   if (!file)
   {
     TRACE("Error writing config file!\r\n");

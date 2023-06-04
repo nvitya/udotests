@@ -44,11 +44,6 @@ void setup()
 
   g_device.Init();  // starts the periodic IRQ / task
 
-  if (!g_slaveapp.Init())
-  {
-    TRACE("Error initializing UdoSlaveApp !\n");
-  }
-
   TRACE("\r\n");
 
   TRACE("\r\n");

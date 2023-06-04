@@ -30,8 +30,6 @@
 #include <fcntl.h>
 #include "udoslave_traces.h"
 
-extern bool HandleUdoReadWrite(TUdoRequest * udorq);  // must be defined by the application
-
 uint8_t udoip_rq_buffer[UDOIP_MAX_RQ_SIZE];
 uint8_t udoip_ans_cache_buffer[UDOIP_ANSCACHE_NUM * UDOIP_MAX_RQ_SIZE]; // this might be relative big!
 
@@ -152,7 +150,7 @@ void TUdoIpCommBase::ProcessUdpRequest(TUdoIpRequest * ucrq)
 		mudorq.dataptr = pansdata;
 	}
 
-  HandleUdoReadWrite(&mudorq);
+	udoslave_app_read_write(&mudorq);
 
 	if (mudorq.result)
 	{

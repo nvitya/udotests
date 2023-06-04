@@ -8,7 +8,7 @@
         <Filename Value="udotool.lpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="100" Y="26"/>
-        <UsageCount Value="135"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -20,7 +20,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="52"/>
         <CursorPos X="76" Y="92"/>
-        <UsageCount Value="135"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -32,7 +32,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
         <CursorPos X="64" Y="33"/>
-        <UsageCount Value="135"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -44,7 +44,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="12"/>
         <CursorPos X="68" Y="31"/>
-        <UsageCount Value="135"/>
+        <UsageCount Value="137"/>
       </Unit>
       <Unit>
         <Filename Value="src/udo_device.pas"/>
@@ -52,7 +52,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="4"/>
         <CursorPos X="14" Y="49"/>
-        <UsageCount Value="135"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -65,7 +65,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="196"/>
         <CursorPos X="25" Y="286"/>
-        <UsageCount Value="133"/>
+        <UsageCount Value="135"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -77,7 +77,7 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos X="27" Y="12"/>
-        <UsageCount Value="133"/>
+        <UsageCount Value="135"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_connections.pas"/>
@@ -87,7 +87,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="95" Y="26"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="128"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_conn_edit.pas"/>
@@ -98,7 +98,7 @@
         <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <CursorPos X="50" Y="19"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="128"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -108,7 +108,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="89"/>
         <CursorPos X="22" Y="245"/>
-        <UsageCount Value="125"/>
+        <UsageCount Value="127"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -117,7 +117,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="15" Y="72"/>
-        <UsageCount Value="111"/>
+        <UsageCount Value="113"/>
       </Unit>
       <Unit>
         <Filename Value="tfr_comm/commh_udpcan.pas"/>
@@ -125,7 +125,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="208"/>
         <CursorPos X="58" Y="259"/>
-        <UsageCount Value="109"/>
+        <UsageCount Value="111"/>
       </Unit>
       <Unit>
         <Filename Value="src/form_scope.pas"/>
@@ -136,7 +136,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="313"/>
         <CursorPos X="86" Y="346"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="53"/>
         <Bookmarks Count="1">
           <Item0 X="34" Y="429" ID="1"/>
         </Bookmarks>
@@ -148,7 +148,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="15"/>
-        <UsageCount Value="92"/>
+        <UsageCount Value="94"/>
         <Bookmarks Count="1">
           <Item0 X="32" Y="220" ID="1"/>
         </Bookmarks>
@@ -160,16 +160,17 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="53" Y="11"/>
-        <UsageCount Value="91"/>
+        <UsageCount Value="93"/>
       </Unit>
       <Unit>
         <Filename Value="udomaster/commh_udosl.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="115"/>
-        <CursorPos X="13" Y="135"/>
-        <UsageCount Value="40"/>
+        <TopLine Value="79"/>
+        <CursorPos X="23" Y="119"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -352,7 +353,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="261"/>
         <CursorPos X="103" Y="303"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -360,7 +361,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="171"/>
         <CursorPos X="39" Y="216"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -381,17 +382,16 @@
         <Filename Value="../../../../../univio/pascal/univio/univio_conn.pas"/>
         <EditorIndex Value="5"/>
         <TopLine Value="95"/>
-        <CursorPos X="77" Y="114"/>
-        <UsageCount Value="21"/>
+        <CursorPos X="70" Y="134"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="extlibs/sercomm.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
         <CursorPos X="77" Y="64"/>
-        <UsageCount Value="19"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
