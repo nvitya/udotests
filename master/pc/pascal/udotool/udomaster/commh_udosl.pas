@@ -20,8 +20,6 @@ type
   public
     devstr     : string;
     comm       : TSerComm;
-    //max_tries  : integer;
-    timeout_ms : integer;
 
     constructor Create; override;
     destructor Destroy; override;
@@ -81,11 +79,13 @@ begin
   comm := TSerComm.Create;
   comm.baudrate := UDOSL_DEFAULT_SPEED;
 
+  default_timeout := 0.2;
+  timeout := default_timeout;
+
   protocol := ucpSerial;
   devstr := '';
 
   rxstate := 0;
-  timeout_ms := 200;
 end;
 
 destructor TCommHandlerUdoSl.Destroy;
@@ -287,7 +287,7 @@ begin
     begin
     	if (r = 0) or (r = -11) then  // 11 = EAGAIN
     	begin
-    		if nstime() - lastrecvtime > timeout_ms * 1000000 then
+    		if nstime() - lastrecvtime > timeout * 1000000000 then
         begin
           raise EUdoAbort.Create(UDOERR_TIMEOUT, '%s timeout', [opstring]);
         end;
@@ -337,7 +337,7 @@ begin
           rxstate := 3;  // index follows normally
 
           lencode := ((b shr 4) and 7);
-          if      lencode < 5 then ans_datalen := ($84210 shr (lencode shl 2) and $F) // in-line demultiplexing
+          if      lencode < 5 then ans_datalen := (($84210 shr (lencode shl 2)) and $F) // in-line demultiplexing
           else if 5 = lencode then ans_datalen := 16
           else if 7 = lencode then rxstate := 2     // extended length follows
           else  // 6 == error code
@@ -365,7 +365,7 @@ begin
   		begin
   			if 0 = rxcnt then
   			begin
-  				ans_index := b;  // address low
+  				ans_index := b;  // index low
   				rxcnt := 1;
   			end
   			else

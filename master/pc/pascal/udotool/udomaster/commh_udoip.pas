@@ -37,7 +37,6 @@ type
   TCommHandlerUdoIp = class(TUdoCommHandler)
   public
     ipaddrstr : string;
-    slaveid   : integer;
 
     max_tries : integer;
 
@@ -95,7 +94,6 @@ begin
   inherited;
   protocol := ucpIP;
   ipaddrstr := '127.0.0.1';
-  slaveid := 0;
 
   cursqnum := 0; // always start at zero, and increment, the port number will be at every connection different
   fdsocket := -1;
@@ -201,11 +199,13 @@ var
 label
   repeat_send, repeat_recv;
 begin
+  Inc(cursqnum); // increment sequence number
 
   rqhead  := PUdoIpRqHeader(@rqbuf[0]);
   anshead := PUdoIpRqHeader(@ansbuf[0]);
   headsize := sizeof(TUdoIpRqHeader);
 
+  rqhead^.rqid   := cursqnum;
   rqhead^.index := mindex;
   rqhead^.offset := moffset;
   rqhead^.metadata := 0;  // no metadata support so far
@@ -221,10 +221,6 @@ begin
     rqhead^.len_cmd := mrqlen;  // bit15 = 0: read
     opstring := format('UdoRead(%.4X, %d)', [mindex, moffset]);
   end;
-
-  Inc(cursqnum); // increment sequence number
-  rqhead^.rqid   := cursqnum;
-  rqhead^.offset := moffset;
 
   trynum := 1;
 

@@ -206,7 +206,7 @@ begin
   end;
   offs := 0;
 
-  if objidx > 0 then
+  if objidx >= 0 then
   begin
     // numeric id was given
     if sp.CheckSymbol('.') then

@@ -551,8 +551,10 @@ class function TUdoParam.FormatValueGeneric(const buf; buflen : uint32) : string
 var
   n : integer;
   pb : PByte;
+  zs : string;
+  sterm : boolean = false;
 begin
-  if buflen > 16 then
+  if buflen > 64 then
   begin
     result := IntToStr(buflen) + ' bytes';
   end
@@ -575,11 +577,21 @@ begin
   begin
     // hex dump
     result := '';
+    zs := '';
     pb := PByte(@buf);
     for n := 1 to buflen do
     begin
+      if not sterm then
+      begin
+        if 0 = pb^ then sterm := true // terminate the string here
+        else if (pb^ >= 32) and (pb^ < 127) then zs += chr(pb^) else zs := '?';
+      end;
+      if (n > 1) and (0 = ((n-1) mod 16)) then result += #13+'    ';
       result += format(' %.2X', [pb^]);
+      inc(pb);
     end;
+    // zero terminated string
+    result += #13+'     "'+zs+'"';
   end;
 end;
 

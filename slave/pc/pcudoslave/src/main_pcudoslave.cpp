@@ -24,12 +24,6 @@ int main()
 	g_device.Init();
 	g_udoip_comm.Init();
 
-	if (!g_slaveapp.Init())
-	{
-		printf("Error initializing UdoSlaveApp !\n");
-		exit(1);
-	}
-
 	rt_thread.Start();
 
 	printf("UDOIP Slave listening at port %u ...\n", g_udoip_comm.port);

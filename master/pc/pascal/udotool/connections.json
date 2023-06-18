@@ -1,6 +1,12 @@
 {
 	"CONNLIST": [
 		{
+			"ID": "USB1",
+			"DEVID": "UNIVIO",
+			"CONNTYPE": 1,
+			"ADDR": "/dev/ttyACM1"
+		},
+		{
 			"ID": "test1-ACM0",
 			"DEVID": "TESTDEV1",
 			"CONNTYPE": 1,

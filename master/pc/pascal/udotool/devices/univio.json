@@ -1,0 +1,22 @@
+{
+	"PARAMS": [
+		{
+			"INDEX": "0100",
+			"OFFSET": 0,
+			"NAME": "FWTYPE",
+			"DTYPE": 64,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "Firmware Type"
+		},
+		{
+			"INDEX": "0181",
+			"OFFSET": 0,
+			"NAME": "USB-DEVID",
+			"DTYPE": 64,
+			"UNIT": "",
+			"SCALE": 1,
+			"DESCR": "USB Device ID"
+		}
+	]
+}

@@ -11,19 +11,4 @@
 
 #include "udoslave.h"
 
-class TUdoSlaveApp: public TUdoSlave
-{
-private:
-	typedef TUdoSlave super;
-public:
-	TUdoSlaveApp();
-	virtual ~TUdoSlaveApp() { }
-
-	bool Init();
-
-	virtual bool UdoReadWrite(TUdoRequest * udorq);
-};
-
-extern TUdoSlaveApp g_slaveapp;
-
 #endif /* UDOSLAVEAPP_H_ */

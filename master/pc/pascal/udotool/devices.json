@@ -7,6 +7,10 @@
 		{
 			"ID": "TESTDEV1",
 			"JSON": "devices/TESTDEV1.json"
+		},
+		{
+			"ID": "UNIVIO",
+			"JSON": "devices/univio.json"
 		}
 	]
 }
