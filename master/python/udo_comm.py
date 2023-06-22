@@ -94,6 +94,35 @@ class TUdoComm:
         r = self.commh.UdoRead(index, offset, 1)
         return self.ByteArrayToUint(r)
 
+    def ReadBlob(self, index : int, offset : int, maxdatalen : int) -> bytearray:
+        result = bytearray()
+        remaining = maxdatalen
+        offs = offset
+        while remaining > 0:
+             chunksize = self.max_payload_size
+             if chunksize > remaining:  chunksize = remaining
+             r = self.commh.UdoRead(index, offs, chunksize)
+             if len(r) <= 0:
+                 break
+
+             result.extend(r)
+             offs += len(r)
+             remaining -= len(r)
+             if len(r) < chunksize:
+                 break
+        return result
+
+    def WriteBlob(self, index : int, offset : int, value : bytearray):
+        data = bytearray(value)
+        remaining = len(data)
+        dataoffs = 0
+        while remaining > 0:
+            chunksize = self.max_payload_size
+            if chunksize > remaining:  chunksize = remaining
+            self.commh.UdoWrite(index, offset + dataoffs, data[dataoffs : dataoffs+chunksize])
+            dataoffs += chunksize
+            remaining -= chunksize
+
     def Open(self):
         if not self.commh.Opened():
             self.commh.Open()

@@ -30,4 +30,9 @@ try:
 except Exception as e:
     print('Exception: ', str(e))
 
+print('reading blob...')
+bd = udocomm.ReadBlob(2, 0, 2048)
+print('result length: ', len(bd))
+#print(bd)
+
 print('test finished.')
