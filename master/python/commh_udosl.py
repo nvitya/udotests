@@ -1,4 +1,5 @@
 import serial
+import struct
 from udo_comm import *
 
 # CRC8 table with the standard polynom of 0x07:
@@ -64,7 +65,8 @@ class TCommHandlerUdoSl(TUdoCommHandler):
             except:
                 pass
 
-        self.com = serial.Serial(self.devstr, self.baudrate, timeout=self.timeout)
+        self.com = serial.Serial(self.devstr, self.baudrate, timeout=self.timeout,
+                                 bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
 
     def Close(self):
         if self.com:
@@ -94,7 +96,16 @@ class TCommHandlerUdoSl(TUdoCommHandler):
         return self.ans_data
 
     def UdoWrite(self, index : int, offset : int, avalue : bytearray):
-        raise EUdoAbort(UDOERR_APPLICATION, "Open: Invalid comm. handler")
+        self.iswrite = False
+        self.mindex  = index
+        self.moffset = offset
+        self.rqdata = bytearray(avalue)
+        self.mrqlen = len(self.rqdata)
+
+        self.opstring = "UdoWrite(%.4X, %d)[%d]" % (self.mindex, self.moffset, self.mrqlen)
+
+        self.SendRequest()
+        self.RecvResponse()
 
     def SendRequest(self):
         self.com.flushInput()
@@ -126,7 +137,7 @@ class TCommHandlerUdoSl(TUdoCommHandler):
         else:              b |= (metalen << 2)
 
         extlen = 0
-        if 3  > self.mrqlen:  b |= (self.mrqlen << 4)
+        if    3  > self.mrqlen:    b |= (self.mrqlen << 4)
         elif  4 == self.mrqlen:    b |= (3 << 4)
         elif  8 == self.mrqlen:    b |= (4 << 4)
         elif 16 == self.mrqlen:    b |= (5 << 4)
@@ -168,9 +179,121 @@ class TCommHandlerUdoSl(TUdoCommHandler):
         self.com.write(self.txdata)
 
     def RecvResponse(self):
-        pass
+        self.ans_data = bytearray()
+        self.rxdata = bytearray()
+        self.ans_datalen = 0
+        self.ans_offset = 0
+        self.ans_metadata = 0
+        self.ans_index = 0
+        offslen = 0
+        metalen = 0
+        iserror = False
 
+        rxstate = 0
+        rxcnt = 0
+        rxpos = 0
+        while True:
+            rxch = self.com.read(1)
+            # print('received: 0x%02X' % rxch[0])
+            if len(rxch) == 0:
+                raise EUdoAbort(UDOERR_CONNECTION, "Error receiving response")
+            self.rxdata.extend(bytearray(rxch))
+            while rxpos < len(self.rxdata):
+                b = self.rxdata[rxpos]
+                if 0 == rxstate:
+                    rxpos = 0
+                    rxcnt = 0
+                    if 0x55 == self.rxdata[0]:
+                        rxstate = 1
+                    else:
+                        self.rxdata.pop(0) # remove the first byte and continue
 
+                elif 1 == rxstate: # command and lengths
+                    if ((b & 0x80) != 0) != self.iswrite:  # does the response R/W differ from the request ?
+                        rxstate = 0
+                    else:
+                        # decode the length fields
+                        offslen = (0x4210 >> ((b & 3) << 2)) & 0xF
+                        metalen = (0x4210 >> (b & 0xC)) & 0xF  # its already multiple of 4
+                        rxcnt = 0
+                        rxstate = 3  # index follows normally
+                        lencode = ((b >> 4) & 7)
+                        if   lencode < 5:   self.ans_datalen = ((0x84210 >> (lencode << 2)) & 0xF) # in-line demultiplexing
+                        elif 5 == lencode:  self.ans_datalen = 16
+                        elif 7 == lencode:  rxstate = 2     # extended length follows
+                        else:  # 6 == error code
+                            self.ans_datalen = 2
+                            iserror = True
+                            
+                elif 2 == rxstate: # extended length
+                    if 0 == rxcnt:
+                        self.ans_datalen = b # low byte
+                        rxcnt = 1
+                    else:
+                        self.ans_datalen |= (b << 8) # high byte
+                        rxcnt = 0
+                        rxstate = 3 # index follows
+				
+                elif 3 == rxstate: # index
+                    if 0 == rxcnt:
+                        self.ans_index = b  # index low
+                        rxcnt = 1
+                    else:
+                        self.ans_index |= (b << 8)  # index high
+                        rxcnt = 0
+                        if offslen > 0:
+                            rxstate = 4  # offset follows
+                        elif metalen > 0:
+                            rxstate = 5  # meta follows
+                        elif self.ans_datalen > 0:
+                            rxstate = 6  # read data or error code
+                        else:
+                            rxstate = 10  # then crc check
+
+                elif 4 == rxstate:  # offset
+                    self.ans_offset |= (b << (rxcnt << 3))
+                    rxcnt += 1
+                    if (rxcnt >= offslen):
+                        rxcnt = 0
+                        if metalen > 0:
+                            rxstate = 5  # meta follows
+                        elif self.ans_datalen > 0:
+                            rxstate = 6  # read data or error code
+                        else:
+                            rxstate = 10  # then crc check
+
+                elif 5 == rxstate:  # metadata
+                    self.ans_metadata |= (b << (rxcnt << 3))
+                    rxcnt += 1
+                    if rxcnt >= metalen:
+                        rxcnt = 0
+                        if self.ans_datalen > 0:
+                            rxstate = 6  # read data or error code
+                        else:
+                            rxstate = 10  # then crc check
+
+                elif 6 == rxstate:  # read data (or error code)
+                    self.ans_data.append(b)
+                    rxcnt += 1
+                    if rxcnt >= self.ans_datalen:
+                        rxstate = 10  # crc check
+
+                elif 10 == rxstate:  # crc check
+                    crc = calculate_crc(self.rxdata[0:rxpos])
+                    if b != crc:
+                        raise EUdoAbort(UDOERR_CRC, "%s CRC error" % self.opstring)
+
+                    if iserror:
+                        if len(self.ans_data) < 2:
+                            raise EUdoAbort(UDOERR_CONNECTION, '%s error response length: %d' % (self.opstring, len(self.ans_data)))
+                        ecode = struct.unpack("=H", self.ans_data)[0]
+                        raise EUdoAbort(ecode, '%s result: %04X' % (self.opstring, ecode))
+
+                    return  # everything was ok, return with the data in self.ans_data
+
+                rxpos += 1
+            #/  while
+        #/ while
 
 
 udosl_commh = TCommHandlerUdoSl()

@@ -1,9 +1,13 @@
 from udo_comm import *
 from commh_udoip import udoip_commh
+from commh_udosl import udosl_commh
 
 #udoip_commh.ipaddrstr = '192.168.0.76:1221'  # this was an ESP32 UDO test device
-udoip_commh.ipaddrstr = '127.0.0.1:1221'  # pc udo slave test
-udocomm.SetHandler(udoip_commh)
+#udoip_commh.ipaddrstr = '127.0.0.1:1221'  # pc udo slave test
+#udocomm.SetHandler(udoip_commh)
+
+udosl_commh.devstr = '/dev/ttyACM0'
+udocomm.SetHandler(udosl_commh)
 
 udocomm.Open()
 
