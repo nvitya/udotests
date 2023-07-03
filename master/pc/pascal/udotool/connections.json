@@ -1,6 +1,12 @@
 {
 	"CONNLIST": [
 		{
+			"ID": "ESP-C3",
+			"DEVID": "UNIVIO",
+			"CONNTYPE": 0,
+			"ADDR": "192.168.0.74"
+		},
+		{
 			"ID": "USB1",
 			"DEVID": "UNIVIO",
 			"CONNTYPE": 1,
