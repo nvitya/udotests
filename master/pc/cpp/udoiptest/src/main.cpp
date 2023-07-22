@@ -18,7 +18,8 @@ int main(int argc, char * const * argv)
 {
   printf("UDO-IP Test - v1.0\n");
 
-  udoip_commh.ipaddrstr = "127.0.0.1:1221";
+  //udoip_commh.ipaddrstr = "127.0.0.1:1221";
+  udoip_commh.ipaddrstr = "192.168.0.74:1221";
   if (argc > 1)
   {
   	udoip_commh.ipaddrstr = argv[1];
@@ -58,7 +59,16 @@ int main(int argc, char * const * argv)
   printf("\n");
 
 	// set the led blink pattern
-	//iores = conn.WriteUint32(0x1500, 0x00FF0101);
+  printf("Writing 0x1000...\n");
+  try
+  {
+  	udocomm.WriteU32(0x1500, 0, 0x00111111);
+  	printf("  OK\n");
+  }
+  catch (...)
+  {
+  	printf("  FAILED\n");
+  }
 
 	udocomm.Close();
 

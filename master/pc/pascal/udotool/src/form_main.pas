@@ -181,7 +181,8 @@ var
   par : TUdoParam;
   dev : TUdoDevice;
   rlen : integer;
-  wvalue : integer;
+  wvalue : int64;
+  wsize : integer;
 begin
   dev := activeconn.device;
   if dev = nil then EXIT;
@@ -264,10 +265,23 @@ begin
       end;
       wvalue := sp.PrevToInt();
     end;
-    try
-      udocomm.UdoWrite(objidx, offs, wvalue, 4);
 
-      AddLog(IntToHex(objidx shr 8, 4)+'.'+IntToStr(objidx and $FF)+' <- '+IntToStr(wvalue));
+    wsize := 4;
+    if sp.CheckSymbol(':') then // size specified
+    begin
+      if not sp.ReadAlphaNum() then
+      begin
+        AddLog('invalid size specifier');
+        EXIT;
+      end;
+      wsize := sp.PrevToInt();
+      if wsize > 8 then wsize := 8;
+    end;
+
+    try
+      udocomm.UdoWrite(objidx, offs, wvalue, wsize);
+
+      AddLog(IntToHex(objidx, 4)+'.'+IntToStr(offs)+' <- '+IntToStr(wvalue));
 
     except
       on e : Exception do
