@@ -182,7 +182,7 @@ var
   dev : TUdoDevice;
   rlen : integer;
   wvalue : int64;
-  wsize : integer;
+  rqsize : integer;
 begin
   dev := activeconn.device;
   if dev = nil then EXIT;
@@ -191,7 +191,7 @@ begin
 
   sp.Init(cmd);
 
-  if sp.ReadTo(' .=') then
+  if sp.ReadTo(' .=:') then
   begin
     idstr := sp.PrevStr();
   end
@@ -241,6 +241,18 @@ begin
     end;
   end;
 
+  rqsize := 4;
+  sp.SkipSpaces();
+  if sp.CheckSymbol(':') then // size specifier
+  begin
+    if not sp.ReadAlphaNum() then
+    begin
+      AddLog('Invalid size specifier');
+      EXIT;
+    end;
+    rqsize := sp.PrevToInt();
+  end;
+
   sp.SkipSpaces();
   if sp.CheckSymbol('=') then
   begin
@@ -266,20 +278,13 @@ begin
       wvalue := sp.PrevToInt();
     end;
 
-    wsize := 4;
-    if sp.CheckSymbol(':') then // size specified
+    if rqsize > 8 then
     begin
-      if not sp.ReadAlphaNum() then
-      begin
-        AddLog('invalid size specifier');
-        EXIT;
-      end;
-      wsize := sp.PrevToInt();
-      if wsize > 8 then wsize := 8;
+      rqsize := 8;
     end;
 
     try
-      udocomm.UdoWrite(objidx, offs, wvalue, wsize);
+      udocomm.UdoWrite(objidx, offs, wvalue, rqsize);
 
       AddLog(IntToHex(objidx, 4)+'.'+IntToStr(offs)+' <- '+IntToStr(wvalue));
 
@@ -295,7 +300,7 @@ begin
   begin
     // read
     try
-      rlen := udocomm.UdoRead(objidx, offs, readbuf[0], length(readbuf));
+      rlen := udocomm.UdoRead(objidx, offs, readbuf[0], rqsize);
     except
       on e : Exception do
       begin

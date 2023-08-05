@@ -81,11 +81,21 @@ type
     function  UdoRead(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
     procedure UdoWrite(index : uint16; offset : uint32; const dataptr; datalen : uint32);
 
-    function  UdoReadBlob(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
-    procedure UdoWriteBlob(index : uint16; offset : uint32; const dataptr; datalen : uint32);
+  public // some helper functions
+    function  ReadBlob(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
+    procedure WriteBlob(index : uint16; offset : uint32; const dataptr; datalen : uint32);
 
-    function  UdoReadInt(index : uint16; offset : uint32) : int32;
-    procedure UdoWriteInt(index : uint16; offset : uint32; avalue : int32);
+    function  ReadI32(index : uint16; offset : uint32) : int32;
+    function  ReadI16(index : uint16; offset : uint32) : int16;
+    function  ReadU32(index : uint16; offset : uint32) : uint32;
+    function  ReadU16(index : uint16; offset : uint32) : uint16;
+    function  ReadU8(index : uint16; offset : uint32) : uint8;
+
+    procedure WriteI32(index : uint16; offset : uint32; avalue : int32);
+    procedure WriteI16(index : uint16; offset : uint32; avalue : int16);
+    procedure WriteU32(index : uint16; offset : uint32; avalue : uint32);
+    procedure WriteU16(index : uint16; offset : uint32; avalue : uint16);
+    procedure WriteU8(index : uint16; offset : uint32; avalue : uint8);
 
   end;
 
@@ -269,7 +279,7 @@ begin
   commh.UdoWrite(index, offset, dataptr, datalen);
 end;
 
-function TUdoComm.UdoReadBlob(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
+function TUdoComm.ReadBlob(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
 var
   chunksize : integer;
   remaining : integer;
@@ -302,7 +312,7 @@ begin
   end;
 end;
 
-procedure TUdoComm.UdoWriteBlob(index : uint16; offset : uint32; const dataptr; datalen : uint32);
+procedure TUdoComm.WriteBlob(index : uint16; offset : uint32; const dataptr; datalen : uint32);
 var
   chunksize : integer;
   remaining : integer;
@@ -325,22 +335,84 @@ begin
   end;
 end;
 
-function TUdoComm.UdoReadInt(index : uint16; offset : uint32) : int32;
+function TUdoComm.ReadI32(index : uint16; offset : uint32) : int32;
 var
-  resultbuf : array[0..3] of byte;
+  rvalue : int32 = 0;
 begin
-  resultbuf[0] := 0; // fpc warning fix
-  fillchar(resultbuf[0], sizeof(resultbuf), 0);
-  commh.UdoRead(index, offset, resultbuf[0], sizeof(resultbuf));
-  result := PInt32(@resultbuf[0])^;
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
 end;
 
-procedure TUdoComm.UdoWriteInt(index : uint16; offset : uint32; avalue : int32);
+function TUdoComm.ReadI16(index : uint16; offset : uint32) : int16;
+var
+  rvalue : int16 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+function TUdoComm.ReadU32(index : uint16; offset : uint32) : uint32;
+var
+  rvalue : uint32 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+function TUdoComm.ReadU16(index : uint16; offset : uint32) : uint16;
+var
+  rvalue : uint16 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+function TUdoComm.ReadU8(index : uint16; offset : uint32) : uint8;
+var
+  rvalue : uint16 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+procedure TUdoComm.WriteI32(index : uint16; offset : uint32; avalue : int32);
 var
   lvalue : int32;
 begin
   lvalue := avalue;
   commh.UdoWrite(index, offset, lvalue, 4);
+end;
+
+procedure TUdoComm.WriteI16(index : uint16; offset : uint32; avalue : int16);
+var
+  lvalue : int16;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 2);
+end;
+
+procedure TUdoComm.WriteU32(index : uint16; offset : uint32; avalue : uint32);
+var
+  lvalue : uint32;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 4);
+end;
+
+procedure TUdoComm.WriteU16(index : uint16; offset : uint32; avalue : uint16);
+var
+  lvalue : uint16;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 2);
+end;
+
+procedure TUdoComm.WriteU8(index : uint16; offset : uint32; avalue : uint8);
+var
+  lvalue : int8;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 1);
 end;
 
 initialization
