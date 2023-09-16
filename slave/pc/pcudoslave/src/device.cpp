@@ -21,7 +21,7 @@
 
 TDevice   g_device;
 
-uint8_t scope_buffer[32 * 1024];
+uint8_t scope_buffer[32 * 1024 * 1024];
 
 void TDevice::Init()
 {
