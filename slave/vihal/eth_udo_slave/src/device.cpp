@@ -29,7 +29,7 @@ extern "C" void SysTick_Handler(void) // 250 us periodic IRQ
 
 void TDevice::Init()
 {
-	g_scope.Init(&g_scope_buffer[0], SCOPE_DATA_BUFFER_SIZE);
+	g_scope.Init(g_scope_buffer_ptr, g_scope_buffer_size);
 
   // start the device periodic irq
   SysTick_Config(SystemCoreClock / 4000);  // 250 us

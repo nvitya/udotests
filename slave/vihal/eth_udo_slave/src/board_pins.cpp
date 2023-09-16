@@ -12,6 +12,9 @@
 unsigned     pin_led_count = 1;
 TGpioPin     pin_led[MAX_LEDS] = { TGpioPin(), TGpioPin(), TGpioPin(), TGpioPin() };
 
+uint8_t *    g_scope_buffer_ptr = nullptr;
+uint32_t     g_scope_buffer_size = 0;
+
 TSpiFlash    spiflash;
 
 THwEth       eth;

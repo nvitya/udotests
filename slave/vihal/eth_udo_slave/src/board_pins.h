@@ -31,7 +31,8 @@ extern THwEth       eth;
 extern TNetAdapter  net_adapter;
 extern TIp4Handler  ip4_handler;
 
-extern uint8_t      g_scope_buffer[];
+extern uint8_t *    g_scope_buffer_ptr;
+extern uint32_t     g_scope_buffer_size;
 
 void board_pins_init();
 void board_res_init();

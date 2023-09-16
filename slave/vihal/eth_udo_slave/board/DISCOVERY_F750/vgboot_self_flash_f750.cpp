@@ -24,6 +24,7 @@
  *  authors:  nvitya
 */
 
+#include "stdlib.h"
 #include "platform.h"
 
 #include "spiflash_updater.h"
@@ -42,7 +43,8 @@ extern unsigned __app_image_end;
 // do self flashing using the flash writer
 bool spi_self_flashing(TSpiFlash * spiflash)
 {
-  uint8_t   localbuf[SELFFLASH_BUFSIZE] __attribute__((aligned(8)));
+  uint8_t * tempbuf = (uint8_t *)malloc(SELFFLASH_BUFSIZE);  // allocate the temp buffer on the heap !!!
+
   unsigned  len = unsigned(&__app_image_end) - unsigned(&application_header);
 
   len = ((len + 7) & 0xFFFFFFF8); // length must be also dividible with 8 !
@@ -61,7 +63,7 @@ bool spi_self_flashing(TSpiFlash * spiflash)
   __DSB();
 
   // Using the flash writer to first compare the flash contents:
-  TSpiFlashUpdater  flashupdater(spiflash, localbuf, sizeof(localbuf));
+  TSpiFlashUpdater  flashupdater(spiflash, tempbuf, sizeof(SELFFLASH_BUFSIZE));
 
   TRACE("Self-Flashing:\r\n");
   TRACE("  mem = %08X -> flash = %08X, len = %u ...\r\n", unsigned(&application_header), FLADDR_APPLICATION, len);
@@ -72,6 +74,7 @@ bool spi_self_flashing(TSpiFlash * spiflash)
   if (!flashupdater.UpdateFlash(FLADDR_APPLICATION, (uint8_t *)&application_header, len))
   {
     TRACE("  ERROR!\r\n");
+    free(tempbuf);
     return false;
   }
 
@@ -83,5 +86,6 @@ bool spi_self_flashing(TSpiFlash * spiflash)
   TRACE("  %u * %uk updated, %u * %uk matched, took %u us\r\n",
       flashupdater.writecnt, ssize_k, flashupdater.samecnt, ssize_k, (t1 - t0) / clocksperus);
 
+  free(tempbuf);
   return true;
 }
