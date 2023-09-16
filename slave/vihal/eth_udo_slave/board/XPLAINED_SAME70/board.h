@@ -1,6 +1,6 @@
 /*
  *  file:     board.h
- *  brief:    Board definition for the DISCOVERY F750
+ *  brief:    Board definition for the SAME70 XPLAINED Board
  *  created:  2022-10-28
  *  authors:  nvitya
 */
