@@ -37,5 +37,8 @@ void board_pins_init();
 void board_res_init();
 
 void board_net_init();
+void spiflash_init();
+
+//void board_get_scope_buffer();
 
 #endif /* SRC_BOARD_PINS_H_ */

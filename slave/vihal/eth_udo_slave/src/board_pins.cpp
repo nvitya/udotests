@@ -19,7 +19,7 @@ TNetAdapter  net_adapter;
 TIp4Handler  ip4_handler;
 
 // combined buffer for the Ethernet RX, TX descriptors, packet buffers and later TCP buffers
-uint8_t      network_memory[32 * 1024] __attribute__((section(".bss_RAM2"),aligned(32)));
+uint8_t      network_memory[32 * 1024] __attribute__((section(".bss_RAM2"),aligned(64)));
 
 void board_net_init()
 {

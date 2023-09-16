@@ -1,0 +1,17 @@
+/* linker script for IMXRT1020, requires VBOOT (in VIHALTESTS) */
+
+MEMORY
+{
+  FLASH (rx) :    ORIGIN = 0x10000000, LENGTH = 0K
+
+  ITCRAM (rwx) :  ORIGIN = 0x00000000, LENGTH = 160K
+  DTCRAM (xrw) :  ORIGIN = 0x20000000, LENGTH = 64K
+  OCRAM  (xrw) :  ORIGIN = 0x20200000, LENGTH = 32K
+}
+
+REGION_ALIAS("RAM",  DTCRAM);
+REGION_ALIAS("TEXT", ITCRAM);
+REGION_ALIAS("RAM2", ITCRAM);
+
+INCLUDE armm_default_noflash.ld
+
