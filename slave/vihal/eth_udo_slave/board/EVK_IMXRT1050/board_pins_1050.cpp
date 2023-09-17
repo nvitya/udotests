@@ -57,6 +57,7 @@ void board_pins_init()
   hwpinctrl.PadSetup(IOMUXC_GPIO_B1_11_ENET_RX_ER,       pinflags);
 
   eth.phy_address = 2;
+  eth.external_ref_clock = false; // the MCU gives the refererence clock here !
 
   pin_eth_reset.Setup(PINCFG_OUTPUT | PINCFG_GPIO_INIT_0); // issue reset
   pin_eth_irq.Setup(PINCFG_OUTPUT | PINCFG_GPIO_INIT_1); // pull up before reset
