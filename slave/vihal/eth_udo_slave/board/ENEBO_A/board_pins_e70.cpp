@@ -1,8 +1,7 @@
 /*
- *  file:     board_pins.cpp (eth_raw)
- *  brief:    Board Specific Settings
- *  version:  1.00
- *  date:     2022-03-14
+ *  file:     board_pins.cpp
+ *  brief:    ENEBO-A Board Specific Settings
+ *  date:     2023-09-16
  *  authors:  nvitya
 */
 
@@ -11,7 +10,7 @@
 #include "clockcnt.h"
 #include "cmdline_app.h"
 
-uint8_t g_scope_buffer[SCOPE_DATA_BUFFER_SIZE] __attribute__((aligned(16)));
+uint8_t g_scope_buffer[SCOPE_DATA_BUFFER_SIZE] __attribute__((section(".bss_RAM2"),aligned(16)));
 
 TGpioPin  pin_eth_reset(PORTNUM_A, 19, false);
 
@@ -88,5 +87,7 @@ void board_pins_init()
 
 void board_res_init()
 {
+  g_scope_buffer_ptr   = (uint8_t *)&g_scope_buffer;
+  g_scope_buffer_size  = sizeof(g_scope_buffer);
 }
 
