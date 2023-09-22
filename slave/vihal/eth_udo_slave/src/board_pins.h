@@ -24,8 +24,9 @@ extern unsigned   pin_led_count;
 
 extern TSpiFlash  spiflash; // not all boards have this
 
-#define ETH_RX_PACKETS  16
-#define ETH_TX_PACKETS   4
+#define ETH_RX_PACKETS    6
+#define ETH_TX_PACKETS    4
+#define ETH_NET_MEM_SIZE  (16 * 1024 + 512)
 
 extern THwEth       eth;
 extern TNetAdapter  net_adapter;
