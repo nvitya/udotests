@@ -22,18 +22,18 @@ object frmScope: TfrmScope
     TabOrder = 0
     object Label3: TLabel
       Left = 168
-      Height = 14
+      Height = 15
       Top = 8
-      Width = 76
+      Width = 73
       Caption = 'Trigger Mode:'
       ParentColor = False
     end
     object cbTriggerSlope: TComboBox
       Left = 168
-      Height = 27
+      Height = 23
       Top = 28
       Width = 100
-      ItemHeight = 0
+      ItemHeight = 15
       ItemIndex = 0
       Items.Strings = (
         'Always'
@@ -50,23 +50,23 @@ object frmScope: TfrmScope
     end
     object Label4: TLabel
       Left = 80
-      Height = 14
+      Height = 15
       Top = 8
-      Width = 75
+      Width = 69
       Caption = 'Trigger Level:'
       ParentColor = False
     end
     object Label8: TLabel
       Left = 279
-      Height = 14
+      Height = 15
       Top = 8
-      Width = 50
+      Width = 47
       Caption = 'Pre-Trig.:'
       ParentColor = False
     end
     object edPretriggerPercent: TSpinEdit
       Left = 276
-      Height = 24
+      Height = 23
       Top = 28
       Width = 52
       Increment = 5
@@ -77,17 +77,17 @@ object frmScope: TfrmScope
     end
     object Label9: TLabel
       Left = 116
-      Height = 14
+      Height = 15
       Top = 64
-      Width = 75
+      Width = 72
       Caption = 'Max samples:'
       ParentColor = False
     end
     object Label5: TLabel
       Left = 428
-      Height = 14
+      Height = 15
       Top = 8
-      Width = 76
+      Width = 73
       Caption = 'Device Buffer:'
       ParentColor = False
     end
@@ -104,9 +104,9 @@ object frmScope: TfrmScope
     end
     object Label6: TLabel
       Left = 312
-      Height = 14
+      Height = 15
       Top = 64
-      Width = 65
+      Width = 62
       Caption = 'Rec. length:'
       ParentColor = False
     end
@@ -188,9 +188,9 @@ object frmScope: TfrmScope
     end
     object Label7: TLabel
       Left = 8
-      Height = 14
+      Height = 15
       Top = 116
-      Width = 75
+      Width = 70
       Caption = 'Scope Status:'
       ParentColor = False
     end
@@ -207,15 +207,15 @@ object frmScope: TfrmScope
     end
     object Label11: TLabel
       Left = 332
-      Height = 14
+      Height = 15
       Top = 32
-      Width = 11
+      Width = 10
       Caption = '%'
       ParentColor = False
     end
     object edMaxSamples: TSpinEdit
       Left = 116
-      Height = 24
+      Height = 23
       Top = 81
       Width = 86
       Alignment = taRightJustify
@@ -226,15 +226,15 @@ object frmScope: TfrmScope
     end
     object Label2: TLabel
       Left = 8
-      Height = 14
+      Height = 15
       Top = 8
-      Width = 61
+      Width = 57
       Caption = 'Trigger Ch:'
       ParentColor = False
     end
     object edTriggerCh: TSpinEdit
       Left = 7
-      Height = 24
+      Height = 23
       Top = 28
       Width = 64
       MaxValue = 7
@@ -242,7 +242,7 @@ object frmScope: TfrmScope
     end
     object edTriggerValue: TEdit
       Left = 80
-      Height = 26
+      Height = 23
       Top = 28
       Width = 80
       TabOrder = 8
@@ -250,10 +250,10 @@ object frmScope: TfrmScope
     end
     object cbSmpMul: TComboBox
       Left = 8
-      Height = 27
+      Height = 23
       Top = 81
       Width = 100
-      ItemHeight = 0
+      ItemHeight = 15
       Items.Strings = (
         '62.5 us'
         '125 us'
@@ -270,17 +270,17 @@ object frmScope: TfrmScope
     end
     object Label13: TLabel
       Left = 8
-      Height = 14
+      Height = 15
       Top = 64
-      Width = 79
+      Width = 76
       Caption = 'Sampling rate:'
       ParentColor = False
     end
     object Label10: TLabel
       Left = 8
-      Height = 14
+      Height = 15
       Top = 178
-      Width = 70
+      Width = 63
       Caption = 'VScope Exe:'
       ParentColor = False
     end
@@ -313,9 +313,9 @@ object frmScope: TfrmScope
     end
     object Label12: TLabel
       Left = 216
-      Height = 14
+      Height = 15
       Top = 64
-      Width = 81
+      Width = 78
       Caption = 'Sample Count:'
       ParentColor = False
     end

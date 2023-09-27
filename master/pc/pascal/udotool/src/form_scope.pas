@@ -67,6 +67,7 @@ type
 
   public
 
+    dev_max_channels  : int32;
     dev_scope_buffer  : uint32;
     dev_cycle_time_ns : uint32;
     sample_bytes      : uint32;
@@ -112,6 +113,12 @@ uses
 
 procedure TfrmScope.btnAddClick(Sender : TObject);
 begin
+  if length(channels) >= dev_max_channels then
+  begin
+    MessageDlg('Add Channel', 'Maximal channel count reached!', mtError, [mbAbort], 0);
+    EXIT;
+  end;
+
   EditChannel(-1);
 end;
 
@@ -255,6 +262,12 @@ end;
 procedure TfrmScope.GetDeviceData;
 begin
   try
+    dev_max_channels := udocomm.ReadU32($5001, 0);
+  except //on Exception do
+    dev_max_channels := 8;
+  end;
+
+  try
     dev_scope_buffer := udocomm.ReadU32($5002, 0);
   except //on Exception do
     dev_scope_buffer := 32 * 1024;
@@ -316,7 +329,7 @@ begin
     sleep(10);
   end;
 
-  for i := 0 to 7 do // fill all the channels
+  for i := 0 to dev_max_channels-1 do // fill all the channels
   begin
     if i < length(channels) then
     begin
