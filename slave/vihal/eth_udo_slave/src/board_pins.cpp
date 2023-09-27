@@ -12,6 +12,9 @@
 unsigned     pin_led_count = 1;
 TGpioPin     pin_led[MAX_LEDS] = { TGpioPin(), TGpioPin(), TGpioPin(), TGpioPin() };
 
+uint8_t *    g_scope_buffer_ptr = nullptr;
+uint32_t     g_scope_buffer_size = 0;
+
 TSpiFlash    spiflash;
 
 THwEth       eth;
@@ -19,7 +22,7 @@ TNetAdapter  net_adapter;
 TIp4Handler  ip4_handler;
 
 // combined buffer for the Ethernet RX, TX descriptors, packet buffers and later TCP buffers
-uint8_t      network_memory[32 * 1024] __attribute__((section(".bss_RAM2"),aligned(32)));
+uint8_t      network_memory[ETH_NET_MEM_SIZE] __attribute__((section(NETMEM_SECTION),aligned(64)));
 
 void board_net_init()
 {
@@ -40,7 +43,8 @@ void board_net_init()
 */
   // 2. INITIALIZE THE Adapter
 
-  net_adapter.max_rx_packets = 12; // use the free space with RX packets
+  net_adapter.max_rx_packets = ETH_RX_PACKETS; // use the free space with RX packets
+  net_adapter.max_tx_packets = ETH_TX_PACKETS; // use the free space with RX packets
   net_adapter.Init(&eth, &network_memory[0], sizeof(network_memory));  // Ethernet initialization included
 
 /*

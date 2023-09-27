@@ -1,6 +1,6 @@
 /*
  *  file:     board.h
- *  brief:    Board definition for the SAME70 XPLAINED Board
+ *  brief:    Board definition for the self-made VERTIBO-A Board
  *  created:  2022-10-28
  *  authors:  nvitya
 */
@@ -10,9 +10,12 @@
 
 #define PRINTF_SUPPORT_FLOAT
 
-#define BOARD_NAME "SAME70 XPlained"
-#define MCU_ATSAME70Q21
-#define EXTERNAL_XTAL_HZ   12000000
+#define BOARD_NAME "VERTIBO-A by nvitya"
+#define MCU_ATSAME70Q20
+#define EXTERNAL_XTAL_HZ  12000000
+#ifndef MCU_CLOCK_SPEED
+  #define MCU_CLOCK_SPEED  288000000  // because the SDRAM shares the data bus with the FPGA
+#endif
 
 #define CONUART_UART_SPEED   115200
 #define HAS_SDRAM                 1

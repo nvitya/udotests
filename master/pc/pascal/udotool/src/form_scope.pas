@@ -255,13 +255,13 @@ end;
 procedure TfrmScope.GetDeviceData;
 begin
   try
-    dev_scope_buffer := udocomm.UdoReadInt($5002, 0);
+    dev_scope_buffer := udocomm.ReadU32($5002, 0);
   except //on Exception do
     dev_scope_buffer := 32 * 1024;
   end;
 
   try
-    dev_cycle_time_ns := udocomm.UdoReadInt($5003, 0);
+    dev_cycle_time_ns := udocomm.ReadU32($5003, 0);
   except //on Exception do
     dev_cycle_time_ns := 62500;
   end;
@@ -306,12 +306,12 @@ begin
   // stop the scope if running
   while True do
   begin
-    sst := udocomm.UdoReadInt($5009, 0);
+    sst := udocomm.ReadU8($5009, 0);
     if (sst = 0) or (sst = 8)
     then
         break;
 
-    udocomm.UdoWriteInt($5008, 0, 0);  // stop the scope
+    udocomm.WriteU8($5008, 0, 0);  // stop the scope
     application.ProcessMessages;
     sleep(10);
   end;
@@ -321,27 +321,27 @@ begin
     if i < length(channels) then
     begin
       par := channels[i];
-      udocomm.UdoWriteInt($5020 + i, 0, par.index shl 16 + (par.offset and $FF) shl 8 + par.ByteSize);
+      udocomm.WriteU32($5020 + i, 0, par.index shl 16 + (par.offset and $FF) shl 8 + par.ByteSize);
     end
     else
     begin
-      udocomm.UdoWriteInt($5020 + i, 0, 0); // clear the unused channels
+      udocomm.WriteU32($5020 + i, 0, 0); // clear the unused channels
     end;
   end;
 
   // record settings
-  udocomm.UdoWriteInt($5010, 0, 1 shl cbSmpMul.ItemIndex);  // sample mul
-  udocomm.UdoWriteInt($5011, 0, edMaxSamples.Value);
+  udocomm.WriteU32($5010, 0, 1 shl cbSmpMul.ItemIndex);  // sample mul
+  udocomm.WriteU32($5011, 0, edMaxSamples.Value);
 
   // trigger
-  udocomm.UdoWriteInt($5012, 0, edTriggerCh.Value);
+  udocomm.WriteU8($5012, 0, edTriggerCh.Value);
   trigval := StrToIntDef(edTriggerValue.Text, 0);
-  udocomm.UdoWriteInt($5013, 0, trigval);
-  udocomm.UdoWriteInt($5014, 0, cbTriggerSlope.ItemIndex);
-  udocomm.UdoWriteInt($5016, 0, edPretriggerPercent.Value);
+  udocomm.WriteI32($5013, 0, trigval);
+  udocomm.WriteU8($5014, 0, cbTriggerSlope.ItemIndex);
+  udocomm.WriteU32($5016, 0, edPretriggerPercent.Value);
 
   // start the scope
-  udocomm.UdoWriteInt($5008, 0, 3);
+  udocomm.WriteU8($5008, 0, 3);
 
   //PollScopeStatus;
   //application.ProcessMessages;
@@ -363,7 +363,7 @@ begin
   	8: sampling finished, data available for read
   }
 
-  scope_status := udocomm.UdoReadInt($5009, 0);
+  scope_status := udocomm.ReadU8($5009, 0);
 
   if 0 = scope_status then
   begin
@@ -416,7 +416,7 @@ var
   chnum : integer;
 begin
   SetLength(rawdata, dev_scope_buffer);
-  r := udocomm.UdoReadBlob($500A, 0, rawdata[0], length(rawdata));
+  r := udocomm.ReadBlob($500A, 0, rawdata[0], length(rawdata));
   if r < length(rawdata) then SetLength(rawdata, r);
 
   scnt := uint32(length(rawdata)) div sample_bytes;

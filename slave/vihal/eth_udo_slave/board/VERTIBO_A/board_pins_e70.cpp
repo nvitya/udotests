@@ -1,8 +1,7 @@
 /*
- *  file:     board_pins.cpp (eth_raw)
- *  brief:    Board Specific Settings
- *  version:  1.00
- *  date:     2022-03-14
+ *  file:     board_pins.cpp
+ *  brief:    Board Specific Settings for the VERTIBO-A
+ *  date:     2023-09-16
  *  authors:  nvitya
 */
 
@@ -18,19 +17,12 @@ TGpioPin  pin_eth_irq(    PORTNUM_A, 14, false);
 
 bool TCmdLineApp::InitHw()
 {
-  // USART1 - EDBG
-  hwpinctrl.PinSetup(0, 21, PINCFG_INPUT | PINCFG_AF_0);  // USART1_RXD
-  MATRIX->CCFG_SYSIO |= (1 << 4); // select PB4 instead of TDI !!!!!!!!!
-  hwpinctrl.PinSetup(1,  4, PINCFG_OUTPUT | PINCFG_AF_3); // USART1_TXD
+  hwpinctrl.PinSetup(PORTNUM_A,  9,  PINCFG_INPUT  | PINCFG_AF_0);  // UART0_RX
+  hwpinctrl.PinSetup(PORTNUM_A, 10,  PINCFG_OUTPUT | PINCFG_AF_0);  // UART0_TX
   uart.baudrate = CONUART_UART_SPEED;
-  uart.Init(0x101); // USART1
+  uart.Init(0); // UART0
 
-  dma_rx.Init(1, 10);  // perid: 10 = USART1_RX
-
-  // UART3 - Arduino shield
-  //hwpinctrl.PinSetup(3, 28, PINCFG_INPUT | PINCFG_AF_0);  // UART3_RXD
-  //hwpinctrl.PinSetup(3, 30, PINCFG_OUTPUT | PINCFG_AF_0); // UART3_TXD
-  //uartx2.Init(3); // UART3
+  dma_rx.Init(1, 21);  // perid: 21 = UART0_RX
 
   return true;
 }
@@ -38,9 +30,20 @@ bool TCmdLineApp::InitHw()
 void board_pins_init()
 {
   pin_led_count = 1;
-  pin_led[0].Assign(PORTNUM_C, 8, false);
+  pin_led[0].Assign(PORTNUM_A, 29, false);
   pin_led[0].Setup(PINCFG_OUTPUT | PINCFG_GPIO_INIT_0);
 
+  hwpinctrl.PinSetup(PORTNUM_C,  9,  PINCFG_OUTPUT | PINCFG_GPIO_INIT_1);  // FPGA_CFG
+  hwpinctrl.PinSetup(PORTNUM_A, 22,  PINCFG_INPUT  | PINCFG_PULLUP);       // FPGA_IRQ
+
+#if 1
+  hwpinctrl.PinSetup(PORTNUM_A,  6,  PINCFG_OUTPUT | PINCFG_AF_1);  // PCK0 = FPGA.CLK_IN
+  PMC->PMC_SCER = (1 << 8); // enable PCK0
+  PMC->PMC_PCK[0] = 0
+    | (1 << 0)  // CSS(3): 1 = MAIN CLK (12 MHz)
+    | (0 << 4)  // PRES(8): divisor - 1
+  ;
+#endif
 
   /* Ethernet pins configuration ************************************************
 
@@ -64,32 +67,22 @@ void board_pins_init()
   hwpinctrl.PinSetup(PORTNUM_D, 4, pinfl); // CRS_DV
   hwpinctrl.PinSetup(PORTNUM_D, 5, pinfl); // RXD0
   hwpinctrl.PinSetup(PORTNUM_D, 6, pinfl); // RXD1
-  hwpinctrl.PinSetup(PORTNUM_D, 7, pinfl); // RXER
+  hwpinctrl.PinSetup(PORTNUM_D, 7, pinfl); // RXER       // Tie to the GND !!!
   hwpinctrl.PinSetup(PORTNUM_D, 1, pinfl); // TX_EN
   hwpinctrl.PinSetup(PORTNUM_D, 2, pinfl); // TXD0
   hwpinctrl.PinSetup(PORTNUM_D, 3, pinfl); // TXD1
 
-  pin_eth_reset.Setup(PINCFG_OUTPUT | PINCFG_GPIO_INIT_0); // issue reset
-  pin_eth_irq.Setup(PINCFG_INPUT | PINCFG_PULLUP);
-
-  delay_us(10);
-
-  pin_eth_reset.Set1(); // start the phy
-
-  delay_us(100);
-
-  eth.phy_address = 0;
-  eth.external_ref_clock = true; // the provides the reference clock
+  eth.phy_address = 1;
+  eth.external_ref_clock = true; // the phy provides the reference clock
 }
 
 void board_init_sdram()
 {
-  // SDRAM
-
   // it does not work with strong drive !
-  uint32_t pincfgbase = 0; // PINCFG_DRIVE_STRONG;
+  uint32_t pincfgbase = 0; //PINCFG_DRIVE_STRONG;
 
   hwpinctrl.PinSetup(PORTNUM_A, 20, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_2);  // A16/BA0
+  hwpinctrl.PinSetup(PORTNUM_A,  0, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_2);  // A17/BA1
 
   hwpinctrl.PinSetup(PORTNUM_C, 0, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_0);  // D0
   hwpinctrl.PinSetup(PORTNUM_C, 1, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_0);  // D1
@@ -125,6 +118,9 @@ void board_init_sdram()
   hwpinctrl.PinSetup(PORTNUM_C, 27, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_0);  // A9
   hwpinctrl.PinSetup(PORTNUM_C, 28, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_0);  // A10
   hwpinctrl.PinSetup(PORTNUM_C, 29, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_0);  // A11
+  hwpinctrl.PinSetup(PORTNUM_C, 30, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_0);  // A12
+  hwpinctrl.PinSetup(PORTNUM_C, 31, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_0);  // A13
+  hwpinctrl.PinSetup(PORTNUM_A, 18, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_2);  // A14
 
   hwpinctrl.PinSetup(PORTNUM_D, 13, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_2);  // SDA10
   hwpinctrl.PinSetup(PORTNUM_D, 14, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_2);  // SDCKE
@@ -134,22 +130,22 @@ void board_init_sdram()
   hwpinctrl.PinSetup(PORTNUM_D, 23, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_2);  // SDCK
   hwpinctrl.PinSetup(PORTNUM_D, 29, pincfgbase | PINCFG_OUTPUT | PINCFG_AF_2);  // SDWE
 
-  // config for 2 MByte onboard SDRAM
 
-  hwsdram.row_bits = 11;
-  hwsdram.column_bits = 8;
-  hwsdram.bank_count = 2;
+  // config for MT48LC16M16A2-6A: 32 MByte
+
+  hwsdram.row_bits = 13;
+  hwsdram.column_bits = 9;
+  hwsdram.bank_count = 4;
   hwsdram.cas_latency = 3;
 
-  hwsdram.row_precharge_delay = 5;
-  hwsdram.row_to_column_delay = 5;
-  hwsdram.recovery_delay = 5;
-  hwsdram.row_cycle_delay = 13;
+  hwsdram.row_precharge_delay = 3;
+  hwsdram.row_to_column_delay = 3;
+  hwsdram.recovery_delay = 2;
+  hwsdram.row_cycle_delay = 9;
 
   hwsdram.burst_length = 1;  // SDRAM does not work properly when larger than 1, but no speed degradation noticed
 
-  hwsdram.Init();
-}
+  hwsdram.Init();}
 
 void board_res_init()
 {

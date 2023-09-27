@@ -10,6 +10,7 @@
 #include "stdio.h"
 #include <stdarg.h>
 #include "math.h"
+#include "board_pins.h"
 
 #include "device.h"
 #include "udoslave.h"
@@ -21,8 +22,6 @@
 
 TDevice   g_device;
 
-uint8_t scope_buffer[32 * 1024];
-
 extern "C" void SysTick_Handler(void) // 250 us periodic IRQ
 {
   g_device.IrqTask();
@@ -30,7 +29,7 @@ extern "C" void SysTick_Handler(void) // 250 us periodic IRQ
 
 void TDevice::Init()
 {
-	g_scope.Init(&scope_buffer[0], sizeof(scope_buffer));
+	g_scope.Init(g_scope_buffer_ptr, g_scope_buffer_size);
 
   // start the device periodic irq
   SysTick_Config(SystemCoreClock / 4000);  // 250 us

@@ -102,14 +102,14 @@ bool TCmdLineApp::InitHw()
 
 void board_pins_init()
 {
-  board_sdram_init();
-
   pin_led_count = 1;
   pin_led[0].Assign(PORTNUM_I,  1, false);
   pin_led[0].Setup(PINCFG_OUTPUT | PINCFG_GPIO_INIT_0);
 
   // turn off LCD backlight:
   hwpinctrl.PinSetup(PORTNUM_K,  3, PINCFG_OUTPUT | PINCFG_GPIO_INIT_0);
+
+  board_sdram_init();
 
   // QSPI
 
@@ -156,7 +156,7 @@ void board_pins_init()
   eth.phy_address = 0;
 }
 
-void board_res_init()
+void spiflash_init()
 {
   // initialize QSPI Flash
 
@@ -168,5 +168,12 @@ void board_res_init()
   spiflash.qspi = &fl_qspi;
   spiflash.has4kerase = true;
   spiflash.Init();
+}
 
+void board_res_init()
+{
+  g_scope_buffer_ptr   = (uint8_t *)hwsdram.address;
+  g_scope_buffer_size  = hwsdram.byte_size;
+
+  spiflash_init();
 }

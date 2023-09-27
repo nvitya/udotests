@@ -24,18 +24,23 @@ extern unsigned   pin_led_count;
 
 extern TSpiFlash  spiflash; // not all boards have this
 
-#define ETH_RX_PACKETS  16
-#define ETH_TX_PACKETS   4
+#define ETH_RX_PACKETS    6
+#define ETH_TX_PACKETS    4
+#define ETH_NET_MEM_SIZE  (16 * 1024 + 512)
 
 extern THwEth       eth;
 extern TNetAdapter  net_adapter;
 extern TIp4Handler  ip4_handler;
 
-extern uint8_t      g_scope_buffer[];
+extern uint8_t *    g_scope_buffer_ptr;
+extern uint32_t     g_scope_buffer_size;
 
 void board_pins_init();
 void board_res_init();
 
 void board_net_init();
+void spiflash_init();
+
+//void board_get_scope_buffer();
 
 #endif /* SRC_BOARD_PINS_H_ */

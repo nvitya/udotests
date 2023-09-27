@@ -23,7 +23,7 @@
 #define NVSADDR_APPLICATION             0  // app starts at the position 0 (app header first)
 #define NVSADDR_CONFIGURATION  0x00440000  // configuration at 256K
 
-#define SCOPE_DATA_BUFFER_SIZE  (32 * 1024)
+#define SCOPE_DATA_BUFFER_SIZE  (128 * 1024) // goes into RAM2, as the network ram
 
 #define NETMEM_SECTION  ".bss"
 

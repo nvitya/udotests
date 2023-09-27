@@ -37,6 +37,7 @@
 #include "udo_ip_comm.h"
 
 #include "device.h"
+#include "simple_scope.h"
 #include "udoslaveapp.h"
 
 #include "cmdline_app.h"
@@ -86,6 +87,7 @@ extern "C" __attribute__((noreturn)) void _start(unsigned self_flashing)  // sel
 
   mcu_enable_fpu();    // enable coprocessor if present
   mcu_enable_icache(); // enable instruction cache if present
+  //mcu_enable_dcache(); // enable data cache for sdram!
 
   clockcnt_init();
 
@@ -106,10 +108,9 @@ extern "C" __attribute__((noreturn)) void _start(unsigned self_flashing)  // sel
 
   TRACE_FLUSH();
 
-  board_res_init();
+  board_res_init();  // sdram, spi flash etc
 
   #if HAS_SPI_FLASH
-    spiflash_init();
     if (spiflash.initialized)
     {
       TRACE("SPI Flash ID CODE: %08X, size = %u\r\n", spiflash.idcode, spiflash.bytesize);
@@ -145,6 +146,8 @@ extern "C" __attribute__((noreturn)) void _start(unsigned self_flashing)  // sel
 
   g_device.Init();
 
+  TRACE("Scope buffer size: %u k\r\n", g_scope.buffer_size >> 10);
+
   TRACE("\r\n");
   g_cmdline.WritePrompt();
 
@@ -166,7 +169,6 @@ extern "C" __attribute__((noreturn)) void _start(unsigned self_flashing)  // sel
     g_udoip_comm.Run();
     g_cmdline.Run();
     tracebuf.Run();
-
 
     if (t1-t0 > hbclocks)
     {
