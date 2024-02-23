@@ -14,7 +14,9 @@ TCmdLineApp g_cmdline;
 
 void cpu_soft_reset()
 {
-  __disable_irq();
+  mcu_interrupts_disable();
+
+#if defined(MCUF_ARMM)
 
   uint32_t tmp = SCB->AIRCR;
   tmp &= 0x0000FF00;
@@ -25,6 +27,7 @@ void cpu_soft_reset()
   {
     // wait for the reset...
   }
+#endif
 }
 
 bool TCmdLineApp::ParseCmd() // sp is already prepared

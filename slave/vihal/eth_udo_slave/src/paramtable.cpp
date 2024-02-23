@@ -87,6 +87,14 @@ PARAMTABLE_DEF pt_5000_scope[] =  // 0x5000: scope
 /* +25*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[5].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
 /* +26*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[6].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
 /* +27*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[7].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
+/* +28*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[8].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
+/* +29*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[9].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
+/* +2A*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[10].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
+/* +2B*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[11].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
+/* +2C*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[12].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
+/* +2D*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[13].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
+/* +2E*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[14].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
+/* +2F*/{ PAR_UINT32_RW,  (void *)&g_scope.channels[15].datadef,   &g_scope, PUdoParMethod(&TScope::pfn_scope_def) },
 };
 
 

@@ -9,7 +9,7 @@
 #include "string.h"
 #include "stdio.h"
 #include <stdarg.h>
-#include "math.h"
+//#include "math.h"
 #include "board_pins.h"
 
 #include "device.h"
@@ -22,17 +22,51 @@
 
 TDevice   g_device;
 
+#if defined(MCU_ARMM)
+
 extern "C" void SysTick_Handler(void) // 250 us periodic IRQ
 {
   g_device.IrqTask();
 }
 
+void TDevice::StartPeriodicIrq()
+{
+  SysTick_Config(SystemCoreClock / 4000);  // 250 us
+}
+
+#elif defined(MCUF_VRV100)
+
+extern "C" void IRQ_Handler_23() // Machine Timer Interrupt
+{
+  g_device.IrqTask();
+
+  TIMER->INTFLAG = 1;  // acknowledge interrupt, otherwise continously firing
+}
+
+void TDevice::StartPeriodicIrq()
+{
+  TIMER->CH[0].LIMIT = SystemCoreClock / 4000;  // only CH0 is 32-bit, the rest is 16-bit!
+  TIMER->CH[0].CTRL = (0
+    | (1  <<  0)  // ICLK: increment on clock
+    | (0  <<  1)  // IPRE: increment on prescaler overflow
+    | (0  <<  2)  // IEXT: increment on external
+    | (1  << 16)  // CLOVF: clear on overflow
+    | (0  << 17)  // CLEXT: clear on external
+  );
+
+  TIMER->INTMASK = 1; // enable CH0 interrupt
+}
+
+#else
+  #error "unhandled MCU timer!"
+#endif
+
 void TDevice::Init()
 {
-	g_scope.Init(g_scope_buffer_ptr, g_scope_buffer_size);
+  g_scope.Init(g_scope_buffer_ptr, g_scope_buffer_size);
 
   // start the device periodic irq
-  SysTick_Config(SystemCoreClock / 4000);  // 250 us
+  StartPeriodicIrq();
 }
 
 void TDevice::Run()
@@ -47,6 +81,8 @@ void TDevice::IrqTask() // IRQ Context !
 	++irq_cycle_counter;
 
 	// generate some functions for scoping
+
+#if 0
 
 	for (n = 0; n < 4; ++n)
 	{
@@ -63,6 +99,16 @@ void TDevice::IrqTask() // IRQ Context !
 	func_i16_2 = 1000 * sin(seed_sin[0]) + 2000 * sin(seed_sin[1]) + 3000 * sin(seed_sin[2]) + 4000 * sin(seed_sin[3]);
 	func_fl_1 = 1000.0 / float(1 + irq_cycle_counter);
 	func_fl_2 = (irq_cycle_counter / 1000.0) * sin(seed_sin[2] + seed_sin[0]);
+
+#else
+
+	func_i32_1 = irq_cycle_counter;
+  func_i32_2 = irq_cycle_counter * 2;
+
+  func_i16_1 = irq_cycle_counter;
+  func_i16_2 = irq_cycle_counter * 2;
+
+#endif
 
 	g_scope.RunIrqTask();
 }

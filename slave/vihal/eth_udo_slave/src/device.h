@@ -48,6 +48,7 @@ public:
 	virtual        ~TDevice() { }  // to avoid compiler warning
 
 	void           Init();
+	void           StartPeriodicIrq(); // platform dependent implementation
 	void 					 Run(); // Run Idle Tasks
 
 	bool           prfn_canobj_1008_1018(TUdoRequest * udorq, TParamRangeDef * prdef);
