@@ -94,6 +94,21 @@ class TUdoComm:
         r = self.commh.UdoRead(index, offset, 1)
         return self.ByteArrayToUint(r)
 
+    def WriteU32(self, index : int, offset : int, value : int):
+        self.commh.UdoWrite(index, offset, self.IntToByteArray(value, 4))
+
+    def WriteI32(self, index : int, offset : int, value : int):
+        self.commh.UdoWrite(index, offset, self.IntToByteArray(value, 4))
+
+    def WriteU16(self, index : int, offset : int, value : int):
+        self.commh.UdoWrite(index, offset, self.IntToByteArray(value, 2))
+
+    def WriteI16(self, index : int, offset : int, value : int):
+        self.commh.UdoWrite(index, offset, self.IntToByteArray(value, 2))
+
+    def WriteU8(self, index : int, offset : int, value : int):
+        self.commh.UdoWrite(index, offset, self.IntToByteArray(value, 1))
+
     def ReadBlob(self, index : int, offset : int, maxdatalen : int) -> bytearray:
         result = bytearray()
         remaining = maxdatalen
@@ -167,10 +182,10 @@ class TUdoComm:
         return v
 
     @staticmethod
-    def IntToByteArray(avalue : int) -> bytearray:
+    def IntToByteArray(avalue : int, alen = 4) -> bytearray:
         wdata = bytearray()
         i : int = 0
-        while i < 4:
+        while i < alen:
             wdata.append((avalue >> (8 * i)) & 0xFF)
             i += 1
         return wdata

@@ -1,6 +1,7 @@
 import serial
 import struct
-from udo_comm import *
+import os
+from .udo_comm import *
 
 # CRC8 table with the standard polynom of 0x07:
 udo_crc_table = bytearray([
@@ -65,7 +66,11 @@ class TCommHandlerUdoSl(TUdoCommHandler):
             except:
                 pass
 
-        self.com = serial.Serial(self.devstr, self.baudrate, timeout=self.timeout,
+        devfile = self.devstr
+        if ('posix' == os.name) and (devfile.find('/dev/') < 0):
+            devfile = '/dev/'+devfile
+
+        self.com = serial.Serial(devfile, self.baudrate, timeout=self.timeout,
                                  bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
 
     def Close(self):
@@ -96,7 +101,7 @@ class TCommHandlerUdoSl(TUdoCommHandler):
         return self.ans_data
 
     def UdoWrite(self, index : int, offset : int, avalue : bytearray):
-        self.iswrite = False
+        self.iswrite = True
         self.mindex  = index
         self.moffset = offset
         self.rqdata = bytearray(avalue)
