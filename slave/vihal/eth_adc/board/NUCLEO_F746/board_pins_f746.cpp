@@ -36,6 +36,10 @@ void board_pins_init()
   pin_led[1].Setup(PINCFG_OUTPUT | PINCFG_GPIO_INIT_0);
   pin_led[2].Setup(PINCFG_OUTPUT | PINCFG_GPIO_INIT_0);
 
+  // initialize the Analogue pins
+  hwpinctrl.PinSetup(PORTNUM_A,  3, PINCFG_ANALOGUE); // A0
+  hwpinctrl.PinSetup(PORTNUM_C,  0, PINCFG_ANALOGUE); // A1
+  hwpinctrl.PinSetup(PORTNUM_C,  3, PINCFG_ANALOGUE); // A2
 
   /* Ethernet pins configuration ************************************************
 

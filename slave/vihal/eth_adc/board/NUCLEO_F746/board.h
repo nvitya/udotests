@@ -25,7 +25,8 @@
 #define NVSADDR_APPLICATION             0  // app starts at the position 0 (app header first)
 #define NVSADDR_CONFIGURATION  0x080C0000  // configuration at the last 256k Flash Sector
 
-
+#define ADC_SAMPLER_COUNT       3
+#define ADC_SAMPLER_FREQ        1000000  // 1 MHz ADC Sampling Rate (max 2.4)
 #define SCOPE_DATA_BUFFER_SIZE  (200 * 1024)
 
 #define NETMEM_SECTION  ".bss"
