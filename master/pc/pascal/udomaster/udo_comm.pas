@@ -8,6 +8,9 @@ uses
   Classes, SysUtils;
 
 const
+  UDO_MAX_PAYLOAD_LEN = 1024;
+
+const
   UDOERR_CONNECTION             = $1001;  // not connected, send / receive error
   UDOERR_CRC                    = $1002;
   UDOERR_TIMEOUT                = $1003;
@@ -66,6 +69,8 @@ type
   public
     commh : TUdoCommHandler;
 
+    max_payload_size : uint16;
+
     constructor Create;
 
     procedure SetHandler(acommh : TUdoCommHandler);
@@ -76,12 +81,29 @@ type
     function  UdoRead(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
     procedure UdoWrite(index : uint16; offset : uint32; const dataptr; datalen : uint32);
 
-    function  UdoReadInt(index : uint16; offset : uint32) : int32;
-    procedure UdoWriteInt(index : uint16; offset : uint32; avalue : int32);
+  public // some helper functions
+    function  ReadBlob(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
+    procedure WriteBlob(index : uint16; offset : uint32; const dataptr; datalen : uint32);
+
+    function  ReadI32(index : uint16; offset : uint32) : int32;
+    function  ReadI16(index : uint16; offset : uint32) : int16;
+    function  ReadU32(index : uint16; offset : uint32) : uint32;
+    function  ReadU16(index : uint16; offset : uint32) : uint16;
+    function  ReadU8(index : uint16; offset : uint32) : uint8;
+    function  ReadF32(index : uint16; offset : uint32) : single;
+
+    procedure WriteI32(index : uint16; offset : uint32; avalue : int32);
+    procedure WriteI16(index : uint16; offset : uint32; avalue : int16);
+    procedure WriteU32(index : uint16; offset : uint32; avalue : uint32);
+    procedure WriteU16(index : uint16; offset : uint32; avalue : uint16);
+    procedure WriteU8(index : uint16; offset : uint32; avalue : uint8);
+    procedure WriteF32(index : uint16; offset : uint32; avalue : single);
 
   end;
 
 function UdoAbortText(abortcode : word) : string;
+
+function udo_calc_crc(acrc : byte; adata : byte) : byte;
 
 var
   commh_none : TUdoCommHandler = nil;
@@ -112,6 +134,35 @@ begin
   else if abortcode = UDOERR_APPLICATION      then result := 'Application error'
   else
       result := format('Error 0x%04X', [abortcode]);
+end;
+
+// CRC8 table with the standard polynom of 0x07:
+const udo_crc_table : array[0..255] of byte =
+(
+  $00, $07, $0e, $09, $1c, $1b, $12, $15, $38, $3f, $36, $31, $24, $23, $2a, $2d,
+  $70, $77, $7e, $79, $6c, $6b, $62, $65, $48, $4f, $46, $41, $54, $53, $5a, $5d,
+  $e0, $e7, $ee, $e9, $fc, $fb, $f2, $f5, $d8, $df, $d6, $d1, $c4, $c3, $ca, $cd,
+  $90, $97, $9e, $99, $8c, $8b, $82, $85, $a8, $af, $a6, $a1, $b4, $b3, $ba, $bd,
+  $c7, $c0, $c9, $ce, $db, $dc, $d5, $d2, $ff, $f8, $f1, $f6, $e3, $e4, $ed, $ea,
+  $b7, $b0, $b9, $be, $ab, $ac, $a5, $a2, $8f, $88, $81, $86, $93, $94, $9d, $9a,
+  $27, $20, $29, $2e, $3b, $3c, $35, $32, $1f, $18, $11, $16, $03, $04, $0d, $0a,
+  $57, $50, $59, $5e, $4b, $4c, $45, $42, $6f, $68, $61, $66, $73, $74, $7d, $7a,
+  $89, $8e, $87, $80, $95, $92, $9b, $9c, $b1, $b6, $bf, $b8, $ad, $aa, $a3, $a4,
+  $f9, $fe, $f7, $f0, $e5, $e2, $eb, $ec, $c1, $c6, $cf, $c8, $dd, $da, $d3, $d4,
+  $69, $6e, $67, $60, $75, $72, $7b, $7c, $51, $56, $5f, $58, $4d, $4a, $43, $44,
+  $19, $1e, $17, $10, $05, $02, $0b, $0c, $21, $26, $2f, $28, $3d, $3a, $33, $34,
+  $4e, $49, $40, $47, $52, $55, $5c, $5b, $76, $71, $78, $7f, $6a, $6d, $64, $63,
+  $3e, $39, $30, $37, $22, $25, $2c, $2b, $06, $01, $08, $0f, $1a, $1d, $14, $13,
+  $ae, $a9, $a0, $a7, $b2, $b5, $bc, $bb, $96, $91, $98, $9f, $8a, $8d, $84, $83,
+  $de, $d9, $d0, $d7, $c2, $c5, $cc, $cb, $e6, $e1, $e8, $ef, $fa, $fd, $f4, $f3
+);
+
+function udo_calc_crc(acrc : byte; adata : byte) : byte;
+var
+  idx : byte;
+begin
+  idx := (acrc xor adata);
+  result := udo_crc_table[idx];
 end;
 
 { EUdoAbort }
@@ -167,6 +218,7 @@ end;
 constructor TUdoComm.Create;
 begin
   commh := commh_none;
+  max_payload_size := 64;  // start with the smallest
 end;
 
 procedure TUdoComm.SetHandler(acommh : TUdoCommHandler);
@@ -176,10 +228,30 @@ begin
 end;
 
 procedure TUdoComm.Open;
+var
+  d32 : uint32;
+  r : integer;
 begin
-  if not commh.Opened
-  then
-      commh.Open();
+  if not commh.Opened then
+  begin
+    commh.Open();
+  end;
+
+  r := commh.UdoRead($0000, 0, d32, 4);  // check the fix data register first
+  if (r <> 4) or (d32 <> $66CCAA55) then
+  begin
+    commh.Close();
+    raise EUdoAbort.Create(UDOERR_CONNECTION, 'Invalid Obj-0000 response: %.8X', [d32]);
+  end;
+
+  r := commh.UdoRead($0001, 0, d32, 4);  // get the maximal payload length
+  if (d32 < 64) or (d32 > UDO_MAX_PAYLOAD_LEN) then
+  begin
+    commh.Close();
+    raise EUdoAbort.Create(UDOERR_CONNECTION, 'Invalid maximal payload size: %d', [d32]);
+  end;
+
+  max_payload_size := d32;
 end;
 
 procedure TUdoComm.Close;
@@ -193,8 +265,15 @@ begin
 end;
 
 function TUdoComm.UdoRead(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
+var
+  pdata : PByte;
 begin
   result := commh.UdoRead(index, offset, dataptr, maxdatalen);
+  if (result <= 8) and (result < maxdatalen) then
+  begin
+    pdata := PByte(@dataptr);
+    FillChar(PByte(pdata + result)^, maxdatalen - result, 0); // pad smaller responses, todo: sign extension
+  end;
 end;
 
 procedure TUdoComm.UdoWrite(index : uint16; offset : uint32; const dataptr; datalen : uint32);
@@ -202,17 +281,111 @@ begin
   commh.UdoWrite(index, offset, dataptr, datalen);
 end;
 
-function TUdoComm.UdoReadInt(index : uint16; offset : uint32) : int32;
+function TUdoComm.ReadBlob(index : uint16; offset : uint32; out dataptr; maxdatalen : uint32) : integer;
 var
-  resultbuf : array[0..16] of byte;
+  chunksize : integer;
+  remaining : integer;
+  offs  : uint32;
+  pdata : PByte;
+  r : integer;
 begin
-  resultbuf[0] := 0; // fpc warning fix
-  fillchar(resultbuf[0], sizeof(resultbuf), 0);
-  commh.UdoRead(index, offset, resultbuf[0], sizeof(resultbuf));
-  result := PInt32(@resultbuf[0])^;
+  result := 0;
+  remaining := maxdatalen;
+  pdata := PByte(@dataptr);
+  offs  := offset;
+
+  while remaining > 0 do
+  begin
+    chunksize := max_payload_size;
+    if chunksize > remaining then chunksize := remaining;
+    r := commh.UdoRead(index, offs, pdata^, chunksize);
+    if r <= 0
+    then
+        break;
+
+    result += r;
+    pdata  += r;
+    offs   += r;
+    remaining -= r;
+
+    if r < chunksize
+    then
+        break;
+  end;
 end;
 
-procedure TUdoComm.UdoWriteInt(index : uint16; offset : uint32; avalue : int32);
+procedure TUdoComm.WriteBlob(index : uint16; offset : uint32; const dataptr; datalen : uint32);
+var
+  chunksize : integer;
+  remaining : integer;
+  offs  : uint32;
+  pdata : PByte;
+begin
+  remaining := datalen;
+  pdata := PByte(@dataptr);
+  offs  := offset;
+
+  while remaining > 0 do
+  begin
+    chunksize := max_payload_size;
+    if chunksize > remaining then chunksize := remaining;
+    commh.UdoWrite(index, offs, pdata^, chunksize);
+
+    pdata  += chunksize;
+    offs   += chunksize;
+    remaining -= chunksize;
+  end;
+end;
+
+function TUdoComm.ReadI32(index : uint16; offset : uint32) : int32;
+var
+  rvalue : int32 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+function TUdoComm.ReadI16(index : uint16; offset : uint32) : int16;
+var
+  rvalue : int16 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+function TUdoComm.ReadU32(index : uint16; offset : uint32) : uint32;
+var
+  rvalue : uint32 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+function TUdoComm.ReadU16(index : uint16; offset : uint32) : uint16;
+var
+  rvalue : uint16 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+function TUdoComm.ReadU8(index : uint16; offset : uint32) : uint8;
+var
+  rvalue : uint16 = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+function TUdoComm.ReadF32(index : uint16; offset : uint32) : single;
+var
+  rvalue : single = 0;
+begin
+  commh.UdoRead(index, offset, rvalue, sizeof(rvalue));
+  result := rvalue;
+end;
+
+procedure TUdoComm.WriteI32(index : uint16; offset : uint32; avalue : int32);
 var
   lvalue : int32;
 begin
@@ -220,6 +393,45 @@ begin
   commh.UdoWrite(index, offset, lvalue, 4);
 end;
 
+procedure TUdoComm.WriteI16(index : uint16; offset : uint32; avalue : int16);
+var
+  lvalue : int16;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 2);
+end;
+
+procedure TUdoComm.WriteU32(index : uint16; offset : uint32; avalue : uint32);
+var
+  lvalue : uint32;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 4);
+end;
+
+procedure TUdoComm.WriteU16(index : uint16; offset : uint32; avalue : uint16);
+var
+  lvalue : uint16;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 2);
+end;
+
+procedure TUdoComm.WriteU8(index : uint16; offset : uint32; avalue : uint8);
+var
+  lvalue : int8;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 1);
+end;
+
+procedure TUdoComm.WriteF32(index : uint16; offset : uint32; avalue : single);
+var
+  lvalue : single;
+begin
+  lvalue := avalue;
+  commh.UdoWrite(index, offset, lvalue, 4);
+end;
 
 initialization
 begin
