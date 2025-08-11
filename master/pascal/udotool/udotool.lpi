@@ -128,7 +128,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="src;../extlibs;../udo/pascal/udo"/>
+      <OtherUnitFiles Value="src;../extlibs;../../udo/pascal/udo"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
