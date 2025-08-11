@@ -7,6 +7,12 @@
 			"ADDR": "192.168.0.74"
 		},
 		{
+			"ID": "NUCLEO",
+			"DEVID": "TESTDEV1",
+			"CONNTYPE": 0,
+			"ADDR": "10.90.13.41"
+		},
+		{
 			"ID": "USB1",
 			"DEVID": "UNIVIO",
 			"CONNTYPE": 1,
