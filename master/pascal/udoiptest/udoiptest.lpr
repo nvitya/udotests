@@ -34,7 +34,7 @@ begin
   SetLength(test_arr, 65536);
 
   writeln('Testing blob read');
-  rlen := udocomm.UdoRead(2, 0, test_arr[0], length(test_arr) * 4);
+  rlen := udocomm.ReadBlob(2, 0, test_arr[0], length(test_arr) * 4);
   writeln('rlen = ', rlen);
 
   for i := 0 to 512 - 1 do
