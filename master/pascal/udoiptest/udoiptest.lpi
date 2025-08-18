@@ -62,6 +62,9 @@
       <Item>
         <Name Value="EFOpenError"/>
       </Item>
+      <Item>
+        <Name Value="EUdoAbort"/>
+      </Item>
     </Exceptions>
   </Debugging>
 </CONFIG>

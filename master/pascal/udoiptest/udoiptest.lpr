@@ -36,15 +36,17 @@ begin
   writeln('Testing blob read');
   rlen := udocomm.ReadBlob(2, 0, test_arr[0], length(test_arr) * 4);
   writeln('rlen = ', rlen);
-
   for i := 0 to 512 - 1 do
   begin
     if (i > 0) and ((i mod 8) = 0) then writeln;
     write(format(' %5d', [test_arr[i]]));
-
   end;
-
   writeln;
+
+  writeln('Testing object #2000:');
+  i := udocomm.ReadI32($2000, 0);
+  writeln(' #2000 = ', i);
+
   writeln('test finished.');
 
 end;
