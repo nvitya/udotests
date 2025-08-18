@@ -101,6 +101,7 @@ PARAMTABLE_DEF pt_5000_scope[] =  // 0x5000: scope
 /*****************************************************************************************************************
                                        THE MAIN RANGE TABLE
 ******************************************************************************************************************/
+extern const TParamRangeDef  param_range_table[]; // this must be here to keep the table under
 
 const TParamRangeDef  param_range_table[] =
 {
