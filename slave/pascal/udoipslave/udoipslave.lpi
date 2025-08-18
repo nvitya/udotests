@@ -27,7 +27,10 @@
       <Unit>
         <Filename Value="udoipslave.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="pasudoipsvr"/>
+      </Unit>
+      <Unit>
+        <Filename Value="../../../udo/pascal/udo/udo_slave.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
   </ProjectOptions>
@@ -38,6 +41,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="../../../udo/pascal/udo;../../../udo/pascal/extlibs"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
@@ -45,6 +49,11 @@
         <DebugInfoType Value="dsDwarf3"/>
       </Debugging>
     </Linking>
+    <Other>
+      <CompilerMessages>
+        <IgnoredMessages idx6058="True" idx5024="True" idx3124="True" idx3123="True"/>
+      </CompilerMessages>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions>
