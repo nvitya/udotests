@@ -28,12 +28,12 @@
 		<link>
 			<name>udo</name>
 			<type>2</type>
-			<locationURI>$%7BPARENT-3-PROJECT_LOC%7D/udo/cpp/udo</locationURI>
+			<locationURI>$%7BPARENT-4-PROJECT_LOC%7D/udo/cpp/udo</locationURI>
 		</link>
 		<link>
 			<name>udoslave</name>
 			<type>2</type>
-			<locationURI>$%7BPARENT-3-PROJECT_LOC%7D/udo/cpp/udoslave</locationURI>
+			<locationURI>$%7BPARENT-4-PROJECT_LOC%7D/udo/cpp/udoslave</locationURI>
 		</link>
 		<link>
 			<name>vihal</name>
