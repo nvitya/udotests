@@ -11,7 +11,7 @@ endobject
 func OUdoSlave.ParamReadWrite(udorq : ref SUdoRequest) -> bool [[override]]:
     if 0x2000 == udorq.index:
         testvar += 1
-        result = @.UdoRwData(udorq, %testvar, SizeOf(testvar))
+        result = udorq.RwData(%testvar, SizeOf(testvar))
     else:
         result = inherited ParamReadWrite(udorq)
     endif
@@ -20,15 +20,12 @@ endfunc
 //-----------------------------------------------------------------------------
 
 var udoslave  <- OUdoSlave()
-
-var udpserver : OUdpServerUdoIpSlave
+var udpserver <- OUdpServerUdoIpSlave(udoslave, 1221)
 
 func *Main():
     PrintLn('UDO-IP Slave (DQ)')
 
     udoslave.Init()
-
-    udpserver = new OUdpServerUdoIpSlave(udoslave, 1221)
     udpserver.InitListener()
 
     PrintLn('Starting main cycle...')
