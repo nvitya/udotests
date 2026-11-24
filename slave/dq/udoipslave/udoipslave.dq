@@ -1,14 +1,14 @@
 use print
 use udo/udoip_slave_os
 
-object OUdoSlave(OUdoIpSlaveBase):
+object OUdoSlaveApp(OUdoSlave):
 public
     testvar : int32
 
     func ParamReadWrite(udorq : ref SUdoRequest) -> bool [[override]] ..
 endobject
 
-func OUdoSlave.ParamReadWrite(udorq : ref SUdoRequest) -> bool [[override]]:
+func OUdoSlaveApp.ParamReadWrite(udorq : ref SUdoRequest) -> bool [[override]]:
     if 0x2000 == udorq.index:
         testvar += 1
         result = udorq.RwData(%testvar, SizeOf(testvar))
@@ -19,13 +19,12 @@ endfunc
 
 //-----------------------------------------------------------------------------
 
-var udoslave  <- OUdoSlave()
-var udpserver <- OUdpServerUdoIpSlave(udoslave, 1221)
+var slaveapp  <- OUdoSlaveApp()
+var udpserver <- OUdpServerUdoIpSlave(slaveapp, 1221)
 
 func *Main():
     PrintLn('UDO-IP Slave (DQ)')
 
-    udoslave.Init()
     udpserver.InitListener()
 
     PrintLn('Starting main cycle...')
