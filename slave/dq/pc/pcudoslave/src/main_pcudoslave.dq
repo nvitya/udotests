@@ -1,0 +1,26 @@
+use print
+use udo/udoip_slave_os
+use ./device
+use ./udoslaveapp
+
+//-----------------------------------------------------------------------------
+
+var slaveapp  <- OUdoSlaveApp()
+var udpserver <- OUdpServerUdoIpSlave(slaveapp, 1221)
+
+func *Main():
+    PrintLn('Example UDO-IP Slave (DQ)')
+
+    g_device.Init()
+
+    udpserver.InitListener()
+
+    PrintLn('Starting main cycle...')
+    while true:
+        udpserver.WaitForEvents(10)  // leave some rest for the system (10 ms)
+
+        g_device.Run()
+    endwhile
+
+    PrintLn('Test finished.')
+endfunc

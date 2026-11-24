@@ -1,0 +1,7 @@
+{
+  "dq.debugTarget": "pcudoslave",
+  "dq.debugCwd":    ".",
+
+  "dq.languageServerProject": "pcudoslave.dqproj",
+  "dq.languageServerPath": "dq-comp"
+}

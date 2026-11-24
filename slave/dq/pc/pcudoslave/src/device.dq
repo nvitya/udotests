@@ -1,0 +1,23 @@
+
+object ODevice:
+
+    idlecounter : uint32 = 0
+
+    func Init() ..
+    func Run() ..
+
+endobject
+
+var g_device <- ODevice()
+
+
+implementation
+
+
+func ODevice.Init():
+
+endfunc
+
+func ODevice.Run():
+    ++idlecounter
+endfunc

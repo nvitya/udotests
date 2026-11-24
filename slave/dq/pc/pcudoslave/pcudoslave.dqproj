@@ -1,0 +1,7 @@
+
+main = "src/main_pcudoslave.dq"
+
+optlevel  = 0
+lto       = false
+debuginfo = true
+
