@@ -1,0 +1,40 @@
+use print
+use udo/udoip_slave_os
+
+object OUdoSlave(OUdoIpSlaveBase):
+public
+    testvar : int32
+
+    func ParamReadWrite(udorq : ref SUdoRequest) -> bool [[override]] ..
+endobject
+
+func OUdoSlave.ParamReadWrite(udorq : ref SUdoRequest) -> bool [[override]]:
+    if 0x2000 == udorq.index:
+        testvar += 1
+        result = @.UdoRwData(udorq, %testvar, SizeOf(testvar))
+    else:
+        result = inherited ParamReadWrite(udorq)
+    endif
+endfunc
+
+//-----------------------------------------------------------------------------
+
+var udoslave  <- OUdoSlave()
+
+var udpserver : OUdpServerUdoIpSlave
+
+func *Main():
+    PrintLn('UDO-IP Slave (DQ)')
+
+    udoslave.Init()
+
+    udpserver = new OUdpServerUdoIpSlave(udoslave, 1221)
+    udpserver.InitListener()
+
+    PrintLn('Starting main cycle...')
+    while true:
+      udpserver.WaitForEvents(1000)
+    endwhile
+
+    PrintLn('Test finished.')
+endfunc
