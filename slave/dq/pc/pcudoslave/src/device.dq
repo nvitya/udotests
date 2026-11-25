@@ -25,9 +25,9 @@ object ODevice:
     func Run() ..
 
 public
+    func pfn_Ignore(rq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool ..
 
-    func prfn_canobj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRangeDef) -> bool ..
-    func pfn_ignore(rq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool ..
+    func prfn_CanObj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRangeDef) -> bool ..
 
 endobject
 
@@ -47,7 +47,7 @@ func ODevice.Run():
     ++idlecounter
 endfunc
 
-func ODevice.prfn_canobj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRangeDef) -> bool:
+func ODevice.prfn_CanObj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRangeDef) -> bool:
     use *
     if rq.iswrite:
         return rq.Error(UDOERR_READ_ONLY)
@@ -69,15 +69,15 @@ func ODevice.prfn_canobj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRange
         return rq.RoStr(udo_str_buf)
 
     elif 0x1018 == rq.index:  // identity
-        if rq.offset == 0:
+        if   0 == rq.offset:
             return rq.RoInt(4, 1)  // number of entries here
-        elif rq.offset == 1:
+        elif 1 == rq.offset:
             return rq.RoInt(0x00000abc, 4)
-        elif rq.offset == 2:
+        elif 2 == rq.offset:
             return rq.RoInt(0x000000A1, 4)  // product code
-        elif rq.offset == 3:
+        elif 3 == rq.offset:
             return rq.RoInt(VERSION_INTEGER, 4)  // revision
-        elif rq.offset == 4:
+        elif 4 == rq.offset:
             return rq.RoInt(0x00000000, 4)  // serial number 32 bit
         endif
         return rq.Error(UDOERR_WRONG_OFFSET)
@@ -86,7 +86,7 @@ func ODevice.prfn_canobj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRange
     return rq.Error(UDOERR_INDEX)
 endfunc
 
-func ODevice.pfn_ignore(rq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool:
+func ODevice.pfn_Ignore(rq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool:
     if not rq.iswrite:
         return rq.RoInt(0, 4)
     endif

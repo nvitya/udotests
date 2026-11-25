@@ -91,7 +91,7 @@ const pt_5000_scope : [?] SUdoParamDef =  // 0x5000: scope
 
 const param_range_table : [?] SUdoParamRangeDef =
 [
-	{0x1000, 0x1018, nil, g_device.prfn_canobj_1008_1018 }, // some RO device identifiactions
+	{0x1000, 0x1018, nil, g_device.prfn_CanObj_1008_1018 }, // some RO device identifiactions
 
 	PAR_TABLE(0x2000, pt_2000_app),   // main application parameters
 	PAR_TABLE(0x5000, pt_5000_scope), // scope parameters
