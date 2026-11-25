@@ -212,7 +212,7 @@ func param_handle_pdef(udorq : ref SUdoRequest, pdef : ^SUdoParamDef) -> bool:
         if udorq.iswrite:
             return udorq.Error(UDOERR_READ_ONLY)
         endif
-        return udorq.RoInt(^int(pdef.var_ptr)^, pdef_varsize(pdef))
+        return udorq.RoInt(int(pdef.var_ptr), pdef_varsize(pdef))
     endif
 
     if rw == PARF_READONLY  and udorq.iswrite:
