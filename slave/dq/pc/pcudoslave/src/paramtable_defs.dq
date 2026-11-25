@@ -126,7 +126,7 @@ endstruct
 
 
 func prtable_pdef_get(prtab : ^SUdoParamRangeDef, aindex : uint16) -> ^SUdoParamDef ..
-func pdef_get(aindex : uint16) -> ^SUdoParamDef ..  // WEAK implementation by default
+//func pdef_get(aindex : uint16) -> ^SUdoParamDef ..  // WEAK implementation by default
 
 func pdef_varsize(pdef : ^SUdoParamDef) -> int ..
 
@@ -136,7 +136,8 @@ func param_handle_pdef(udorq : ref SUdoRequest, pdef : ^SUdoParamDef) -> bool ..
 func param_handle_pdef_var(udorq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool ..
 
 func prtable_read_write(prtab : ^SUdoParamRangeDef, udorq : ref SUdoRequest) -> bool ..
-func param_read_write(udorq : ref SUdoRequest) -> bool ..  // WEAK implementation by default
+
+//func param_read_write(udorq : ref SUdoRequest) -> bool ..  // WEAK implementation by default
 
 //const param_range_table : []TParamRangeDef  // this must be provided
 
@@ -146,7 +147,7 @@ implementation
 
 func prtable_read_write(prtab : ^SUdoParamRangeDef, udorq : ref SUdoRequest) -> bool:
     var index : uint16 = udorq.index
-    while prtab.lastindex:
+    while prtab.lastindex <> 0:
         if index < prtab.firstindex:
             return udorq.Error(UDOERR_INDEX)
         endif
@@ -169,7 +170,7 @@ func prtable_read_write(prtab : ^SUdoParamRangeDef, udorq : ref SUdoRequest) -> 
 endfunc
 
 func prtable_pdef_get(prtab : ^SUdoParamRangeDef, aindex : uint16) -> ^SUdoParamDef:
-    while prtab.firstindex:
+    while prtab.firstindex <> 0:
         if aindex < prtab.firstindex:
             return nil
         endif
