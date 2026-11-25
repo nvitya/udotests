@@ -1,0 +1,102 @@
+use udo
+use udo/udoslave
+use ./paramtable_defs
+
+const SCOPE_VERSION      : int  = 1 * 1000000  + 0 * 1000  + 0
+const SCOPE_MAX_CHANNELS : uint = 16
+
+const(byte):
+    SCOPE_STATE_IDLE      = 0
+    SCOPE_STATE_PREFILL   = 1
+    SCOPE_STATE_PERMREC   = 3
+    SCOPE_STATE_WAITTRIG  = 5
+    SCOPE_STATE_POSTFILL  = 7
+    SCOPE_STATE_DATAREADY = 8
+endconst
+
+const(byte):
+    SCOPE_CMD_STOP        = 0
+    SCOPE_CMD_PERMREC     = 1
+    SCOPE_CMD_START       = 3
+    SCOPE_CMD_FORCETRIG   = 7
+endconst
+
+struct SScopeChannelData:
+    datadef          : uint
+    bytelen          : uint32
+    varptr           : ^uint8
+    pdef             : ^SUdoParamDef
+endstruct
+
+object OSimpleScope:
+private
+    channel_count    : uint8 = 0  // will be calculated in PrepareSampling()
+    ptrigch          : ^SScopeChannelData = nil
+
+    next_smp_ptr     : ^uint8
+    buf_end_ptr      : ^uint8
+
+    // trigger
+
+    tr_value_add     : uint
+    tr_value_threshold : uint
+    tr_value_mask    : uint
+
+    triggercomparevalue : uint
+
+    cur_tr_value     : uint
+    prev_tr_value    : uint
+
+    smp_cycle_counter : uint16 = 0
+
+    presmp_count     : uint
+    postsmp_count    : uint
+
+    cur_smp_index    : uint
+
+public
+    pbuffer          : ^byte = nil
+    buffer_size      : uint = 0
+
+public  // state + cmd
+    state            : byte = SCOPE_STATE_IDLE
+    cmd              : byte = SCOPE_CMD_STOP
+    cmd_prev         : byte = SCOPE_CMD_STOP
+
+    sample_count     : uint32 = 0
+    sample_width     : uint32 = 0
+    trigger_index    : uint32 = 0
+
+public  // configuration
+    trigger_channel  : byte = 0
+    trigger_slope    : byte = 0
+    pretrigger_percent : uint32 = 50
+    smp_cycles       : uint16 = 1
+    max_samples      : uint32 = 0  // 0 =
+    trigger_level    : int32 = 0
+    trigger_mask     : uint32 = 0xFFFFFFFF
+
+    channels         : [SCOPE_MAX_CHANNELS] SScopeChannelData
+
+public
+    func pfn_ScopeDef(rq : ref SUdoRequest, adef : ^SUdoParamDef, varptr : pointer) ..
+    func pfn_ScopeCmd(rq : ref SUdoRequest, adef : ^SUdoParamDef, varptr : pointer) ..
+    func pfn_ScopeData(rq : ref SUdoRequest, adef : ^SUdoParamDef, varptr : pointer) ..
+
+endobject
+
+var g_scope <- OSimpleScope()
+
+implementation
+
+func OSimpleScope.pfn_ScopeDef(rq : ref SUdoRequest, adef : ^SUdoParamDef, varptr : pointer):
+
+endfunc
+
+func OSimpleScope.pfn_ScopeCmd(rq : ref SUdoRequest, adef : ^SUdoParamDef, varptr : pointer):
+
+endfunc
+
+func OSimpleScope.pfn_ScopeData(rq : ref SUdoRequest, adef : ^SUdoParamDef, varptr : pointer):
+
+endfunc

@@ -1,10 +1,33 @@
+use udo/udoslave
+use ./paramtable_defs
+
+const DEVICE_NAME : rostr = "UDOIP PC Test"
 
 object ODevice:
 
-    idlecounter : uint32 = 0
+    irq_period_ns     : uint32 = 4000000
+    idlecounter       : uint32 = 0
+    irq_cycle_counter : uint32 = 0
+
+    func_i32_1  : int32  = 321
+    func_i32_2  : int32  = 322
+    func_i16_1  : int16  = 161
+    func_i16_2  : int16  = 162
+    func_fl_1   : float32  = 0xF01
+    func_fl_2   : float32  = 0xF02
+
+    par_dummy_i32   : int32  = 0xABCD1234
+    par_dummy_i16   : int16  = 0x55AA
+
+    udo_str_buf : embstr(64)
 
     func Init() ..
     func Run() ..
+
+public
+
+    func prfn_canobj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRangeDef) -> bool ..
+    func pfn_ignore(rq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool ..
 
 endobject
 
@@ -14,10 +37,59 @@ var g_device <- ODevice()
 implementation
 
 
+use ./version
+
 func ODevice.Init():
 
 endfunc
 
 func ODevice.Run():
     ++idlecounter
+endfunc
+
+func ODevice.prfn_canobj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRangeDef) -> bool:
+    use *
+    if rq.iswrite:
+        return rq.Error(UDOERR_READ_ONLY)
+    endif
+
+    var len : int
+
+    if   0x1008 == rq.index:  // Device name
+        return rq.RoStr(DEVICE_NAME)
+
+    elif 0x1009 == rq.index:  // Hardware version as string
+        udo_str_buf.Clear()
+        udo_str_buf.Add('???')
+        return rq.RoStr(udo_str_buf)
+
+    elif 0x100A == rq.index:  // Software version as string
+        udo_str_buf.Clear()
+        udo_str_buf.AddFmt('APP: {}', [VERSION_INTEGER])
+        return rq.RoStr(udo_str_buf)
+
+    elif 0x1018 == rq.index:  // identity
+        if rq.offset == 0:
+            return rq.RoInt(4, 1)  // number of entries here
+        elif rq.offset == 1:
+            return rq.RoInt(0x00000abc, 4)
+        elif rq.offset == 2:
+            return rq.RoInt(0x000000A1, 4)  // product code
+        elif rq.offset == 3:
+            return rq.RoInt(VERSION_INTEGER, 4)  // revision
+        elif rq.offset == 4:
+            return rq.RoInt(0x00000000, 4)  // serial number 32 bit
+        endif
+        return rq.Error(UDOERR_WRONG_OFFSET)
+    endif
+
+    return rq.Error(UDOERR_INDEX)
+endfunc
+
+func ODevice.pfn_ignore(rq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool:
+    if not rq.iswrite:
+        return rq.RoInt(0, 4)
+    endif
+    // ignore writes !
+    return true
 endfunc

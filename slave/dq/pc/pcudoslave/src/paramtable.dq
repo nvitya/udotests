@@ -1,2 +1,104 @@
 use ./paramtable_defs
+use ./device
+use ./simple_scope
 
+const     PTENTRY_EMPTY : SUdoParamDef = { 0, nil, nil }
+
+constexpr PTENTRY_CONST(n : int)   : SUdoParamDef = { PAR_INT32_CONST, pointer(n), nil }
+constexpr PTENTRY_CONST8(n : byte) : SUdoParamDef = { PAR_UINT8_CONST, pointer(uint(n)), nil }
+
+constexpr PAR_TABLE(astart : uint16, atab : []SUdoParamDef) : SUdoParamRangeDef =
+    { astart, astart + atab.length - 1, %atab[0], nil }
+
+
+/*****************************************************************************************************************
+                                             PARAMETER TABLES
+******************************************************************************************************************/
+// range tables must come before the main
+
+const pt_2000_app : [?] SUdoParamDef =  // 0x2000
+[
+/* +00*/ { PAR_INT32_RO,  %g_device.irq_period_ns,      nil },
+/* +01*/ { PAR_UINT16_RO, %g_device.irq_cycle_counter,  nil },
+/* +02*/ { PAR_INT32_RO,  %g_device.func_i32_1,         nil },
+/* +03*/ { PAR_INT32_RO,  %g_device.func_i32_2,         nil },
+/* +04*/ { PAR_INT16_RO,  %g_device.func_i16_1,         nil },
+/* +05*/ { PAR_INT16_RO,  %g_device.func_i16_2,         nil },
+/* +06*/ { PAR_FLOAT_RO,  %g_device.func_fl_1,          nil },
+/* +07*/ { PAR_FLOAT_RO,  %g_device.func_fl_2,          nil },
+/* +08*/ { PAR_INT32_RW,  %g_device.par_dummy_i32,      nil },
+/* +09*/ { PAR_INT16_RW,  %g_device.par_dummy_i16,      nil }
+
+///* +0A*/{ PTENTRY_SPECIALFUNC(0, &g_device, PWdParMethod(&TDevice::pfn_big_data)) }, //
+]
+
+const pt_5000_scope : [?] SUdoParamDef =  // 0x5000: scope
+[
+/* +00*/ PTENTRY_CONST(SCOPE_VERSION),
+/* +01*/ PTENTRY_CONST(SCOPE_MAX_CHANNELS),
+/* +02*/ { PAR_UINT32_RO,   %g_scope.buffer_size,     nil },
+/* +03*/ { PAR_UINT32_RO,   %g_device.irq_period_ns,  nil },
+/* +04*/ PTENTRY_EMPTY,
+/* +05*/ PTENTRY_EMPTY,
+/* +06*/ PTENTRY_EMPTY,
+/* +07*/ PTENTRY_EMPTY,
+/* +08*/ { PAR_UINT8_RW,   %g_scope.cmd,              g_scope.pfn_ScopeCmd },
+/* +09*/ { PAR_UINT8_RO,   %g_scope.state,            nil },
+/* +0A*/ { PARF_BLOB,      nil,                       g_scope.pfn_ScopeData },
+/* +0B*/ { PAR_UINT8_RO,   %g_scope.sample_width,     nil },
+/* +0C*/ { PAR_UINT32_RO,  %g_scope.sample_count,     nil },
+/* +0D*/ { PAR_UINT32_RO,  %g_scope.trigger_index,    nil },
+/* +0E*/ PTENTRY_EMPTY,
+/* +0F*/ PTENTRY_EMPTY,
+/* +10*/ { PAR_UINT16_RW,  %g_scope.smp_cycles,           nil },
+/* +11*/ { PAR_UINT32_RW,  %g_scope.max_samples,          nil },
+/* +12*/ { PAR_UINT8_RW,   %g_scope.trigger_channel,      nil },
+/* +13*/ { PAR_INT32_RW,   %g_scope.trigger_level,        nil },
+/* +14*/ { PAR_UINT8_RW,   %g_scope.trigger_slope,        nil },
+/* +15*/ { PAR_UINT32_RW,  %g_scope.trigger_mask,         nil },
+/* +16*/ { PAR_UINT32_RW,  %g_scope.pretrigger_percent,   nil },
+/* +17*/ PTENTRY_EMPTY,
+/* +18*/ PTENTRY_EMPTY,
+/* +19*/ PTENTRY_EMPTY,
+/* +1A*/ PTENTRY_EMPTY,
+/* +1B*/ PTENTRY_EMPTY,
+/* +1C*/ PTENTRY_EMPTY,
+/* +1D*/ PTENTRY_EMPTY,
+/* +1E*/ PTENTRY_EMPTY,
+/* +1F*/ PTENTRY_EMPTY,
+/* +20*/ { PAR_UINT32_RW,  %g_scope.channels[ 0].datadef,   g_scope.pfn_ScopeDef },
+/* +21*/ { PAR_UINT32_RW,  %g_scope.channels[ 1].datadef,   g_scope.pfn_ScopeDef },
+/* +22*/ { PAR_UINT32_RW,  %g_scope.channels[ 2].datadef,   g_scope.pfn_ScopeDef },
+/* +23*/ { PAR_UINT32_RW,  %g_scope.channels[ 3].datadef,   g_scope.pfn_ScopeDef },
+/* +24*/ { PAR_UINT32_RW,  %g_scope.channels[ 4].datadef,   g_scope.pfn_ScopeDef },
+/* +25*/ { PAR_UINT32_RW,  %g_scope.channels[ 5].datadef,   g_scope.pfn_ScopeDef },
+/* +26*/ { PAR_UINT32_RW,  %g_scope.channels[ 6].datadef,   g_scope.pfn_ScopeDef },
+/* +27*/ { PAR_UINT32_RW,  %g_scope.channels[ 7].datadef,   g_scope.pfn_ScopeDef },
+/* +28*/ { PAR_UINT32_RW,  %g_scope.channels[ 8].datadef,   g_scope.pfn_ScopeDef },
+/* +29*/ { PAR_UINT32_RW,  %g_scope.channels[ 9].datadef,   g_scope.pfn_ScopeDef },
+/* +2A*/ { PAR_UINT32_RW,  %g_scope.channels[10].datadef,   g_scope.pfn_ScopeDef },
+/* +2B*/ { PAR_UINT32_RW,  %g_scope.channels[11].datadef,   g_scope.pfn_ScopeDef },
+/* +2C*/ { PAR_UINT32_RW,  %g_scope.channels[12].datadef,   g_scope.pfn_ScopeDef },
+/* +2D*/ { PAR_UINT32_RW,  %g_scope.channels[13].datadef,   g_scope.pfn_ScopeDef },
+/* +2E*/ { PAR_UINT32_RW,  %g_scope.channels[14].datadef,   g_scope.pfn_ScopeDef },
+/* +2F*/ { PAR_UINT32_RW,  %g_scope.channels[15].datadef,   g_scope.pfn_ScopeDef }
+]
+
+/*****************************************************************************************************************
+                                       THE MAIN RANGE TABLE
+******************************************************************************************************************/
+//extern const TParamRangeDef  param_range_table[]; // this must be here to keep the table under
+
+const param_range_table : [?] SUdoParamRangeDef =
+[
+	{0x1000, 0x1018, nil, g_device.prfn_canobj_1008_1018 }, // some RO device identifiactions
+
+	PAR_TABLE(0x2000, pt_2000_app),   // main application parameters
+	PAR_TABLE(0x5000, pt_5000_scope), // scope parameters
+
+	// close the list with all zeroes
+	{ ? }
+]
+
+/*****************************************************************************************************************
+******************************************************************************************************************/
