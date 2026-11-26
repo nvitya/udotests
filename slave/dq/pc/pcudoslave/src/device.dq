@@ -61,8 +61,8 @@ func ODevice.IrqTask():
 
 	for n : int = 0 count 4:
 		seed_sin[n] += seed_inc[n];
-		while seed_sin[n] > 2 * M_PI:
-			seed_sin[n] -= 2 * M_PI;
+		while seed_sin[n] > 2 * M_PI32:
+			seed_sin[n] -= 2 * M_PI32;
 		endwhile
 	endfor
 
