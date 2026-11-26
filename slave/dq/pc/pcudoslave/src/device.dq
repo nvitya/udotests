@@ -1,5 +1,5 @@
 use udo/udoslave
-use ./simple_partable
+use udo/udo_simple_partable
 
 const DEVICE_NAME : rostr = "UDOIP PC Test"
 
@@ -44,7 +44,7 @@ implementation
 
 use ./version
 use math
-use ./simple_scope
+use udo/udo_simple_scope
 
 var scope_buffer : [32 * 1024 * 1024] byte
 

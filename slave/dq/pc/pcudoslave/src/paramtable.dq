@@ -1,5 +1,5 @@
 
-use ./simple_partable   reexport
+use udo/udo_simple_partable   reexport
 
 // The *ModuleInit() in the implementation section changes the parameter table
 
@@ -7,7 +7,7 @@ use ./simple_partable   reexport
 implementation
 
 use ./device
-use ./simple_scope
+use udo/udo_simple_scope
 
 const     PTENTRY_EMPTY : SUdoParamDef = { 0, nil, nil }
 
