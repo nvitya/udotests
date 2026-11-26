@@ -53,8 +53,10 @@ func ODevice.Init():
     g_scope.Init(g_udoparams, %scope_buffer[0], SizeOf(scope_buffer))
 endfunc
 
-func ODevice.Run():
+func ODevice.Run():    
+    use *
     ++idlecounter
+    g_scope.Run()
 endfunc
 
 func ODevice.IrqTask():
