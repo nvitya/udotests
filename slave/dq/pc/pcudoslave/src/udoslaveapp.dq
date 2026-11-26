@@ -2,21 +2,16 @@ use udo/udoslave
 
 object OUdoSlaveApp(OUdoSlave):
 public
-    testvar : int32
-
     func ParamReadWrite(rq : ref SUdoRequest) -> bool [[override]] ..
 endobject
 
-
 implementation
 
-use ./device
+use ./paramtable
 
 func OUdoSlaveApp.ParamReadWrite(rq : ref SUdoRequest) -> bool [[override]]:
-    use *
-    if 0x2000 == rq.index:
-        result = rq.RwData(%g_device.idlecounter, SizeOf(g_device.idlecounter))
-    else:
+    result = @paramtable.g_udoparams.HandleReadWrite(rq)
+    if not result:
         result = inherited ParamReadWrite(rq)
     endif
 endfunc

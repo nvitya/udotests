@@ -1,5 +1,5 @@
 use udo/udoslave
-use ./paramtable_defs
+use ./simple_partable
 
 const DEVICE_NAME : rostr = "UDOIP PC Test"
 

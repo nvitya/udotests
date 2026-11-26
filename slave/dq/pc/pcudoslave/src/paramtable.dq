@@ -1,4 +1,11 @@
-use ./paramtable_defs
+
+use ./simple_partable   reexport
+
+// The *ModuleInit() in the implementation section changes the parameter table
+
+
+implementation
+
 use ./device
 use ./simple_scope
 
@@ -102,3 +109,7 @@ const param_range_table : [?] SUdoParamRangeDef =
 
 /*****************************************************************************************************************
 ******************************************************************************************************************/
+
+func *ModuleInit():
+    g_udoparams.SetRangeTable(%param_range_table[0])
+endfunc

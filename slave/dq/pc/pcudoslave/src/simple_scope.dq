@@ -1,6 +1,6 @@
 use udo
 use udo/udoslave
-use ./paramtable_defs
+use ./simple_partable
 
 const SCOPE_VERSION      : int  = 1 * 1000000  + 0 * 1000  + 0
 const SCOPE_MAX_CHANNELS : uint = 16

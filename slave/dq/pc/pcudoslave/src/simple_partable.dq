@@ -125,28 +125,47 @@ struct SUdoParamRangeDef:
 endstruct
 
 
-func prtable_pdef_get(prtab : ^SUdoParamRangeDef, aindex : uint16) -> ^SUdoParamDef ..
-//func pdef_get(aindex : uint16) -> ^SUdoParamDef ..  // WEAK implementation by default
+object OUdoParamTable:
+protected
+    range_table : ^SUdoParamRangeDef
+public
+    func SetRangeTable(arange_table : ^SUdoParamRangeDef):
+        range_table = arange_table
+    endfunc
 
-func pdef_varsize(pdef : ^SUdoParamDef) -> int ..
+    func *Create(arange_table : ^SUdoParamRangeDef):
+        SetRangeTable(arange_table)
+    endfunc
 
-func pdef_empty(pdef : ^SUdoParamDef) -> bool ..
+    func HandleReadWrite(udorq : ref SUdoRequest) -> bool ..
 
-func param_handle_pdef(udorq : ref SUdoRequest, pdef : ^SUdoParamDef) -> bool ..
-func param_handle_pdef_var(udorq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool ..
+    func GetPdef(aindex : uint16) -> ^SUdoParamDef ..
+    func PdefVarSize(pdef : ^SUdoParamDef) -> int ..
 
-func prtable_read_write(prtab : ^SUdoParamRangeDef, udorq : ref SUdoRequest) -> bool ..
+    func PdefIsEmpty(pdef : ^SUdoParamDef) -> bool ..
 
-//func param_read_write(udorq : ref SUdoRequest) -> bool ..  // WEAK implementation by default
+    func HandlePdef(udorq : ref SUdoRequest, pdef : ^SUdoParamDef) -> bool ..
+    func HandlePdefVar(udorq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool ..
 
-//const param_range_table : []TParamRangeDef  // this must be provided
+endobject
+
+
+const dummy_param_range_table : [?] SUdoParamRangeDef =
+[
+	// close the list with all zeroes
+	{ ? }
+]
+
+var g_udoparams <- OUdoParamTable(%dummy_param_range_table[0])
 
 
 implementation
 
 
-func prtable_read_write(prtab : ^SUdoParamRangeDef, udorq : ref SUdoRequest) -> bool:
+func OUdoParamTable.HandleReadWrite(udorq : ref SUdoRequest) -> bool:
+    use *
     var index : uint16 = udorq.index
+    var prtab :? = range_table
     while prtab.lastindex <> 0:
         if index < prtab.firstindex:
             return udorq.Error(UDOERR_INDEX)
@@ -155,7 +174,7 @@ func prtable_read_write(prtab : ^SUdoParamRangeDef, udorq : ref SUdoRequest) -> 
         if prtab.firstindex <= index <= prtab.lastindex:
             // use this entry
             if prtab.partable <> nil:
-                return param_handle_pdef(udorq, prtab.partable[index - prtab.firstindex])
+                return HandlePdef(udorq, prtab.partable[index - prtab.firstindex])
             else:
                 if prtab.handler == nil:
                     return udorq.Error(UDOERR_APPLICATION)
@@ -169,12 +188,12 @@ func prtable_read_write(prtab : ^SUdoParamRangeDef, udorq : ref SUdoRequest) -> 
     return udorq.Error(UDOERR_INDEX)
 endfunc
 
-func prtable_pdef_get(prtab : ^SUdoParamRangeDef, aindex : uint16) -> ^SUdoParamDef:
+func OUdoParamTable.GetPdef(aindex : uint16) -> ^SUdoParamDef:
+    var prtab :? = range_table
     while prtab.firstindex <> 0:
         if aindex < prtab.firstindex:
             return nil
         endif
-
         if prtab.firstindex <= aindex <= prtab.lastindex:  // use this entry
             if prtab.partable <> nil:
                 return prtab.partable[aindex - prtab.firstindex]
@@ -187,7 +206,8 @@ func prtable_pdef_get(prtab : ^SUdoParamRangeDef, aindex : uint16) -> ^SUdoParam
     return nil
 endfunc
 
-func pdef_varsize(pdef : ^SUdoParamDef) -> int:
+func OUdoParamTable.PdefVarSize(pdef : ^SUdoParamDef) -> int:
+    use *
     var sizecode : byte = pdef.flags & PARF_SIZE_MASK
     if sizecode == PARF_SIZE_32:
         return 4
@@ -201,11 +221,12 @@ func pdef_varsize(pdef : ^SUdoParamDef) -> int:
     return 1
 endfunc
 
-func pdef_empty(pdef : ^SUdoParamDef) -> bool:
+func OUdoParamTable.PdefIsEmpty(pdef : ^SUdoParamDef) -> bool:
     return pdef.var_ptr == nil  and pdef.handler == nil
 endfunc
 
-func param_handle_pdef(udorq : ref SUdoRequest, pdef : ^SUdoParamDef) -> bool:
+func OUdoParamTable.HandlePdef(udorq : ref SUdoRequest, pdef : ^SUdoParamDef) -> bool:
+    use *
     var f  : uint16 = pdef.flags
     var rw : uint16 = f & PARF_RW_MASK
 
@@ -213,7 +234,7 @@ func param_handle_pdef(udorq : ref SUdoRequest, pdef : ^SUdoParamDef) -> bool:
         if udorq.iswrite:
             return udorq.Error(UDOERR_READ_ONLY)
         endif
-        return udorq.RoInt(int(pdef.var_ptr), pdef_varsize(pdef))
+        return udorq.RoInt(int(pdef.var_ptr), PdefVarSize(pdef))
     endif
 
     if rw == PARF_READONLY  and udorq.iswrite:
@@ -226,10 +247,11 @@ func param_handle_pdef(udorq : ref SUdoRequest, pdef : ^SUdoParamDef) -> bool:
         return pdef.handler(udorq, pdef, pdef.var_ptr)
     endif
 
-    return param_handle_pdef_var(udorq, pdef, pdef.var_ptr)
+    return HandlePdefVar(udorq, pdef, pdef.var_ptr)
 endfunc
 
-func param_handle_pdef_var(udorq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool:
+func OUdoParamTable.HandlePdefVar(udorq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool:
+    use *
     if varptr == nil:
         return udorq.Error(UDOERR_APPLICATION)
     endif
