@@ -104,7 +104,7 @@ endconst
 
 struct SUdoParamDef ..
 
-type FUdoParamHandler = func(rq : ref SUdoRequest, adef : ^SUdoParamDef, varptr : pointer) of object
+type FUdoParamHandler = func(rq : ref SUdoRequest, adef : ^SUdoParamDef, varptr : pointer) -> bool of object
 
 struct SUdoParamDef:
 	flags          : uint32

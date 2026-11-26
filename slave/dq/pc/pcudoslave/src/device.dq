@@ -44,9 +44,13 @@ implementation
 
 use ./version
 use math
+use ./simple_scope
+
+var scope_buffer : [32 * 1024 * 1024] byte
 
 func ODevice.Init():
-
+    use *
+    g_scope.Init(g_udoparams, %scope_buffer[0], SizeOf(scope_buffer))
 endfunc
 
 func ODevice.Run():
@@ -73,7 +77,7 @@ func ODevice.IrqTask():
 	func_fl_1 = 1000 / (1 + irq_cycle_counter)
 	func_fl_2 = (irq_cycle_counter / 1000.0) * Sin32(seed_sin[2] + seed_sin[0])
 
-	//g_scope.RunIrqTask();
+	g_scope.RunIrqTask();
 endfunc
 
 func ODevice.prfn_CanObj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRangeDef) -> bool:
