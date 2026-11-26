@@ -1,0 +1,96 @@
+//
+
+use threads
+use time
+use print
+
+object ORtThread(OThread):
+public
+    ready         : bool = false
+    finish        : bool = false
+
+    func Start() -> bool ..
+    func Stop() -> bool ..
+    func Run(aarg : pointer) -> pointer [[override]] ..
+
+protected
+    nextcycletime    : int64
+    cycle_start_time : int64
+endobject
+
+var g_rtthread <- ORtThread()
+
+
+implementation
+
+
+use ./device
+
+func ORtThread.Start() -> bool:
+    use *
+    if ready:  // already started
+        PrintLn("RT Thread started already.")
+        return true
+    endif
+
+    StartSelf(nil)
+
+    var t0 : int64 = NanoTime()
+
+    while not ready:
+        var t1 : int64 = NanoTime()
+        if t1 - t0 > 3000000000:
+            PrintLn("timeout waiting the RT thread ready!")
+            Stop()
+            return false
+        endif
+        SleepMicros(10000)
+    endwhile
+
+    return true
+endfunc
+
+func ORtThread.Stop() -> bool:
+    finish = true
+    Join()
+    return true
+endfunc
+
+func ORtThread.Run(aarg : pointer) -> pointer [[override]]:
+    use *
+
+    PrintLn("RT Thread: started")
+
+    PrintLn("  Cycle time    : {} us\n", [g_device.irq_period_ns div 1000])
+
+    var t : int64
+    t = NanoTime()
+
+    nextcycletime = g_device.irq_period_ns * (1 + t div g_device.irq_period_ns)
+
+    ready = true
+
+    while not finish:
+        t = NanoTime()
+        if t >= nextcycletime:
+            // we are on time.
+            cycle_start_time = t
+
+            // calculate the next time
+            while nextcycletime <= t:
+                nextcycletime += g_device.irq_period_ns
+            endwhile
+
+            // do the periodic task
+
+            g_device.IrqTask()
+        else:
+            SleepToNanoTime(nextcycletime)
+        endif
+    endwhile
+
+    PrintLn("RT Thread: exiting.")
+    ready = false
+    return nil
+endfunc
+

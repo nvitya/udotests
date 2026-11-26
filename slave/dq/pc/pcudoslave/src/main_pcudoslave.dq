@@ -2,6 +2,7 @@ use print
 use udo/udoip_slave_os
 use ./device
 use ./udoslaveapp
+use ./rt_thread
 
 //-----------------------------------------------------------------------------
 
@@ -12,6 +13,8 @@ func *Main():
     PrintLn('Example UDO-IP Slave (DQ)')
 
     g_device.Init()
+
+    g_rtthread.Start()
 
     udpserver.InitListener()
 

@@ -19,10 +19,15 @@ object ODevice:
     par_dummy_i32   : int32  = 0xABCD1234
     par_dummy_i16   : int16  = 0x55AA
 
+	seed_sin : [4]float32 = [0.0,  0.0,   0.0,  0.0]
+	seed_inc : [4]float32 = [0.01, 0.011, 0.02, 0.05]
+
     udo_str_buf : embstr(64)
 
     func Init() ..
     func Run() ..
+
+    func IrqTask() ..
 
 public
     func pfn_Ignore(rq : ref SUdoRequest, pdef : ^SUdoParamDef, varptr : pointer) -> bool ..
@@ -38,6 +43,7 @@ implementation
 
 
 use ./version
+use math
 
 func ODevice.Init():
 
@@ -45,6 +51,29 @@ endfunc
 
 func ODevice.Run():
     ++idlecounter
+endfunc
+
+func ODevice.IrqTask():
+    use *
+    ++irq_cycle_counter
+
+	// generate some functions for scoping
+
+	for n : int = 0 count 4:
+		seed_sin[n] += seed_inc[n];
+		while seed_sin[n] > 2 * M_PI:
+			seed_sin[n] -= 2 * M_PI;
+		endwhile
+	endfor
+
+	func_i32_1 = Trunc(100000.0 * Sin32(seed_sin[0]))
+	func_i32_2 = Trunc(50000.0 + 50000.0 * Sin32(seed_sin[1]) + 10000.0 * Sin32(seed_sin[3]))
+	func_i16_1 = Trunc(10000 * Sin32(seed_sin[0]) + 5000 * Sin32(seed_sin[1]) + 2500 * Sin32(seed_sin[2]) + 1000 * Sin32(seed_sin[3]))
+	func_i16_2 = Trunc(1000 * Sin32(seed_sin[0]) + 2000 * Sin32(seed_sin[1]) + 3000 * Sin32(seed_sin[2]) + 4000 * Sin32(seed_sin[3]))
+	func_fl_1 = 1000 / (1 + irq_cycle_counter)
+	func_fl_2 = (irq_cycle_counter / 1000.0) * Sin32(seed_sin[2] + seed_sin[0])
+
+	//g_scope.RunIrqTask();
 endfunc
 
 func ODevice.prfn_CanObj_1008_1018(rq : ref SUdoRequest, prdef : ^SUdoParamRangeDef) -> bool:
