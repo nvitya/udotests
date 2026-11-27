@@ -1,0 +1,67 @@
+
+use print
+
+use udo/udocomm
+use udo/udocommh_ip
+
+var databuf : [65536] byte
+
+func *Main():
+    PrintSetUnbuffered()
+    PrintLn("UDO-IP Test - v1.0")
+
+    udocommh_ip.ipaddrstr = "127.0.0.1:1221"
+    if ArgCount() > 1:
+        udocommh_ip.ipaddrstr = ArgStr(1)
+    endif
+    udocomm.SetHandler(udocommh_ip)
+
+    udocomm.Open()  // throws an exception if it fails
+
+    PrintLn('UDO-IP connection "{}" opened.', udocommh_ip.ipaddrstr)
+
+    var i    : int
+    var u32  : uint32
+    var rlen : int
+
+    PrintLn("Reading test object:")
+    u32 = udocomm.ReadU32(0, 0)
+    PrintLn("  = {:08X}", [u32])
+
+    PrintLn("Reading test object again:")
+    u32 = udocomm.ReadU32(0, 0)
+    PrintLn("  = {:08X}", u32)
+
+    PrintLn("Reading max chunk length:")
+    u32 = udocomm.ReadU32(1, 0)
+    PrintLn("  = {}", u32)
+
+    PrintLn("Testing BLOB read:")
+    rlen = udocomm.ReadBlob(2, 0, %databuf[0], SizeOf(databuf))
+    PrintLn("rlen = {}", rlen)
+
+    var pdata : ^uint32 = ^uint32(%databuf[0])
+    i = 0
+    while i < 512:
+        if i > 0  and i mod 8 == 0:
+            PrintLn()
+        endif
+        Print(" {:5d}", pdata[i]^)
+        ++i
+    endwhile
+    PrintLn()
+
+    // set the led blink pattern
+    PrintLn("Writing 0x1500...")
+    try:
+        udocomm.WriteU32(0x1500, 0, 0x00111111);
+        PrintLn("  OK");
+    except Exception as e:
+        PrintLn("  FAILED");
+    endtry
+
+    udocomm.Close()
+
+    PrintLn("Test finished.")
+endfunc
+

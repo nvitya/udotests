@@ -1,0 +1,11 @@
+// Cross-compiling project for x64-win target
+
+// NOTE: set the DQ_MINGW_ROOT environment variable before compiling. For example
+// export DQ_MINGW_ROOT=/lindata/sysroots/llvm-mingw-x86_64
+
+main = 'udoiptest.dq'
+
+target = 'x64-win'
+output = "\{PROJECT_NAME}.exe"
+
+static = true  // use static linking so no dll copy required
